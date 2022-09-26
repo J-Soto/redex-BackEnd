@@ -25,7 +25,8 @@ public class UserService implements IUserService{
 	public Optional<User> findByUsernameAndPassword(String username, String password) {
 		Optional<User> findUser = this.dao.findByUsername(username);
 		if(findUser.isPresent()) {
-			boolean isPasswordMatched = passwordEncoder().matches(password, findUser.get().getPassword());
+			//boolean isPasswordMatched = passwordEncoder().matches(password, findUser.get().getPassword());
+			boolean isPasswordMatched = password.equals(findUser.get().getPassword());
 			if(!isPasswordMatched) return Optional.empty();
 		}
 		return findUser;
