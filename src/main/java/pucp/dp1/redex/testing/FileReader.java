@@ -31,7 +31,6 @@ public class FileReader {
 		}
 		return records; 
 	}
-	
 	public List<String> getRecordFromLine(String line) {
 	    List<String> values = new ArrayList<String>();
 	    try (Scanner rowScanner = new Scanner(line)) {
@@ -42,7 +41,6 @@ public class FileReader {
 	    }
 	    return values;
 	}
-	
 	public void writeToFile(String out_file, Node node, double time, int origen, int destino) {
 		try(FileWriter fw = new FileWriter(out_file,true);
 			BufferedWriter bw = new BufferedWriter(fw);

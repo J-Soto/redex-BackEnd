@@ -1,6 +1,7 @@
 package pucp.dp1.redex.model.route;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -132,5 +133,5 @@ public class FlightPlan implements Serializable{
 	public void setFullSimulated(Boolean fullSimulated) {
 		this.fullSimulated = fullSimulated;
 	}
-	
+
 }

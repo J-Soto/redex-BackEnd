@@ -314,17 +314,20 @@ public class DispatchService implements IDispatchService {
 		try {
 			Iterator<String> it = request.getFileNames();
 			MultipartFile mf = request.getFile(it.next());
+			System.out.println("1 \n");
 			//Convierte multifile a zip
 			File tempFile = File.createTempFile("upload", null);
 			mf.transferTo(tempFile);
 			ZipFile zip = new ZipFile(tempFile);
 			//loop por cada archivo del zip
 			Enumeration<? extends ZipEntry> entries = zip.entries();
+			ZipEntry entry = entries.nextElement();
 			while (entries.hasMoreElements()) {
-				ZipEntry entry = entries.nextElement();
-	            InputStream stream = zip.getInputStream(entry);
-	            InputStreamReader reader = new InputStreamReader(stream, "UTF-8");
-	            Scanner inputStream = new Scanner(reader);
+				//ZipEntry entry = entries.nextElement();
+				entry = entries.nextElement();
+				InputStream stream = zip.getInputStream(entry);
+				InputStreamReader reader = new InputStreamReader(stream, "UTF-8");
+				Scanner inputStream = new Scanner(reader);
 				//lectura de cada linea del archivo
 				while (inputStream.hasNext()) {
 					String data = inputStream.nextLine();

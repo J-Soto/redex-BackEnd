@@ -290,6 +290,7 @@ public class AStar {
 				}
 				nodes.get(airport.getId()).addDestination(nodes.get(f.getArrivalAirport().getId()), duration, f);
 			}
+			// distancia = raiz((x2-x1)^2 + (y2-y1)^2)
 			Double distance = Math.pow(Math.pow(airport.getLatitude() - objectiveAirport.getLatitude(), 2)
 					+ Math.pow(airport.getLongitude() - objectiveAirport.getLongitude(), 2), 0.5);
 			nodes.get(airport.getId()).setHeuristic(distance);

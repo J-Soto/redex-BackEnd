@@ -40,7 +40,7 @@ INSERT INTO `user` (email,username,password,name,lastname,enabled,warehouse_id) 
 INSERT INTO `user` (email,username,password,name,lastname,enabled,warehouse_id) VALUES ("admin@dp1.com","redexsuiza",'$2a$10$w6MdQyzkHFUMxR/Lt4pmW.ip4SNChcP.h4yMaVcv9VdrO5ImICnMy',"Ana","Torres",true,40);
 
 INSERT INTO `user` (email,username,password,name,lastname,enabled,warehouse_id) VALUES ("super@dp1.com","redexsuper",'$2a$10$w6MdQyzkHFUMxR/Lt4pmW.ip4SNChcP.h4yMaVcv9VdrO5ImICnMy',"Luis","Romero",true,1);
---INSERT INTO `user` (email,username,password,name,lastname,enabled,warehouse_id) VALUES ("admin@dp1.com","redexadminlima",'$2a$10$w6MdQyzkHFUMxR/Lt4pmW.ip4SNChcP.h4yMaVcv9VdrO5ImICnMy',"Cristian","Calvo",true,5);
+INSERT INTO `user` (email,username,password,name,lastname,enabled,warehouse_id) VALUES ("admin@dp1.com","redexadminlima",'$2a$10$w6MdQyzkHFUMxR/Lt4pmW.ip4SNChcP.h4yMaVcv9VdrO5ImICnMy',"Cristian","Calvo",true,5);
 
 INSERT INTO `role` (description) VALUES ("ADMIN");
 INSERT INTO `role` (description) VALUES ("SUPER");
@@ -214,16 +214,16 @@ INSERT INTO `airport` (code, description, city_id,latitude,longitude) VALUES('EG
 INSERT INTO `airport` (code, description, city_id,latitude,longitude) VALUES('ESKN', 'Aeropuerto de Estocolmo-Skavsta', 39,59.3293,18.0686)
 INSERT INTO `airport` (code, description, city_id,latitude,longitude) VALUES('LSZB', 'Aeropuerto de Zúrich', 40,46.948,7.4474)
 
-INSERT INTO `client`(cellphone,document,email,lastname,name,register_date) VALUES ('989876565', '12345678', 'cliente1@hotmail.com', 'Sanchez', 'Oscar', STR_TO_DATE('12/05/2020 11:34', '%d/%m/%Y %H:%i'))
-INSERT INTO `client`(cellphone,document,email,lastname,name,register_date) VALUES ('989876561', '12345670', 'cliente2@hotmail.com', 'Quispe', 'Mateo', STR_TO_DATE('12/05/2020 11:34', '%d/%m/%Y %H:%i'))
-INSERT INTO `client`(cellphone,document,email,lastname,name,register_date) VALUES ('989876562', '12345671', 'cliente3@hotmail.com', 'Flores', 'Luis', STR_TO_DATE('12/05/2020 11:34', '%d/%m/%Y %H:%i'))
-INSERT INTO `client`(cellphone,document,email,lastname,name,register_date) VALUES ('989876563', '12345672', 'cliente4@hotmail.com', 'Calderon', 'Ana', STR_TO_DATE('12/05/2020 11:34', '%d/%m/%Y %H:%i'))
-INSERT INTO `client`(cellphone,document,email,lastname,name,register_date) VALUES ('989876564', '12345673', 'cliente5@hotmail.com', 'Salazar', 'Pedro', STR_TO_DATE('12/05/2020 11:34', '%d/%m/%Y %H:%i'))
-INSERT INTO `client`(cellphone,document,email,lastname,name,register_date) VALUES ('989876566', '12345674', 'cliente6@hotmail.com', 'Guzman', 'Cristina', STR_TO_DATE('12/05/2020 11:34', '%d/%m/%Y %H:%i'))
+INSERT INTO `client`(cellphone,document,email,lastname,name,register_date) VALUES ('989876565', '12345678', 'cliente1@hotmail.com', 'Sanchez', 'Oscar', STR_TO_DATE('12/05/2022 11:34', '%d/%m/%Y %H:%i'))
+INSERT INTO `client`(cellphone,document,email,lastname,name,register_date) VALUES ('989876561', '12345670', 'cliente2@hotmail.com', 'Quispe', 'Mateo', STR_TO_DATE('12/05/2022 11:34', '%d/%m/%Y %H:%i'))
+INSERT INTO `client`(cellphone,document,email,lastname,name,register_date) VALUES ('989876562', '12345671', 'cliente3@hotmail.com', 'Flores', 'Luis', STR_TO_DATE('12/05/2022 11:34', '%d/%m/%Y %H:%i'))
+INSERT INTO `client`(cellphone,document,email,lastname,name,register_date) VALUES ('989876563', '12345672', 'cliente4@hotmail.com', 'Calderon', 'Ana', STR_TO_DATE('12/05/2022 11:34', '%d/%m/%Y %H:%i'))
+INSERT INTO `client`(cellphone,document,email,lastname,name,register_date) VALUES ('989876564', '12345673', 'cliente5@hotmail.com', 'Salazar', 'Pedro', STR_TO_DATE('12/05/2022 11:34', '%d/%m/%Y %H:%i'))
+INSERT INTO `client`(cellphone,document,email,lastname,name,register_date) VALUES ('989876566', '12345674', 'cliente6@hotmail.com', 'Guzman', 'Cristina', STR_TO_DATE('12/05/2022 11:34', '%d/%m/%Y %H:%i'))
 
---INSERT INTO `dispatch`(register_date, tracking_code, origin_airport_id, destination_airport_id, send_client_id, receive_client_lastname, receive_client_name, receive_client_document, package_id, late, status, active) VALUES (STR_TO_DATE('14/05/2020 11:34', '%d/%m/%Y %H:%i'), '736518', 1, 2, 2, 'Romero', 'Ana', '78653123', 2, 0, 2, 1)
---INSERT INTO `dispatch`(register_date, tracking_code, origin_airport_id, destination_airport_id, send_client_id, receive_client_lastname, receive_client_name, receive_client_document, package_id, late, status, active) VALUES (STR_TO_DATE('12/05/2020 11:34', '%d/%m/%Y %H:%i'), '736218', 1, 14, 1, 'Burga', 'Luisa', '78653123', 1, 0, 1, 1)
---INSERT INTO `dispatch`(register_date, tracking_code, origin_airport_id, destination_airport_id, send_client_id, receive_client_lastname, receive_client_name, receive_client_document, package_id, late, status, active) VALUES (STR_TO_DATE('16/05/2020 11:34', '%d/%m/%Y %H:%i'), '733318', 25, 1, 3, 'Castillo', 'Brandon', '78653123', 3, 0, 3, 1)
+--INSERT INTO `dispatch`(register_date, tracking_code, origin_airport_id, destination_airport_id, send_client_id, receive_client_lastname, receive_client_name, receive_client_document, package_id, late, status, active) VALUES (STR_TO_DATE('14/05/2022 11:34', '%d/%m/%Y %H:%i'), '736518', 1, 2, 2, 'Romero', 'Ana', '78653123', 2, 0, 2, 1)
+--INSERT INTO `dispatch`(register_date, tracking_code, origin_airport_id, destination_airport_id, send_client_id, receive_client_lastname, receive_client_name, receive_client_document, package_id, late, status, active) VALUES (STR_TO_DATE('12/05/2022 11:34', '%d/%m/%Y %H:%i'), '736218', 1, 14, 1, 'Burga', 'Luisa', '78653123', 1, 0, 1, 1)
+--INSERT INTO `dispatch`(register_date, tracking_code, origin_airport_id, destination_airport_id, send_client_id, receive_client_lastname, receive_client_name, receive_client_document, package_id, late, status, active) VALUES (STR_TO_DATE('16/05/2022 11:34', '%d/%m/%Y %H:%i'), '733318', 25, 1, 3, 'Castillo', 'Brandon', '78653123', 3, 0, 3, 1)
 
 --INSERT INTO `route_plan`(current_stage, status) VALUES (1, 1)
 --INSERT INTO `route_plan`(current_stage, status) VALUES (2, 2)
