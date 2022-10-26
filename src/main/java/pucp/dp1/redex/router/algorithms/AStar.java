@@ -92,8 +92,7 @@ public class AStar {
 					date = date.plusDays(1);
 				}
 			}
-			Optional<FlightPlan> existent = serviceFlightPlan.findByFlight_IdFlightAndTakeOffDate(flight.getIdFlight(),
-					convertToDateViaSqlDate(date));
+			Optional<FlightPlan> existent = serviceFlightPlan.findByFlight_IdFlightAndTakeOffDate(flight.getIdFlight(),convertToDateViaSqlDate(date));
 			FlightPlan flightPlan;
 			if (existent.isPresent()) {
 				flightPlan = existent.get();
@@ -329,8 +328,7 @@ public class AStar {
 				c.add(Calendar.HOUR, -5);
 				Date dateStoragePatch=c.getTime();
 				System.out.println(dateStorage);*/
-				List<StorageRegister> listRegisters = serviceStorage.findAllPresentOnDate(dateStorage/*Patch*/,
-						warehouse.getId());
+				List<StorageRegister> listRegisters = serviceStorage.findAllPresentOnDate(dateStorage/*Patch*/,warehouse.getId());
 				if (listRegisters.size() >= warehouse.getCapacity()) {
 					//System.out.println("No hay espacio en almacen");
 					Incident incident = new Incident();

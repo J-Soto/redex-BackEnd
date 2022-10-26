@@ -322,6 +322,7 @@ public class DispatchService implements IDispatchService {
 			//loop por cada archivo del zip
 			Enumeration<? extends ZipEntry> entries = zip.entries();
 			ZipEntry entry = entries.nextElement();
+			Integer i=0;
 			while (entries.hasMoreElements()) {
 				//ZipEntry entry = entries.nextElement();
 				entry = entries.nextElement();
@@ -329,6 +330,7 @@ public class DispatchService implements IDispatchService {
 				InputStreamReader reader = new InputStreamReader(stream, "UTF-8");
 				Scanner inputStream = new Scanner(reader);
 				//lectura de cada linea del archivo
+				Integer stateColapso=0;
 				while (inputStream.hasNext()) {
 					String data = inputStream.nextLine();
 					List<String> line = Arrays.asList(data.split("-"));
@@ -340,47 +342,44 @@ public class DispatchService implements IDispatchService {
 					// PROCESAR ALGORITMO
 					System.out.println(originAirport + "  " + date + " " + time + " " + destinationAirport);
 					Integer resultPlan = serviceAStart.insertHistoricPackage(originAirport, destinationAirport, date, time);
-					if(resultPlan==1) {
-						Optional<SummaryCase> sc = this.daoSummary.findById(1);
+					i++;
+					Optional<SummaryCase> sc = this.daoSummary.findById(1);
+					if(!sc.isPresent()) {
+						SummaryCase nsc = new SummaryCase();
+							nsc.setFails(0);
+							nsc.setOk(0);
+							nsc.setLate(0);
+							this.daoSummary.save(nsc);
+							sc = this.daoSummary.findById(1);
+					}
+
+					if(resultPlan==1) {						
 						if(sc.isPresent()) {
 							sc.get().setOk(sc.get().getOk()+1);
 							this.daoSummary.save(sc.get());
-						} else if(resultPlan==0) {
-							SummaryCase nsc = new SummaryCase();
-							nsc.setFails(0);
-							nsc.setOk(1);
-							nsc.setLate(0);
-							this.daoSummary.save(nsc);
-						}
+						} 
+
 					} else if (resultPlan==0){
-						Optional<SummaryCase> sc = this.daoSummary.findById(1);
 						if(sc.isPresent()) {
 							sc.get().setFails(sc.get().getFails()+1);
 							this.daoSummary.save(sc.get());
-						} else {
-							SummaryCase nsc = new SummaryCase();
-							nsc.setFails(1);
-							nsc.setOk(0);
-							nsc.setLate(0);
-							this.daoSummary.save(nsc);
-						}
+						} 
+						stateColapso=1;
+						break;
 					} else if (resultPlan==2){
-						Optional<SummaryCase> sc = this.daoSummary.findById(1);
 						if(sc.isPresent()) {
 							sc.get().setLate(sc.get().getLate()+1);
 							this.daoSummary.save(sc.get());
-						} else {
-							SummaryCase nsc = new SummaryCase();
-							nsc.setFails(0);
-							nsc.setOk(0);
-							nsc.setLate(0);
-							this.daoSummary.save(nsc);
-						}
+						} 
+						stateColapso=2;
+						break;
 					}
 				}
 				//System.out.println("Exitosos: "+exitosos.toString()+" Fallos: "+fallidos.toString());
+				
 				reader.close();
 				inputStream.close();
+				if(stateColapso>0 && i>20) break;
 			}
 			zip.close();
 			tempFile.delete();
