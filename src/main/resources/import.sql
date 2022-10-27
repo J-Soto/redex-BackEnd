@@ -91,46 +91,46 @@ INSERT INTO `user_role` (user_id, role_id) VALUES (41, 2);
 INSERT INTO `continent` (name) VALUES ('America del Sur');
 INSERT INTO `continent` (name) VALUES ('Europa');
 
-INSERT INTO `country` (continent_id, name) VALUES (1, 'Colombia');
-INSERT INTO `country` (continent_id, name) VALUES (1, 'Ecuador');
-INSERT INTO `country` (continent_id, name) VALUES (1, 'Venezuela');
-INSERT INTO `country` (continent_id, name) VALUES (1, 'Brasil');
-INSERT INTO `country` (continent_id, name) VALUES (1, 'Perú');
-INSERT INTO `country` (continent_id, name) VALUES (1, 'Bolivia');
-INSERT INTO `country` (continent_id, name) VALUES (1, 'Chile');
-INSERT INTO `country` (continent_id, name) VALUES (1, 'Argentina');
-INSERT INTO `country` (continent_id, name) VALUES (1, 'Paraguay');
-INSERT INTO `country` (continent_id, name) VALUES (1, 'Uruguay');
-INSERT INTO `country` (continent_id, name) VALUES (2,'Albania')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Alemania')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Austria')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Belgica')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Bielorrusia')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Bulgaria')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Checa')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Croacia')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Dinamarca')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Eslovaquia')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Eslovenia')
-INSERT INTO `country` (continent_id, name) VALUES (2,'España')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Estonia')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Finlandia')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Francia')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Grecia')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Holanda')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Hungria')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Irlanda(Eire)')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Islanda')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Italia')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Letonia')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Luxemburgo')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Malta')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Noruega')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Polonia')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Portugal')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Reino Unido')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Suecia')
-INSERT INTO `country` (continent_id, name) VALUES (2,'Suiza')
+INSERT INTO `country` (continent_id, name,utc) VALUES (1, 'Colombia',-5);
+INSERT INTO `country` (continent_id, name,utc) VALUES (1, 'Ecuador',-5);
+INSERT INTO `country` (continent_id, name,utc) VALUES (1, 'Venezuela',4);
+INSERT INTO `country` (continent_id, name,utc) VALUES (1, 'Brasil',-5);
+INSERT INTO `country` (continent_id, name,utc) VALUES (1, 'Perú',-5);
+INSERT INTO `country` (continent_id, name,utc) VALUES (1, 'Bolivia',-4);
+INSERT INTO `country` (continent_id, name,utc) VALUES (1, 'Chile',-3);
+INSERT INTO `country` (continent_id, name,utc) VALUES (1, 'Argentina',-3);
+INSERT INTO `country` (continent_id, name,utc) VALUES (1, 'Paraguay',-3);
+INSERT INTO `country` (continent_id, name,utc) VALUES (1, 'Uruguay',-3);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Albania',2);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Alemania',2);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Austria',2);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Belgica',2);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Bielorrusia',3);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Bulgaria',3);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Checa',2);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Croacia',2);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Dinamarca',2);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Eslovaquia',2);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Eslovenia',2);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'España',2);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Estonia',3);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Finlandia',3);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Francia',2);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Grecia',3);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Holanda',2);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Hungria',2);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Irlanda(Eire)',1);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Islanda',0);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Italia',2);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Letonia',3);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Luxemburgo',2);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Malta',2);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Noruega',2);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Polonia',2);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Portugal',0);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Reino Unido',1);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Suecia',2);
+INSERT INTO `country` (continent_id, name,utc) VALUES (2,'Suiza',2);
 
 INSERT INTO `city` (country_id, name) VALUES (1, 'Bogota');
 INSERT INTO `city` (country_id, name) VALUES (2, 'Quito');

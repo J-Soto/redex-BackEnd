@@ -24,6 +24,9 @@ public class Country implements Serializable{
 	
 	@Column(name = "name")
 	private String name;
+
+	@Column(name = "utc")
+	private int utc;
 	
 	@ManyToOne
 	private Continent continent;
@@ -42,6 +45,14 @@ public class Country implements Serializable{
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getUtc() {
+		return utc;
+	}
+
+	public void setUtc(int utc) {
+		this.utc = utc;
 	}
 
 	public Continent getContinent() {

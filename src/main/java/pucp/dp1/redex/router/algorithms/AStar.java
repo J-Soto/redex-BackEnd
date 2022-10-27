@@ -229,6 +229,7 @@ public class AStar {
 
 		Set<Node> settledNodes = new HashSet<>();
 		Set<Node> unsettledNodes = new HashSet<>();
+		Integer arrivalUtc,takeOffUtc;
 
 		unsettledNodes.add(source);
 		while (unsettledNodes.size() != 0) {
@@ -238,6 +239,8 @@ public class AStar {
 				Node adjacentNode = adjacencyPair.getKey();
 				Double edgeWeight = adjacencyPair.getValue().getKey();
 				Flight f = adjacencyPair.getValue().getValue();
+				arrivalUtc=adjacencyPair.getValue().getValue().getArrivalAirport().getCity().getCountry().getUtc();
+				takeOffUtc=adjacencyPair.getValue().getValue().getTakeOffAirport().getCity().getCountry().getUtc();
 				// Comprobar consistencia de horas
 				/* Ahora siempre será consistente */
 				// Boolean consistent = true;
@@ -246,7 +249,8 @@ public class AStar {
 					// consistent=currentNode.getShortestPath().get(listSize-1).getValue().getArrivalDateTime().isBefore(f.getTakeOffDateTime());
 					// Agregar el tiempo de espera hasta el despegue
 					edgeWeight += durationBetweenTime(currentNode.getShortestPath().get(listSize - 1).getValue()
-							.getFlight().getArrivalTime().toLocalTime(), f.getTakeOffTime().toLocalTime());
+							.getFlight().getArrivalTime().toLocalTime(), f.getTakeOffTime().toLocalTime(),arrivalUtc,takeOffUtc);
+							//currentNode.getShortestPath().get(listSize - 1).getValue
 				}
 				if (!settledNodes.contains(adjacentNode) /* && consistent */) {
 					CalculateMinimumDistance(adjacentNode, edgeWeight, currentNode, f, date, time, simulated);
@@ -281,8 +285,8 @@ public class AStar {
 		for (Airport airport : graphOld.keySet()) {
 			List<Flight> flights = graphOld.get(airport);
 			for (Flight f : flights) {
-				double duration = durationBetweenTime(f.getTakeOffTime().toLocalTime(),
-						f.getArrivalTime().toLocalTime());
+				double duration = durationBetweenTime(f.getTakeOffTime().toLocalTime(),f.getArrivalTime().toLocalTime(),
+				f.getArrivalAirport().getCity().getCountry().getUtc(),f.getTakeOffAirport().getCity().getCountry().getUtc());
 				/* Agregar espera al primer vuelo */
 				if (airport.getId() == start) {
 					duration+=durationBetweenTime(time, f.getTakeOffTime().toLocalTime());
@@ -552,6 +556,29 @@ public class AStar {
 			return acumulator;
 		}
 	}
+
+	public double durationBetweenTime(LocalTime start, LocalTime end, Integer utcStart, Integer utcEnd) {
+		double acumulator;
+		if(utcStart>0){
+			start.minusMinutes(utcStart*60);
+		}
+		else{
+			utcStart*=-1;
+			start.plusMinutes(utcStart*60);
+		}
+
+		if(utcEnd>0){
+			end.minusMinutes(utcEnd*60);
+		}
+		else{
+			utcEnd*=-1;
+			end.plusMinutes(utcEnd*60);
+		}
+	
+		acumulator  =durationBetweenTime( start,  end);
+		return acumulator;
+	}
+
 
 	public LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
 		return LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(dateToConvert));
