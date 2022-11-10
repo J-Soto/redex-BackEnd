@@ -41,13 +41,8 @@ public class AirportsMap {
 	public Map<Airport, List<Flight>> getGraph() {
 		List<Airport> airports = this.obtainAirpots();
 		for (Airport airport: airports){
-			//Optional<Warehouse> warehouse = serviceWarehouse.findByAirport_id(airport.getId()); 
-			//if(warehouse.isPresent()) {
-				//if(!warehouse.get().isFull()) {
-					List<Flight> flights = obtainFlightsByAirport(airport);
-					this.map.put(airport, flights);
-				//}
-			//}
+			List<Flight> flights = obtainFlightsByAirport(airport);
+			this.map.put(airport, flights);
 		}
 		return this.map;
 	}

@@ -84,7 +84,7 @@ public class Dijkstra {
 	    return graph;
 	}
 
-	public Node getShortestPath(Integer start, Integer objetive){
+	public Node getShortestPath(Integer start, Integer objective){
 		//List<Flight> result=new ArrayList<>();
 		Map<Airport, List<Flight>> graphOld = this.getMap();
 		Map<Integer, Node> nodes = new HashMap<>();
@@ -111,7 +111,7 @@ public class Dijkstra {
 		//Boolean found=false;
 		for (Node node: graphResult.getNodes()) {
 			//end=node;
-			if(node.getId().equals(objetive)) {
+			if(node.getId().equals(objective)) {
 				//found=true;
 				end=node;
 				break;

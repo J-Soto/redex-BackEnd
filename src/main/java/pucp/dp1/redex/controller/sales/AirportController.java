@@ -55,13 +55,13 @@ public class AirportController {
 		}
 	}
 	
-	@GetMapping(path = "/getRouteA/{inicio}/{fin}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResponseObject> consultarRutaA(@PathVariable("inicio") Integer start, @PathVariable("fin") Integer objective){
+	@GetMapping(path = "/getRouteA/{inicio}/{fin}/{cantPackages}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResponseObject> consultarRutaA(@PathVariable("inicio") Integer start, @PathVariable("fin") Integer objective, @PathVariable("cantPackages") Integer cantPackages){
 		ResponseObject response = new ResponseObject();
 		NumberFormat formatter = new DecimalFormat("#0.00000"); 
 		try {
 			Long startTime = System.currentTimeMillis();
-			Node node = this.servicioA.getShortestPath(start, objective, LocalDate.now(), LocalTime.now().minusHours(5),false);
+			Node node = this.servicioA.getShortestPath(start, objective, LocalDate.now(), LocalTime.now().minusHours(5),false,cantPackages);
 			Long endTime = System.currentTimeMillis();
 			List<FlightPlan> lista = new ArrayList<>();
 			for(Pair<Node,FlightPlan> p : node.getShortestPath()) {

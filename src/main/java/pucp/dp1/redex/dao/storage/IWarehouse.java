@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import pucp.dp1.redex.model.storage.Warehouse;
+import pucp.dp1.redex.model.storage.Warehouse;	
 import pucp.dp1.redex.model.utils.AirportElement;
 
 public interface IWarehouse extends JpaRepository<Warehouse, Integer> {

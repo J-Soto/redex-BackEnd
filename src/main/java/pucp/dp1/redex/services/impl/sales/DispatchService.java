@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.TimeZone;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -311,6 +312,7 @@ public class DispatchService implements IDispatchService {
 
 	@Override
 	public String masiveLoad(MultipartHttpServletRequest request) {
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 		try {
 			Iterator<String> it = request.getFileNames();
 			MultipartFile mf = request.getFile(it.next());
@@ -339,9 +341,10 @@ public class DispatchService implements IDispatchService {
 					String date = line.get(1);
 					String time = line.get(2);
 					String destinationAirport = line.get(3).substring(0, 4);
+					Integer cantPackages = Integer.parseInt(line.get(3).substring(5));
 					// PROCESAR ALGORITMO
-					System.out.println(originAirport + "  " + date + " " + time + " " + destinationAirport);
-					Integer resultPlan = serviceAStart.insertHistoricPackage(originAirport, destinationAirport, date, time);
+					System.out.println(originAirport + "  " + date + " " + time + " " + destinationAirport + " " + cantPackages);
+					Integer resultPlan = serviceAStart.insertHistoricPackage(originAirport, destinationAirport, date, time, cantPackages);
 					i++;
 					Optional<SummaryCase> sc = this.daoSummary.findById(1);
 					if(!sc.isPresent()) {
@@ -372,6 +375,7 @@ public class DispatchService implements IDispatchService {
 							this.daoSummary.save(sc.get());
 						} 
 						stateColapso=2;
+						System.out.println("Fallo: "+originAirport+ " - "+destinationAirport);
 						break;
 					}
 				}
@@ -379,7 +383,7 @@ public class DispatchService implements IDispatchService {
 				
 				reader.close();
 				inputStream.close();
-				if(stateColapso>0 && i>20) break;
+				if(stateColapso>0) break;
 			}
 			zip.close();
 			tempFile.delete();

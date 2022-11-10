@@ -47,10 +47,10 @@ public class RoutePlanController {
 	}
 	
 	@GetMapping(path = "/generateRoute", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResponseObject> generarRuta(@RequestParam("idStart") Integer idStart, @RequestParam("idObjective") Integer idObjective) {
+	public ResponseEntity<ResponseObject> generarRuta(@RequestParam("idStart") Integer idStart, @RequestParam("idObjective") Integer idObjective, @RequestParam("cantPackages") Integer cantPackages) {
 		ResponseObject response = new ResponseObject();
 		try {
-			RoutePlan plan = serviceAStar.determinRoute(idStart, idObjective, LocalDate.now(), LocalTime.now().minusHours(5),false);
+			RoutePlan plan = serviceAStar.determinRoute(idStart, idObjective, LocalDate.now(), LocalTime.now().minusHours(5),false,cantPackages);
 			response.setResultado(plan);
 			response.setEstado(Estado.OK);
 			return new ResponseEntity<ResponseObject>(response, HttpStatus.OK);

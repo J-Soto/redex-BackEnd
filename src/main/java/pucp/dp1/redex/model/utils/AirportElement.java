@@ -41,6 +41,8 @@ public class AirportElement {
 		this.count = count;
 	}
 
+
+
 	public AirportElement(String code, String city, String country, Long x) {
 		super();
 		this.code = code;
@@ -48,6 +50,25 @@ public class AirportElement {
 		this.city = city;
 		this.country = country;
 	}
+
+	public AirportElement(String code, String city, String country, Long x, Long num) {
+		super();
+		this.code = code;
+		this.x = x;
+		this.city = city;
+		this.country = country;
+		num++;
+	}
+
+	public AirportElement(String code) {
+		super();
+	}
+
+	public AirportElement() {
+		super();
+	}
+
+
 
 	public AirportElement(String code, String name,  Date date, String city, String country, Long count) {
 		super();
@@ -71,6 +92,7 @@ public class AirportElement {
 		this.country = country;
 		this.count = count;
 	}
+	
 
 	public LocalDate getLdate() {
 		return ldate;
