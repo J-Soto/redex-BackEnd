@@ -19,6 +19,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.Map.Entry;
+
+import javax.print.attribute.standard.Destination;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -225,7 +228,11 @@ public class AStar {
 		Node lowestDistanceNode = null;
 		double lowestDistance = Double.MAX_VALUE;
 		for (Node node : unsettledNodes) {
-			double nodeDistance = node.getDistance();
+			double nodeDistance = node.getDistance() + node.getHeuristic();
+			if(node.getId()==34){
+				Integer id;
+				id=node.getId();
+			}
 			if (nodeDistance < lowestDistance) {
 				lowestDistance = nodeDistance;
 				lowestDistanceNode = node;
@@ -251,7 +258,7 @@ public class AStar {
 		while (unsettledNodes.size() != 0) {
 			Node currentNode = getLowestDistanceNode(unsettledNodes);
 			unsettledNodes.remove(currentNode);
-			
+			//if(currentNode.getId()==objective) return graph;
 
 			for (Entry<Node, Pair<Double, Flight>> adjacencyPair : currentNode.getAdjacentNodes().entrySet()) {
 				Node adjacentNode = adjacencyPair.getKey();
@@ -266,7 +273,7 @@ public class AStar {
 
 				Integer listSize = currentNode.getShortestPath().size();
 				if (listSize > 0) {
- 					// Agregar el tiempo desde el destino del vuelo current al despegue del sgte vuelo, ver si ta bien, creo que falta el tiempod el sgte vuelo
+ 					// Agregar el tiempo desde el destino del vuelo current al despegue del sgte vuelo
 					 takeOffTimeF=f.getTakeOffTime().toLocalTime();
 					 takeOffUtcF=f.getArrivalAirport().getCity().getCountry().getUtc();
 					 arrivalTimeCurrentNode = currentNode.getShortestPath().get(listSize - 1).getValue().getFlight().getArrivalTime().toLocalTime();
@@ -283,6 +290,75 @@ public class AStar {
 			settledNodes.add(currentNode);
 		}
 		return graph;
+	}
+
+
+
+	public Node  calculateShortestPathFromSource( Node start,Node obective, LocalDate date, LocalTime time, Integer cantPackages) {
+
+		Integer arrivalTimeUtcCurrentNode;
+		LocalTime arrivalTimeCurrentNode,takeOffTimeF;
+
+		start.setDistance(0.0);
+
+		Set<Node> settledNodes = new HashSet<>();
+		Set<Node> unsettledNodes = new HashSet<>();
+		Integer takeOffUtcF;
+
+		unsettledNodes.add(start);
+		while (unsettledNodes.size() != 0) {
+			Node currentNode = getLowestDistanceNode(unsettledNodes);
+			unsettledNodes.remove(currentNode);
+			settledNodes.add(currentNode);
+			if(currentNode.getId() == obective.getId() ){
+				return currentNode;
+			}
+
+			for (Entry<Node, Pair<Double, Flight>> adjacencyPair : currentNode.getAdjacentNodes().entrySet()) {//aqui se generan suscesores de node_n
+				
+				Node adjacentNode = adjacencyPair.getKey();
+				Flight f = adjacencyPair.getValue().getValue();
+				LocalTime takeOff, arrival;
+				Integer takeOffUtc, arrivalUtc;
+				Double newDistance;
+				Boolean isStart=false;
+
+				if(f.getTakeOffAirport().getId() == start.getId()) isStart=true;
+				takeOff= f.getTakeOffTime().toLocalTime();
+				arrival = f.getArrivalTime().toLocalTime();
+				takeOffUtc =f.getTakeOffAirport().getCity().getCountry().getUtc();
+				arrivalUtc =f.getArrivalAirport().getCity().getCountry().getUtc();
+
+				adjacentNode.setFather(currentNode);
+				adjacentNode.setFatherFlight(f);
+				//adjacentNode.setHeuristic(); -> ya lo tiene preestablecido
+				//falta meterle la info de date/time y cant packages-------------------------------------------------------------------------
+				
+				newDistance=durationBetweenTime(isStart,date, time, cantPackages, takeOff, arrival, takeOffUtc, arrivalUtc);
+				adjacentNode.setDistance(currentNode.getDistance() + newDistance);
+				//adjacentNode.setDistancePlusHeu(); -> no lo uso porque en el desencolado uso dist + heu
+
+				if (!settledNodes.contains(adjacentNode) && !unsettledNodes.contains(adjacentNode)) {
+					unsettledNodes.add(adjacentNode);
+				}
+				else{
+					if(unsettledNodes.contains(adjacentNode)){
+						Node oldCurrentNode;
+						oldCurrentNode = currentNode;
+						if(adjacentNode.getDistance() < oldCurrentNode.getDistance()){
+							//debe actualizarse a nivel de espacio de memoria, para que se actualice en la cola tambien
+							oldCurrentNode.setDistance(adjacentNode.getDistance());
+							oldCurrentNode.setFather(adjacentNode.getFather());
+
+						}
+					}
+				}
+
+			}
+			
+		}
+		
+		return null;
 	}
 
 	public Node getShortestPath(Integer start, Integer objective, LocalDate date, LocalTime time, boolean simulated, Integer cantPackages) {
@@ -314,7 +390,6 @@ public class AStar {
 
 		if(listBestFlights.size()>0 ) {
 			//tomar el menor tiempo de los vuelos directos que existan
-			//no se porque pasa varias veces por este for
 			for (FlightElement f : listBestFlights) {
 				f.setArrivalTime(serviceFlight.findBestFlightArrivalTime(f.getIdFlight()).toLocalTime());
 				f.setTakeOffTime(serviceFlight.findBestFlightTakeOffTime(f.getIdFlight()).toLocalTime());
@@ -338,19 +413,26 @@ public class AStar {
 					duration+=durationBetweenTime(time, f.getTakeOffTime().toLocalTime());
 				}
 
+				if(f.getIdFlight()==4755 ||f.getIdFlight()==4757 ||f.getIdFlight()==4759 ){
+					Integer i;
+					i=f.getIdFlight();
+				}
 
-				nodes.get(airport.getId()).addDestination(nodes.get(f.getArrivalAirport().getId()), duration, f);
+				if(airport.getId()==objective) {
+				 nodes.get(airport.getId()).setHeuristic(timeHeu);
+				}
+				else nodes.get(airport.getId()).setHeuristic(10000000.0);
+
+				nodes.get(airport.getId()).addDestination(nodes.get(f.getArrivalAirport().getId()), duration, f,timeHeu);
 			}
 			// distancia = raiz((x2-x1)^2 + (y2-y1)^2), ya no es asi
 		
-			if(airport.getId()==start && timeHeu < 10000000.0) {
-				nodes.get(airport.getId()).setHeuristic(timeHeu);
-			}
-			else nodes.get(airport.getId()).setHeuristic(10000000.0);
+			
 
 			graphNew.addNode(nodes.get(airport.getId()));
 		}
 
+		//Node result = calculateShortestPathFromSource(graphNew, nodes.get(start),nodes.get(objective), date, time, simulated, cantPackages);
 		Graph graphResult = calculateShortestPathFromSource(graphNew, nodes.get(start), date, time, simulated, cantPackages);
 		Node end = new Node(0);
 		// Boolean found=false;
@@ -598,6 +680,42 @@ public class AStar {
 		}
 	
 		acumulator  =durationBetweenTime( start,  end);
+		return acumulator;
+	}
+
+	public double durationBetweenTime(Boolean isStart, LocalDate date,LocalTime time, Integer cantPackages,LocalTime start, LocalTime end, Integer utcStart, Integer utcEnd) {
+		double acumulator=0;
+
+		if(!isStart) acumulator+=60; //agregar una hora si es escala
+
+		if(utcStart>0) start.minusHours(utcStart);		
+		else {
+			utcStart*=-1;
+			start.plusHours(utcStart);
+		}
+
+		if(utcEnd>0) end.minusHours(utcEnd);		
+		else {
+			utcEnd*=-1;
+			end.plusHours(utcEnd);
+		}
+		
+		//calcular tiempo hasta el vuelo
+		if(time.isBefore(start)){
+			acumulator += Duration.between(time, start).toMinutes();
+		}
+		else {
+			acumulator += Duration.between(time, LocalTime.parse("23:59:59")).toMinutes();
+			acumulator += Duration.between( LocalTime.parse("00:00:00"),start).toMinutes();
+		}
+		
+		//calcular tiempo desde el arrivo hasta la llegada
+		if (start.isBefore(end)) {
+			acumulator += Duration.between(start, end).toMinutes();
+		} else {
+			acumulator += Duration.between(start, LocalTime.parse("23:59:59")).toMinutes();
+			acumulator += Duration.between(LocalTime.parse("00:00:00"), end).toMinutes();
+		}
 		return acumulator;
 	}
 

@@ -13,14 +13,74 @@ public class Node {
 	private Integer id;
 	private Double distance=Double.MAX_VALUE;
 	private List<Pair<Node,FlightPlan>> shortestPath = new LinkedList<>();
-	private Double heuristic=0.0; 
+	private Double heuristic=10000000.0;
+	private Integer key=0; 
+
+	public Integer getKey() {
+		return key;
+	}
+
 	Map<Node, Pair<Double, Flight>> adjacentNodes = new HashMap<>();
+	public Node() {
+	}
+
+	private Node father;
+	private Flight fatherFlight;
+	private Double DistancePlusHeu;
+
 	
-	public void addDestination(Node destination, double cost, Flight flight) {
+	public Flight getFatherFlight() {
+		return fatherFlight;
+	}
+
+	public void setFatherFlight(Flight fatherFlight) {
+		this.fatherFlight = fatherFlight;
+	}
+
+	
+	
+	public Double getDistancePlusHeu() {
+		return DistancePlusHeu;
+	}
+
+	public void setDistancePlusHeu(Double distancePlusHeu) {
+		DistancePlusHeu = distancePlusHeu;
+	}
+
+	public Node getFather() {
+		return father;
+	}
+
+	public void setFather(Node father) {
+		this.father = father;
+	}
+
+	public void addDestination(Node destination, double cost, Flight flight, Double heu) {
+		//rev, malogra el return final porque busca por id
 		Pair<Double, Flight> pair = new Pair<Double, Flight>(cost, flight);
-		this.adjacentNodes.put(destination, pair);
+		Node newNode= new Node();
+		newNode.setId(destination.getId());
+		newNode.setAdjacentNodes(destination.getAdjacentNodes());
+		newNode.setDistancePlusHeu(destination.getDistancePlusHeu());
+		newNode.setDistance(destination.getDistance());
+		newNode.setFather(destination.getFather());
+		newNode.setFatherFlight(destination.getFatherFlight());
+		newNode.setHeuristic(heu);
+		newNode.setShortestPath(destination.getShortestPath());
+		key++;
+		//this.adjacentNodes.put(destination, pair);	
+		this.adjacentNodes.put(newNode, pair);
+		
 	}
 	
+	public void addDestination(Node destination, double cost, Flight flight) {
+		//rev, malogra el return final porque busca por id
+		Pair<Double, Flight> pair = new Pair<Double, Flight>(cost, flight);
+		
+		this.adjacentNodes.put(destination, pair);	
+
+		
+	}
 	public Node(Integer id) {
 		this.id=id;
 	}
@@ -39,6 +99,7 @@ public class Node {
 
 	public void setShortestPath(List<Pair<Node, FlightPlan>> shortestPath) {
 		this.shortestPath = shortestPath;
+		key =1;
 	}
 
 	public Map<Node, Pair<Double, Flight>> getAdjacentNodes() {
