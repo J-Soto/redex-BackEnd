@@ -35,7 +35,18 @@ public class Warehouse implements Serializable{
 	
 	@Column(name = "full")
 	private Boolean full;
-	
+
+	@Column(name = "occupied_Capacity")
+	private Integer occupiedCapacity;
+
+	public Integer getOccupiedCapacity() {
+		return this.occupiedCapacity;
+	}
+
+	public void setOccupiedCapacity(final Integer occupiedCapacity) {
+		this.occupiedCapacity = occupiedCapacity;
+	}
+
 	@OneToOne
 	@JsonIgnoreProperties({"warehouse", "takeOffFlights", "arrivalFlights"})
 	private Airport airport;

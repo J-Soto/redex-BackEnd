@@ -44,6 +44,17 @@ public class Flight implements Serializable {
 	@Column(name = "capacity")
 	private Integer capacity;
 
+	@Column(name = "occupied_Capacity")
+	private Integer occupiedCapacity;
+
+	public Integer getOccupiedCapacity() {
+		return this.occupiedCapacity;
+	}
+
+	public void setOccupiedCapacity(final Integer occupiedCapacity) {
+		this.occupiedCapacity = occupiedCapacity;
+	}
+
 	public int getIdFlight() {
 		return idFlight;
 	}
