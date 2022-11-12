@@ -331,10 +331,11 @@ public class AStar {
 
 				adjacentNode.setFather(currentNode);
 				adjacentNode.setFatherFlight(f);
+				f.getArrivalAirport().get
 				//adjacentNode.setHeuristic(); -> ya lo tiene preestablecido
-				//falta meterle la info de date/time y cant packages-------------------------------------------------------------------------
+				//falta meterle la info de cant packages-------------------------------------------------------------------------
 				
-				newDistance=durationBetweenTime(isStart,date, time, cantPackages, takeOff, arrival, takeOffUtc, arrivalUtc);
+				newDistance=durationBetweenTime(f,f.getArrivalAirport().getWarehouse(),isStart,date, time, cantPackages, takeOff, arrival, takeOffUtc, arrivalUtc);
 				adjacentNode.setDistance(currentNode.getDistance() + newDistance);
 				//adjacentNode.setDistancePlusHeu(); -> no lo uso porque en el desencolado uso dist + heu
 
@@ -683,8 +684,50 @@ public class AStar {
 		return acumulator;
 	}
 
-	public double durationBetweenTime(Boolean isStart, LocalDate date,LocalTime time, Integer cantPackages,LocalTime start, LocalTime end, Integer utcStart, Integer utcEnd) {
-		double acumulator=0;
+	public double durationBetweenTime(Flight f,Warehouse w,Boolean isStart, LocalDate date,LocalTime time, Integer cantPackages,LocalTime start, LocalTime end, Integer utcStart, Integer utcEnd) {
+		double acumulator=0,factorCapacidad=Double.MAX_VALUE;
+		Integer cantOcupadaAntF=0,cantOcupadaAntA=0,cantMaxF,cantMaxA,cantDisponible,cantDisponibleA,cantDisponibleF,cantPorOcupar,packagesPorProcesar;
+		cantMaxF=f.getCapacity();
+		cantMaxA=w.getCapacity();
+		cantOcupadaAntF=f.getOccupiedCapacity();
+		cantOcupadaAntA=w.getOccupiedCapacity();
+		cantDisponibleA=cantMaxA-cantOcupadaAntA;
+		cantDisponibleF=cantMaxF-cantOcupadaAntF;
+		cantDisponible = Math.min(cantDisponibleF,cantDisponibleA);
+		if(cantDisponible<=0){
+			//no hay capacidad
+			acumulator=factorCapacidad;
+			return acumulator;
+		}
+		else{
+			cantPorOcupar=cantDisponible-cantPackages;
+			if(cantPorOcupar>0){
+				//entra todo
+				f.setOccupiedCapacity(f.getOccupiedCapacity()+cantPackages);
+				w.setOccupiedCapacity(w.getOccupiedCapacity()+cantPackages);
+			}else{
+				//entra parcial
+				f.setOccupiedCapacity(f.getCapacity());
+				w.setOccupiedCapacity(w.getCapacity());
+				packagesPorProcesar=cantPackages-cantDisponible;
+				//devolver packagesPorProcesar, esos son los envios que faltan procesar
+
+			}
+		}
+		
+	
+
+	
+
+
+
+
+	
+
+
+
+
+
 
 		if(!isStart) acumulator+=60; //agregar una hora si es escala
 
