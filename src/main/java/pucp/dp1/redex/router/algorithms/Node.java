@@ -15,6 +15,25 @@ public class Node {
 	private List<Pair<Node,FlightPlan>> shortestPath = new LinkedList<>();
 	private Double heuristic=10000000.0;
 	private Integer key=0; 
+	private Integer packagesProcesados=0;
+	private Flight arrivalFlight=null;
+
+
+	public Flight getArrivalFlight() {
+		return arrivalFlight;
+	}
+
+	public void setArrivalFlight(Flight arrivalFlight) {
+		this.arrivalFlight = arrivalFlight;
+	}
+
+	public Integer getPackagesProcesados() {
+		return packagesProcesados;
+	}
+
+	public void setPackagesProcesados(Integer packagesProcesados) {
+		this.packagesProcesados = packagesProcesados;
+	}
 
 	public Integer getKey() {
 		return key;
