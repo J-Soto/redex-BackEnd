@@ -128,7 +128,7 @@ public class AStar {
 					adjacentNode.setArrivalFlight(f);
 	
 					adjacentNode.setFather(currentNode);
-					adjacentNode.setHeuristic(heuristic(adjacentNode.getArrivalFlight().getArrivalAirport(),start.getId(), objective.getId(), time));
+					adjacentNode.setHeuristic(heuristic(adjacentNode.getArrivalFlight().getArrivalAirport(),currentNode.getId(), objective.getId(), time));
 					packagesProcesados= hayCapacidad(f, f.getArrivalAirport().getWarehouse(), cantPackages);
 					if(packagesProcesados > 0){
 						//if(minComunCap > packagesProcesados) minComunCap = packagesProcesados;
@@ -136,6 +136,10 @@ public class AStar {
 						adjacentNode.setDistance(currentNode.getDistance() + newDistance);
 						adjacentNode.setPackagesProcesados(packagesProcesados);
 						adjacentNode.setArrivalFlight(f);
+					}
+					else{
+						Double n=Double.MAX_VALUE;
+						adjacentNode.setDistance(n);
 					}
 	
 					if (!settledNodes.contains(adjacentNode) && !unsettledNodes.contains(adjacentNode)) {
@@ -169,6 +173,7 @@ public class AStar {
 			actualizarCapacidad(start,currentNode,minComunCap);
 			cantPackages-=minComunCap;
 			bestWays.add(currentNode);
+			actualizarStart(start, objective.getId());
 		}
 		
 		return bestWays;
@@ -191,22 +196,30 @@ public class AStar {
 			if(node.getId()==start.getId()) break;
 			Flight f=node.getArrivalFlight();
 			Warehouse w=f.getArrivalAirport().getWarehouse();			
-			f.setOccupiedCapacity(f.getOccupiedCapacity()+minComunCapac);
-			w.setOccupiedCapacity(w.getOccupiedCapacity()+minComunCapac);
+			//f.setOccupiedCapacity(f.getOccupiedCapacity()+minComunCapac);
+			//w.setOccupiedCapacity(w.getOccupiedCapacity()+minComunCapac);
+			
+			
+			serviceFlight.updateOccupiedCapacity(f.getIdFlight(),f.getOccupiedCapacity()+minComunCapac);		
+			serviceWarehouse.updateOccupiedCapacity(w.getId(), w.getOccupiedCapacity()+minComunCapac);
+
+			//serviceFlight.updateCapacity(f.getIdFlight(),f.getOccupiedCapacity()+minComunCapac);		
+			//serviceWarehouse.updateCapacity(w.getId(), w.getOccupiedCapacity()+minComunCapac);
+
 			node=node.getFather();
-			//falta poner en bd
+
 		}	
 		
 	}
 
 
-	public double heuristic(Airport airport, Integer start, Integer objective, LocalTime time){
+	public double heuristic(Airport arrivalAirport, Integer takeOffNode, Integer objective, LocalTime time){
 		double  timeHeu= 10000000.0;
 		Double tEspera=0.0;
 		Integer idFlight;
-		List<FlightElement> listBestFlights = serviceFlight.findBestFlight(start, objective);
+		List<FlightElement> listBestFlights = serviceFlight.findBestFlight(takeOffNode, objective);
 
-		if(airport.getId()==objective){
+		if(arrivalAirport.getId()==objective){
 			
 			if(listBestFlights.size()>0 ) {
 				//tomar el menor tiempo de los vuelos directos que existan
@@ -226,6 +239,35 @@ public class AStar {
 		
 		return timeHeu;
 	}
+
+	public void  actualizarStart(Node start,Integer objective){
+		Map<Airport, List<Flight>> graphOld = this.getMap();
+		Map<Integer, Node> nodes = new HashMap<>();
+		Airport objectiveAirport = null;
+		Graph graphNew = new Graph();
+
+		for (Airport airport : graphOld.keySet()) {
+			if (objective.equals(airport.getId())) {
+				objectiveAirport = airport;
+			}
+			Node n = new Node(airport.getId());
+			nodes.put(airport.getId(), n);
+		}
+		if (objectiveAirport == null) {
+			System.out.println("No se esta encontrando el aeropuerto objetivo");
+		}
+
+		for (Airport airport : graphOld.keySet()) {
+			List<Flight> flights = graphOld.get(airport);
+			for (Flight f : flights) {
+				nodes.get(airport.getId()).addDestination(nodes.get(f.getArrivalAirport().getId()), 0, f,10000000.0);		
+			}
+			graphNew.addNode(nodes.get(airport.getId()));
+		}
+		start =nodes.get(start.getId());
+
+	}
+
 	public Node getShortestPath(Integer start, Integer objective, LocalDate date, LocalTime time, boolean simulated, Integer cantPackages) {
 		// List<Flight> result=new ArrayList<>();
 		Double tEspera=0.0;
@@ -251,27 +293,13 @@ public class AStar {
 			System.out.println("No se esta encontrando el aeropuerto objetivo");
 		}
 
-/* 
-		List<FlightElement> listBestFlights = serviceFlight.findBestFlight(start, objective);
 
-		if(listBestFlights.size()>0 ) {
-			//tomar el menor tiempo de los vuelos directos que existan
-			for (FlightElement f : listBestFlights) {
-				f.setArrivalTime(serviceFlight.findBestFlightArrivalTime(f.getIdFlight()).toLocalTime());
-				f.setTakeOffTime(serviceFlight.findBestFlightTakeOffTime(f.getIdFlight()).toLocalTime());
-				tEspera = durationBetweenTime(time, f.getTakeOffTime());
-				Double newTimeHeu= tEspera + durationBetweenTime(f.getTakeOffTime(),f.getArrivalTime(),
-				  f.getTakeOffAirport().getCity().getCountry().getUtc(),   f.getArrivalAirport().getCity().getCountry().getUtc());
-					idFlight= f.getIdFlight();
-					if(timeHeu>newTimeHeu) timeHeu=newTimeHeu;
-			}
-		}
-*/
 
 		for (Airport airport : graphOld.keySet()) {
 			List<Flight> flights = graphOld.get(airport);
 			for (Flight f : flights) {
-
+				nodes.get(airport.getId()).addDestination(nodes.get(f.getArrivalAirport().getId()), 0, f,timeHeu);
+/*
 				double duration = durationBetweenTime(f.getTakeOffTime().toLocalTime(),f.getArrivalTime().toLocalTime(),
 				f.getArrivalAirport().getCity().getCountry().getUtc(),f.getTakeOffAirport().getCity().getCountry().getUtc());
 				
@@ -284,13 +312,9 @@ public class AStar {
 					Integer i;
 					i=f.getIdFlight();
 				}
-/* 
-				if(airport.getId()==objective) {
-				 nodes.get(airport.getId()).setHeuristic(timeHeu);
-				}
-				else nodes.get(airport.getId()).setHeuristic(10000000.0);
 
-*/				nodes.get(airport.getId()).addDestination(nodes.get(f.getArrivalAirport().getId()), duration, f,timeHeu);
+ */			//nodes.get(airport.getId()).addDestination(nodes.get(f.getArrivalAirport().getId()), duration, f,timeHeu);
+				
 			}
 			// distancia = raiz((x2-x1)^2 + (y2-y1)^2), ya no es asi
 		

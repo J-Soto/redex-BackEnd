@@ -14,6 +14,8 @@ public interface IWarehouseService {
 	public Optional<Warehouse> findByAirport_id(Integer id);
 	
 	public Optional<Warehouse> updateCapacity(Integer id, Integer capacity);
+	public Optional<Warehouse> updateOccupiedCapacity(Integer id, Integer capacity);
+	
 	
 	public List<AirportElement> getTimeLineWarehouse(Date date, Boolean simulated);
 	

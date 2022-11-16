@@ -13,6 +13,7 @@ public interface IFlightService {
 	public List<Flight> findByTakeOffAirport(Airport airport);
 	public List<Flight> findAll();
 	public Optional<Flight> updateCapacity(Integer id, Integer capacity);
+	public Optional<Flight> updateOccupiedCapacity(Integer id, Integer capacity);	
 	Optional<Flight> findById(Integer id);
 	public List<FlightElement> findBestFlight(Integer start,Integer objective);
 	public Time findBestFlightTakeOffTime(Integer id);

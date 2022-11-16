@@ -47,6 +47,18 @@ public class FlightService implements IFlightService{
 	}
 
 	@Override
+	public Optional<Flight> updateOccupiedCapacity(Integer id, Integer capacity) {
+		Optional<Flight> ff = this.dao.findById(id);
+		if(ff.isPresent()) {
+			ff.get().setOccupiedCapacity(capacity);
+			this.dao.save(ff.get());
+			return ff;
+		} else {
+			return Optional.empty();
+		}
+	}
+
+	@Override
 	public Optional<Flight> findById(Integer id) {
 		return this.dao.findById(id);
 	}

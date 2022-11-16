@@ -41,6 +41,18 @@ public class WarehouseService implements IWarehouseService {
 	}
 
 	@Override
+	public Optional<Warehouse> updateOccupiedCapacity(Integer id, Integer capacity) {
+		Optional<Warehouse> wf = this.dao.findByAirport_id(id);
+		if(wf.isPresent()) {
+			wf.get().setOccupiedCapacity(capacity);
+			this.dao.save(wf.get());
+			return wf;
+		} else {
+			return Optional.empty();
+		}
+	}
+
+	@Override
 	public List<AirportElement> getTimeLineWarehouse(Date date, Boolean simulated) {
 		return this.dao.getTimeLineWarehouse(date, simulated);
 	}
