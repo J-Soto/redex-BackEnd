@@ -17,6 +17,12 @@ public class Node {
 	private Integer key=0; 
 	private Integer packagesProcesados=0;
 	private Flight arrivalFlight=null;
+	private List<List<Pair<Node,FlightPlan>>> listShortestPath= new LinkedList<>();;
+	Map<Node, Pair<Double, Flight>> adjacentNodes = new HashMap<>();
+
+	public void addListShortestPath( List<Pair<Node,FlightPlan>> shortestPath){
+		this.listShortestPath.add(shortestPath);
+	}
 
 
 	public Flight getArrivalFlight() {
@@ -39,11 +45,11 @@ public class Node {
 		return key;
 	}
 
-	Map<Node, Pair<Double, Flight>> adjacentNodes = new HashMap<>();
+	
 	public Node() {
 	}
 
-	private Node father;
+	private Node father=null;
 	private Flight fatherFlight;
 	private Double DistancePlusHeu;
 
