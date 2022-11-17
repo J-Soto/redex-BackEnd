@@ -44,6 +44,17 @@ public class RoutePlan implements Serializable {
 	@JsonIgnoreProperties("routePlan")
 	private List<FlightPlan> flightPlans;
 
+	@Column(name = "packages")
+	private Integer packages;
+	public Integer getPackages() {
+		return this.packages;
+	}
+
+	public void setPackages(final Integer packages) {
+		this.packages = packages;
+	}
+
+
 	public int getId() {
 		return id;
 	}
@@ -51,8 +62,6 @@ public class RoutePlan implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	
 
 	public List<FlightPlan> getFlightPlans() {
 		return flightPlans;

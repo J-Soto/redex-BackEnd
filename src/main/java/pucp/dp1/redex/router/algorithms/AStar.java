@@ -178,7 +178,6 @@ public class AStar {
 		
 		return bestWays;
 	}
-
 	Node contiene(Set<Node> unsettledNodes, Integer id){
 		Node result=null;
 		for (Node node :  unsettledNodes){
@@ -188,8 +187,6 @@ public class AStar {
 		}
 		return result;
 	}
-
-
 	private void actualizarCapacidad(Node start, Node node, Integer minComunCapac) {
 		
 		while(true){
@@ -211,8 +208,6 @@ public class AStar {
 		}	
 		
 	}
-
-
 	public double heuristic(Airport arrivalAirport, Integer takeOffNode, Integer objective, LocalTime time){
 		double  timeHeu= 10000000.0;
 		Double tEspera=0.0;
@@ -239,7 +234,6 @@ public class AStar {
 		
 		return timeHeu;
 	}
-
 	public void  actualizarStart(Node start,Integer objective){
 		Map<Airport, List<Flight>> graphOld = this.getMap();
 		Map<Integer, Node> nodes = new HashMap<>();
@@ -267,8 +261,7 @@ public class AStar {
 		start =nodes.get(start.getId());
 
 	}
-
-	public Node getShortestPath(Integer start, Integer objective, LocalDate date, LocalTime time, boolean simulated, Integer cantPackages) {
+	public List <Node> getShortestPath(Integer start, Integer objective, LocalDate date, LocalTime time, boolean simulated, Integer cantPackages) {
 		// List<Flight> result=new ArrayList<>();
 		Double tEspera=0.0;
 		Double timeHeu= 10000000.0;
@@ -292,8 +285,6 @@ public class AStar {
 		if (objectiveAirport == null) {
 			System.out.println("No se esta encontrando el aeropuerto objetivo");
 		}
-
-
 
 		for (Airport airport : graphOld.keySet()) {
 			List<Flight> flights = graphOld.get(airport);
@@ -326,14 +317,10 @@ public class AStar {
 		//Node result = calculateShortestPathFromSource( nodes.get(start),nodes.get(objective), date, time, cantPackages);
 		List <Node> listResult = calculateShortestPathFromSource( nodes.get(start),nodes.get(objective), date, time, cantPackages);
 
-		Node end = new Node(0);
-
-
 		// Logica que pablo comento ya implementada
 
 		//obtengo el shortestPath hasta este momento
 		for(Node result: listResult){
-			
 			LinkedList<Pair<Node, FlightPlan>> shortestPath = new LinkedList<Pair<Node, FlightPlan>>(result.getShortestPath());
 			while(true){
 				if (result.equals(null))break;
@@ -359,15 +346,14 @@ public class AStar {
 			}
 			//result.setShortestPath(shortestPath);
 			result.addListShortestPath(shortestPath);
-			end=result;
-		}	
-		
-		return end;
+		}
+		return listResult;
 	}
 	private Double getBestTime(Integer start, Integer objective) {
 		return null;
 	}
-	public RoutePlan determinRoute(Integer start, Integer objective, LocalDate date, LocalTime time, boolean simulated, Integer cantPackages) {
+	public List <RoutePlan> determinRoute(Integer start, Integer objective, LocalDate date, LocalTime time, boolean simulated, Integer cantPackages) {
+		List <RoutePlan> listplan = new ArrayList<>();
 		/*Verificar si almacen de origen tiene espacio*/
 		Optional<Warehouse> oWarehouse = serviceWarehouse.findByAirport_id(start);
 		if (oWarehouse.isPresent()) {
@@ -401,7 +387,8 @@ public class AStar {
 					plan.setCurrentStage(0);
 					plan.setEstimatedTime(0.0);
 					plan.setFlightPlans(new ArrayList<FlightPlan>());
-					return plan;
+					listplan.add(plan);
+					return listplan;
 				}
 			}
 		}
@@ -413,31 +400,38 @@ public class AStar {
 			plan.setCurrentStage(0);
 			plan.setEstimatedTime(0.0);
 			plan.setFlightPlans(new ArrayList<FlightPlan>());
-			return plan;
+			listplan.add(plan);
+			return listplan;
 		}
-		
-		Node result = getShortestPath(start, objective, date, time, simulated,cantPackages);
-		RoutePlan plan = new RoutePlan();
-		if (result.getId() == 0) {
-			/* Sin resultado */
-			return plan;
+
+		List <Node> listResult = getShortestPath(start, objective, date, time, simulated,cantPackages);
+		//obtengo el shortestPath hasta este momento
+		for(Node result: listResult){
+				RoutePlan plan = new RoutePlan();
+				if (result.getId() == 0) {
+					/* Sin resultado */
+					return listplan;
+				}
+				plan.setCurrentStage(0);
+				plan.setStatus(RoutePlanStatus.EN_EJECUCION);
+				List<FlightPlan> listFlightPlan = new ArrayList<>();
+				List<Pair<Node, FlightPlan>> listPairs = result.getShortestPath();
+				if (listPairs.size() == 0) {
+					System.out.println("Sin resultado");
+				}
+				for (Pair<Node, FlightPlan> p : listPairs) {
+					FlightPlan fp = p.getValue();
+					listFlightPlan.add(fp);
+				}
+				plan.setFlightPlans(listFlightPlan);
+				plan.setEstimatedTime(result.getDistance());
+				listplan.add(plan);
 		}
-		plan.setCurrentStage(0);
-		plan.setStatus(RoutePlanStatus.EN_EJECUCION);
-		List<FlightPlan> listFlightPlan = new ArrayList<>();
-		List<Pair<Node, FlightPlan>> listPairs = result.getShortestPath();
-		if (listPairs.size() == 0) {
-			System.out.println("Sin resultado");
-		}
-		for (Pair<Node, FlightPlan> p : listPairs) {
-			FlightPlan fp = p.getValue();
-			listFlightPlan.add(fp);
-		}
-		plan.setFlightPlans(listFlightPlan);
-		plan.setEstimatedTime(result.getDistance());
-		return plan;
+		return listplan;
 	}
 	public Integer insertHistoricPackage(String originAirport, String destinationAirport, String dateS, String timeS, Integer cantPackages) {
+		List <RoutePlan> listplan = new ArrayList<>();
+		int resultado=0;
 		/* Obtener id de aeropuertos */
 		Optional<Airport> oDestination = serviceAirport.findByCode(destinationAirport);
 		Optional<Airport> oOrigin = serviceAirport.findByCode(originAirport);
@@ -446,99 +440,77 @@ public class AStar {
 			Airport destination = oDestination.get();
 			LocalDate date = convertStringToLocalDate(dateS);
 			LocalTime time = convertStringToLocalTime(timeS);
-
-
 			time.plusHours(5);
-
-
 			if (date == null || time == null) {
 				System.out.println("Error en convertir fechas u horas");
 				System.out.println(date);
 				System.out.println(time);
 				return 0;
 			} else {
-				
-				RoutePlan plan = determinRoute(origin.getId(), destination.getId(), date, time,true,cantPackages);
-				if (plan.getFlightPlans().size() > 0) {
-					/* Se encontró resultado */
 
-					// System.out.println("Crear cliente");
+				listplan = determinRoute(origin.getId(), destination.getId(), date, time,true,cantPackages);
+				//RoutePlan plan = determinRoute(origin.getId(), destination.getId(), date, time,true,cantPackages);
 
-					/* Crear cliente */
-					Client c = new Client();
-					c.setCellphone("987654321");
-					c.setDocument("1234568");
-					c.setEmail("historia@gmail.com");
-					// c.setId(0);
-					c.setLastname("Historia");
-					c.setName("Historia");
-					c.setRegisterDate(LocalDateTime.now());
+				for(RoutePlan plan: listplan){
+					if (plan.getFlightPlans().size() > 0) {
+						/* Se encontró resultado */
 
-					// System.out.println("Crear paquete");
+						// System.out.println("Crear cliente");
 
-					/* Crear package */
-					Package p = new Package();
-					p.setFragile(false);
-					p.setDescription("Paquete de registro histórico");
-					p.setHigh(1.0);
-					p.setLarge(1.0);
-					p.setWidth(1.0);
-					p.setWeight(1.0);
-					p.setRoutePlan(plan);
-					p.setStatus(PackageStatus.SIMULADO);
-					p.setActive(true);
+						/* Crear cliente */
+						Client c = new Client();
+						c.setCellphone("987654321");
+						c.setDocument("1234568");
+						c.setEmail("historia@gmail.com");
+						// c.setId(0);
+						c.setLastname("Historia");
+						c.setName("Historia");
+						c.setRegisterDate(LocalDateTime.now());
 
-					/* Insertar resultados */
+						// System.out.println("Crear paquete");
 
-					// System.out.println("Crear dispatch");
+						/* Crear package */
+						Package p = new Package();
+						p.setFragile(false);
+						p.setDescription("Paquete de registro histórico");
+						p.setHigh(1.0);
+						p.setLarge(1.0);
+						p.setWidth(1.0);
+						p.setWeight(1.0);
+						p.setRoutePlan(plan);
+						p.setStatus(PackageStatus.SIMULADO);
+						p.setActive(true);
 
-					/* Crear dispatch */
-					Dispatch d = new Dispatch();
-					d.setDestinationAirport(destination);
-					d.setOriginAirport(origin);
-					d.setPack(p);
-					d.setReceiveClientDocument("00000000");
-					d.setReceiveClientLastname("History");
-					d.setReceiveClientName("History");
-					d.setRegisterDate(LocalDateTime.now());
-					d.setStatus(DispatchStatus.SIMULADO);
-					d.setSend_client(c);
-					d.setActive(true);
+						/* Insertar resultados */
 
-					// System.out.println("insertar dispatch");
-					d = serviceDispatch.save(d,true,convertDateAndTimeToDate(convertToDateViaSqlDate(date), Time.valueOf(time)));
+						// System.out.println("Crear dispatch");
 
-					// System.out.println("obtener paquete dispatch");
-					p = d.getPack();
-					
-					/*Ver si es que llego a tiempo*/
-					Double max;
-					if(origin.getCity().getCountry().getContinent().getId()==destination.getCity().getCountry().getContinent().getId()) {
-						/*Mismo continente*/
-						max=24*60.0;
+						/* Crear dispatch */
+						Dispatch d = new Dispatch();
+						d.setDestinationAirport(destination);
+						d.setOriginAirport(origin);
+						d.setPack(p);
+						d.setReceiveClientDocument("00000000");
+						d.setReceiveClientLastname("History");
+						d.setReceiveClientName("History");
+						d.setRegisterDate(LocalDateTime.now());
+						d.setStatus(DispatchStatus.SIMULADO);
+						d.setSend_client(c);
+						d.setActive(true);
+
+						// System.out.println("insertar dispatch");
+						d = serviceDispatch.save(d,true,convertDateAndTimeToDate(convertToDateViaSqlDate(date), Time.valueOf(time)));
+
+						// System.out.println("obtener paquete dispatch");
+						p = d.getPack();
+						resultado= 1;
 					}
-					else{
-						/*Diferente continente*/
-						max=48*60.0;
-					}
-					
-					if(plan.getEstimatedTime()>max) {
-						/*Late*/
-						return 2;
-					}
-					else {
-						/*Ok*/
-						return 1;
-					}
-					
-				} else {
-					return 0;
 				}
 			}
 		} else {
 			System.out.println("No existe alguno de los aeropuertos");
-			return 0;
-		}
+			resultado=0;}
+		return resultado;
 	}
 	public LocalDate convertStringToLocalDate(String date) {
 		try {
