@@ -50,8 +50,8 @@ public class RoutePlanController {
 	public ResponseEntity<ResponseObject> generarRuta(@RequestParam("idStart") Integer idStart, @RequestParam("idObjective") Integer idObjective, @RequestParam("cantPackages") Integer cantPackages) {
 		ResponseObject response = new ResponseObject();
 		try {
-			RoutePlan plan = serviceAStar.determinRoute(idStart, idObjective, LocalDate.now(), LocalTime.now().minusHours(5),false,cantPackages);
-			response.setResultado(plan);
+			List<RoutePlan> plans = serviceAStar.determinRoute(idStart, idObjective, LocalDate.now(), LocalTime.now().minusHours(5),false,cantPackages);
+			response.setResultado(plans);
 			response.setEstado(Estado.OK);
 			return new ResponseEntity<ResponseObject>(response, HttpStatus.OK);
 		} catch(Exception e) {

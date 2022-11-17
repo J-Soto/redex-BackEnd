@@ -355,13 +355,11 @@ public class DispatchService implements IDispatchService {
 							this.daoSummary.save(nsc);
 							sc = this.daoSummary.findById(1);
 					}
-
 					if(resultPlan==1) {						
 						if(sc.isPresent()) {
 							sc.get().setOk(sc.get().getOk()+1);
 							this.daoSummary.save(sc.get());
-						} 
-
+						}
 					} else if (resultPlan==0){
 						if(sc.isPresent()) {
 							sc.get().setFails(sc.get().getFails()+1);
@@ -380,7 +378,6 @@ public class DispatchService implements IDispatchService {
 					}
 				}
 				//System.out.println("Exitosos: "+exitosos.toString()+" Fallos: "+fallidos.toString());
-				
 				reader.close();
 				inputStream.close();
 				if(stateColapso>0) break;
@@ -392,7 +389,6 @@ public class DispatchService implements IDispatchService {
 			return "ERROR";
 		}
 	}
-	
 	@Override
 	public void deleteSimulated(DispatchStatus status){
 		this.dao.deleteSimulated(status);
