@@ -5336,7 +5336,7 @@ INSERT INTO `flight` (take_off_airport_id,arrival_airport_id,take_off_time,arriv
 INSERT INTO `flight` (take_off_airport_id,arrival_airport_id,take_off_time,arrival_time,capacity,occupied_Capacity) VALUES (39,40,STR_TO_DATE('15:10', '%H:%i'),STR_TO_DATE('18:39', '%H:%i'),280,0)
 INSERT INTO `flight` (take_off_airport_id,arrival_airport_id,take_off_time,arrival_time,capacity,occupied_Capacity) VALUES (40,39,STR_TO_DATE('14:25', '%H:%i'),STR_TO_DATE('19:42', '%H:%i'),280,0)
 INSERT INTO `flight` (take_off_airport_id,arrival_airport_id,take_off_time,arrival_time,capacity,occupied_Capacity) VALUES (39,40,STR_TO_DATE('23:10', '%H:%i'),STR_TO_DATE('03:13', '%H:%i'),280,0)
-INSERT INTO `flight` (take_off_airport_id,arrival_airport_id,take_off_time,arrival_time,capacity,occupied_Capacity) VALUES (40,39,STR_TO_DATE('22:25', '%H:%i'),STR_TO_DATE('02:30', '%H:%i'),280,0)
+INSERT INTO `flight` (take_off_airport_id,arrival_airport_id,take_off_time,arrival_time,capacity,occupied_Capacity) VALUES (40,39,STR_TO_DATE('22:25', '%H:%i'),STR_TO_DATE('02:30', '%H:%i'),150,0)
 
 INSERT INTO `warehouse`(airport_id, full, packages_number, capacity,occupied_Capacity) VALUES (1, 0, 0, 850,0)
 INSERT INTO `warehouse`(airport_id, full, packages_number, capacity,occupied_Capacity) VALUES (2, 0, 0, 850,0)
