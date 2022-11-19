@@ -132,12 +132,15 @@ public class AStar {
 					takeOffUtc =f.getTakeOffAirport().getCity().getCountry().getUtc();
 					arrivalUtc =f.getArrivalAirport().getCity().getCountry().getUtc();
 					adjacentNode.setArrivalFlight(f);
-					adjacentNode.setFlightPlan(fp);
 					adjacentNode.setFather(currentNode);
 					adjacentNode.setHeuristic(heuristic(adjacentNode.getArrivalFlight().getArrivalAirport(),currentNode.getId(), objective.getId(), time));
 					packagesProcesados= hayCapacidad(f, f.getArrivalAirport().getWarehouse(), cantPackages);
+					fp.setPackagesNumber(packagesProcesados);
+					fp.setPackagesNumberSimulated(packagesProcesados);
+					adjacentNode.setFlightPlan(fp);
 					if(packagesProcesados > 0){
 						//if(minComunCap > packagesProcesados) minComunCap = packagesProcesados;
+						//fp.setPackagesNumber(packagesProcesados);
 						newDistance=durationBetweenTime(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc);
 						adjacentNode.setDistance(currentNode.getDistance() + newDistance);
 						adjacentNode.setPackagesProcesados(packagesProcesados);
