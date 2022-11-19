@@ -62,6 +62,17 @@ public class FlightPlan implements Serializable{
 	@JsonIgnoreProperties("flightPlan")
 	private Flight flight;
 
+	
+
+	public FlightPlan() {
+	}
+
+	public FlightPlan(Date takeOffDate, Date arrivalDate, Flight flight) {
+		this.takeOffDate = takeOffDate;
+		this.arrivalDate = arrivalDate;
+		this.flight = flight;
+	}
+
 	public int getId() {
 		return id;
 	}

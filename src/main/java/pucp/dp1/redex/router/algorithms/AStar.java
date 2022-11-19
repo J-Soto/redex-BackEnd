@@ -6,6 +6,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -74,10 +75,6 @@ public class AStar {
 		double lowestDistance = Double.MAX_VALUE;
 		for (Node node : unsettledNodes) {
 			double nodeDistance = node.getDistance() + node.getHeuristic();
-			if(node.getId()==34){
-				Integer id;
-				id=node.getId();
-			}
 			if (nodeDistance < lowestDistance) {
 				lowestDistance = nodeDistance;
 				lowestDistanceNode = node;
@@ -85,7 +82,7 @@ public class AStar {
 		}
 		return lowestDistanceNode;
 	}
-	public List<Node>  calculateShortestPathFromSource( Node start,Node objective, LocalDate date, LocalTime time, Integer cantPackages) {
+	public List<Node> calculateShortestPathFromSource( Node start,Node objective, LocalDate date, LocalTime time, Integer cantPackages) {
 		Integer minComunCap=0;
 		Node currentNode=null;
 		List<Node>  bestWays =new LinkedList<>();
@@ -119,14 +116,23 @@ public class AStar {
 					Integer takeOffUtc, arrivalUtc;
 					Double newDistance;
 					Boolean isStart=false;
-	
+					Date dia;
+					dia=Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+					Double horas;
+					// horas=durationBetweenTime(takeOff, arrival, takeOffUtc, arrivalUtc);
+					// time.plusMinutes(horas.longValue());
+					// if(time.isBefore(LocalTime.parse("23:59:59")) ){
+					// }
+
+					FlightPlan fp = new FlightPlan(dia, dia, f);
+					//fp = actualizarDiasFP(fp);
 					if(f.getTakeOffAirport().getId() == start.getId()) isStart=true;
 					takeOff= f.getTakeOffTime().toLocalTime();
 					arrival = f.getArrivalTime().toLocalTime();
 					takeOffUtc =f.getTakeOffAirport().getCity().getCountry().getUtc();
 					arrivalUtc =f.getArrivalAirport().getCity().getCountry().getUtc();
 					adjacentNode.setArrivalFlight(f);
-	
+					adjacentNode.setFlightPlan(fp);
 					adjacentNode.setFather(currentNode);
 					adjacentNode.setHeuristic(heuristic(adjacentNode.getArrivalFlight().getArrivalAirport(),currentNode.getId(), objective.getId(), time));
 					packagesProcesados= hayCapacidad(f, f.getArrivalAirport().getWarehouse(), cantPackages);
@@ -261,7 +267,7 @@ public class AStar {
 		start =nodes.get(start.getId());
 
 	}
-	public List <Node> getShortestPath(Integer start, Integer objective, LocalDate date, LocalTime time, boolean simulated, Integer cantPackages) {
+	public List <RoutePlan> getShortestPath(Integer start, Integer objective, LocalDate date, LocalTime time, boolean simulated, Integer cantPackages) {
 		// List<Flight> result=new ArrayList<>();
 		Double tEspera=0.0;
 		Double timeHeu= 10000000.0;
@@ -318,117 +324,136 @@ public class AStar {
 		List <Node> listResult = calculateShortestPathFromSource( nodes.get(start),nodes.get(objective), date, time, cantPackages);
 
 		// Logica que pablo comento ya implementada
-
+		List <RoutePlan> listplan = new ArrayList<>();
 		//obtengo el shortestPath hasta este momento
 		for(Node result: listResult){
 			LinkedList<Pair<Node, FlightPlan>> shortestPath = new LinkedList<Pair<Node, FlightPlan>>(result.getShortestPath());
+			RoutePlan rPlan = new RoutePlan();
+			List<FlightPlan> listFlightPlan = new ArrayList<>();
 			while(true){
-				if (result.equals(null))break;
+				//if (result.equals(null))break;
+				
 				//dentro del result habia un flight y lo asigne
-				Flight f= result.getArrivalFlight();
+				//Flight f= result.getArrivalFlight();
+				FlightPlan fp= result.getFlightPlan();
+				rPlan.setCurrentStage(0);
+				rPlan.setStatus(RoutePlanStatus.EN_EJECUCION);
+				listFlightPlan.add(fp);
 				//creo un optional con el flight y el date que se envia como parametro
-				Optional<FlightPlan> existent = serviceFlightPlan.findByFlight_IdFlightAndTakeOffDate(f.getIdFlight(),convertToDateViaSqlDate(date));
+				//Optional<FlightPlan> existent = serviceFlightPlan.findByFlight_IdFlightAndTakeOffDate(f.getIdFlight(),convertToDateViaSqlDate(date));
 				//creo un flightPlan
-				FlightPlan flightPlan;
-				//si el optional no esta vacio
-				if (existent.isPresent()) {
-					//asigno el optional a el flightPlan
-					flightPlan = existent.get();
-					//creo el par necesario para el shortestPath, con el nodo result y el flightPlan
-					Pair<Node, FlightPlan> pair = new Pair<Node, FlightPlan>(result,flightPlan);
+				//FlightPlan flightPlan;
+				if(fp!=null){
+					Pair<Node, FlightPlan> pair = new Pair<Node, FlightPlan>(result,fp);
 					//agrego el par al shortestPath
 					shortestPath.add(pair);
 					//obtengo el nodo padre anterior
-					result = result.getFather();
+					
 				}
+				result = result.getFather();
+				if (result.getFather()==null) break;
+				//si el optional no esta vacio
+				// if (existent.isPresent()) {
+				// 	//asigno el optional a el flightPlan
+				// 	flightPlan = existent.get();
+				// 	//creo el par necesario para el shortestPath, con el nodo result y el flightPlan
+				// 	Pair<Node, FlightPlan> pair = new Pair<Node, FlightPlan>(result,flightPlan);
+				// 	//agrego el par al shortestPath
+				// 	shortestPath.add(pair);
+				// 	//obtengo el nodo padre anterior
+				// 	result = result.getFather();
+				// }
 				//si el optional esta vacio
-				else System.out.println("No se encontro el vuelo");
+				//else System.out.println("No se encontro el vuelo");
+				
 			}
 			//result.setShortestPath(shortestPath);
-			result.addListShortestPath(shortestPath);
+			rPlan.setFlightPlans(listFlightPlan);
+			listplan.add(rPlan);
+			//result.addListShortestPath(shortestPath);
 		}
-		return listResult;
+		return listplan;
 	}
 	private Double getBestTime(Integer start, Integer objective) {
 		return null;
 	}
-	public List <RoutePlan> determinRoute(Integer start, Integer objective, LocalDate date, LocalTime time, boolean simulated, Integer cantPackages) {
-		List <RoutePlan> listplan = new ArrayList<>();
-		/*Verificar si almacen de origen tiene espacio*/
-		Optional<Warehouse> oWarehouse = serviceWarehouse.findByAirport_id(start);
-		if (oWarehouse.isPresent()) {
-			Warehouse warehouse = oWarehouse.get();
-			Date dateStorage;
-			Date arrivalDate = convertToDateViaSqlDate(date);
-			Time arrivalTime = Time.valueOf(time);
-			dateStorage = convertDateAndTimeToDate(arrivalDate, arrivalTime);
-			if (dateStorage == null) {
-				System.out.println("Error en conversión");
-			} else {
-				/*Calendar c = Calendar.getInstance();
-				c.setTime(dateStorage);
-				c.add(Calendar.HOUR, -5);
-				Date dateStoragePatch=c.getTime();
-				System.out.println(dateStorage);*/
-				List<StorageRegister> listRegisters = serviceStorage.findAllPresentOnDate(dateStorage/*Patch*/,warehouse.getId());
-				if (listRegisters.size() >= warehouse.getCapacity()) {
-					//System.out.println("No hay espacio en almacen");
-					Incident incident = new Incident();
-					incident.setAirport(warehouse.getAirport());
-					incident.setRegisterDate(convertToDateViaSqlDate(convertToLocalDateViaInstant(dateStorage)));
-					incident.setDescription("FULL WAREHOUSE");
-					incident.setActive(true);
-					incident.setSimulated(simulated);
-					incident.setRegisterDate(dateStorage);
-					this.daoIncident.save(incident);
+	// public List <RoutePlan> determinRoute(Integer start, Integer objective, LocalDate date, LocalTime time, boolean simulated, Integer cantPackages) {
+	// 	List <RoutePlan> listplan = new ArrayList<>();
+	// 	/*Verificar si almacen de origen tiene espacio*/
+	// 	Optional<Warehouse> oWarehouse = serviceWarehouse.findByAirport_id(start);
+	// 	if (oWarehouse.isPresent()) {
+	// 		Warehouse warehouse = oWarehouse.get();
+	// 		Date dateStorage;
+	// 		Date arrivalDate = convertToDateViaSqlDate(date);
+	// 		Time arrivalTime = Time.valueOf(time);
+	// 		dateStorage = convertDateAndTimeToDate(arrivalDate, arrivalTime);
+	// 		if (dateStorage == null) {
+	// 			System.out.println("Error en conversión");
+	// 		} else {
+	// 			/*Calendar c = Calendar.getInstance();
+	// 			c.setTime(dateStorage);
+	// 			c.add(Calendar.HOUR, -5);
+	// 			Date dateStoragePatch=c.getTime();
+	// 			System.out.println(dateStorage);*/
+	// 			List<StorageRegister> listRegisters = serviceStorage.findAllPresentOnDate(dateStorage/*Patch*/,warehouse.getId());
+	// 			if (listRegisters.size() >= warehouse.getCapacity()) {
+	// 				//System.out.println("No hay espacio en almacen");
+	// 				Incident incident = new Incident();
+	// 				incident.setAirport(warehouse.getAirport());
+	// 				incident.setRegisterDate(convertToDateViaSqlDate(convertToLocalDateViaInstant(dateStorage)));
+	// 				incident.setDescription("FULL WAREHOUSE");
+	// 				incident.setActive(true);
+	// 				incident.setSimulated(simulated);
+	// 				incident.setRegisterDate(dateStorage);
+	// 				this.daoIncident.save(incident);
 					
-					RoutePlan plan=new RoutePlan();
-					plan.setStatus(RoutePlanStatus.CANCELADO);
-					plan.setCurrentStage(0);
-					plan.setEstimatedTime(0.0);
-					plan.setFlightPlans(new ArrayList<FlightPlan>());
-					listplan.add(plan);
-					return listplan;
-				}
-			}
-		}
-		else {
-			System.out.println("No existe el almacen?");
+	// 				RoutePlan plan=new RoutePlan();
+	// 				plan.setStatus(RoutePlanStatus.CANCELADO);
+	// 				plan.setCurrentStage(0);
+	// 				plan.setEstimatedTime(0.0);
+	// 				plan.setFlightPlans(new ArrayList<FlightPlan>());
+	// 				listplan.add(plan);
+	// 				return listplan;
+	// 			}
+	// 		}
+	// 	}
+	// 	else {
+	// 		System.out.println("No existe el almacen?");
 			
-			RoutePlan plan=new RoutePlan();
-			plan.setStatus(RoutePlanStatus.CANCELADO);
-			plan.setCurrentStage(0);
-			plan.setEstimatedTime(0.0);
-			plan.setFlightPlans(new ArrayList<FlightPlan>());
-			listplan.add(plan);
-			return listplan;
-		}
+	// 		RoutePlan plan=new RoutePlan();
+	// 		plan.setStatus(RoutePlanStatus.CANCELADO);
+	// 		plan.setCurrentStage(0);
+	// 		plan.setEstimatedTime(0.0);
+	// 		plan.setFlightPlans(new ArrayList<FlightPlan>());
+	// 		listplan.add(plan);
+	// 		return listplan;
+	// 	}
 
-		List <Node> listResult = getShortestPath(start, objective, date, time, simulated,cantPackages);
-		//obtengo el shortestPath hasta este momento
-		for(Node result: listResult){
-				RoutePlan plan = new RoutePlan();
-				if (result.getId() == 0) {
-					/* Sin resultado */
-					return listplan;
-				}
-				plan.setCurrentStage(0);
-				plan.setStatus(RoutePlanStatus.EN_EJECUCION);
-				List<FlightPlan> listFlightPlan = new ArrayList<>();
-				List<Pair<Node, FlightPlan>> listPairs = result.getShortestPath();
-				if (listPairs.size() == 0) {
-					System.out.println("Sin resultado");
-				}
-				for (Pair<Node, FlightPlan> p : listPairs) {
-					FlightPlan fp = p.getValue();
-					listFlightPlan.add(fp);
-				}
-				plan.setFlightPlans(listFlightPlan);
-				plan.setEstimatedTime(result.getDistance());
-				listplan.add(plan);
-		}
-		return listplan;
-	}
+	// 	List <Node> listResult = getShortestPath(start, objective, date, time, simulated,cantPackages);
+	// 	//obtengo el shortestPath hasta este momento
+	// 	for(Node result: listResult){
+	// 			RoutePlan plan = new RoutePlan();
+	// 			if (result.getId() == 0) {
+	// 				/* Sin resultado */
+	// 				return listplan;
+	// 			}
+	// 			plan.setCurrentStage(0);
+	// 			plan.setStatus(RoutePlanStatus.EN_EJECUCION);
+	// 			List<FlightPlan> listFlightPlan = new ArrayList<>();
+	// 			List<Pair<Node, FlightPlan>> listPairs = result.getShortestPath();
+	// 			if (listPairs.size() == 0) {
+	// 				System.out.println("Sin resultado");
+	// 			}
+	// 			for (Pair<Node, FlightPlan> p : listPairs) {
+	// 				FlightPlan fp = p.getValue();
+	// 				listFlightPlan.add(fp);
+	// 			}
+	// 			plan.setFlightPlans(listFlightPlan);
+	// 			plan.setEstimatedTime(result.getDistance());
+	// 			listplan.add(plan);
+	// 	}
+	// 	return listplan;
+	// }
 	public Integer insertHistoricPackage(String originAirport, String destinationAirport, String dateS, String timeS, Integer cantPackages) {
 		List <RoutePlan> listplan = new ArrayList<>();
 		int resultado=0;
@@ -448,7 +473,7 @@ public class AStar {
 				return 0;
 			} else {
 
-				listplan = determinRoute(origin.getId(), destination.getId(), date, time,true,cantPackages);
+				listplan = getShortestPath(origin.getId(), destination.getId(), date, time,true,cantPackages);
 				//RoutePlan plan = determinRoute(origin.getId(), destination.getId(), date, time,true,cantPackages);
 
 				for(RoutePlan plan: listplan){

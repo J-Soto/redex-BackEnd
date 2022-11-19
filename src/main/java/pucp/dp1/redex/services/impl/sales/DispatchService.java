@@ -103,7 +103,7 @@ public class DispatchService implements IDispatchService {
 	public List<Dispatch> findByDestinationAirport_idAndStatusNotOrderByRegisterDateDesc(Integer id) {
 		return this.dao.findByDestinationAirport_idAndStatusNotOrderByRegisterDateDesc(id, DispatchStatus.SIMULADO);
 	}
-
+	//CAMBIO URGENTE
 	@Override
 	public Dispatch save(Dispatch dispatch, Boolean simulated, Date dateCheckIn) {
 		dispatch.setActive(true);

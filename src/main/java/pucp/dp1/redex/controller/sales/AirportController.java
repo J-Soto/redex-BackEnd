@@ -57,39 +57,39 @@ public class AirportController {
 		}
 	}
 	
-	@GetMapping(path = "/getRouteA/{inicio}/{fin}/{cantPackages}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResponseObject> consultarRutaA(@PathVariable("inicio") Integer start, @PathVariable("fin") Integer objective, @PathVariable("cantPackages") Integer cantPackages){
-		ResponseObject response = new ResponseObject();
-		NumberFormat formatter = new DecimalFormat("#0.00000"); 
-		try {
-			Long startTime = System.currentTimeMillis();
-			List<Node> nodes = this.servicioA.getShortestPath(start, objective, LocalDate.now(), LocalTime.now().minusHours(5),false,cantPackages);
-			Long endTime = System.currentTimeMillis();
-			List<List<FlightPlan>> listaFlightPlans = new ArrayList<>();
-			for(Node node: nodes){
-				List<FlightPlan> lista = new ArrayList<>();
-				for(Pair<Node,FlightPlan> p : node.getShortestPath()) {
-					lista.add(p.getValue());
-				}
-				if (node.getId()!=0 && lista.size()>0) {
-					System.out.println("Consiguió resultado");
-					System.out.println("Tiempo en horas: "+formatter.format(node.getDistance()/60));
-				}
-				else {
-					System.out.println("No consiguió resultado");
-				}
-				System.out.println("A* in " +  (endTime-startTime) + " milliseconds");
-				listaFlightPlans.add(lista);
-			}
-			response.setResultado(listaFlightPlans);
-			response.setEstado(Estado.OK);
-			return new ResponseEntity<ResponseObject>(response, HttpStatus.OK);
-		} catch(Exception e) {
-			response.setError(1, "Error", e.getMessage());
-			response.setEstado(Estado.ERROR);
-			return new ResponseEntity<ResponseObject>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+	// @GetMapping(path = "/getRouteA/{inicio}/{fin}/{cantPackages}", produces = MediaType.APPLICATION_JSON_VALUE)
+	// public ResponseEntity<ResponseObject> consultarRutaA(@PathVariable("inicio") Integer start, @PathVariable("fin") Integer objective, @PathVariable("cantPackages") Integer cantPackages){
+	// 	ResponseObject response = new ResponseObject();
+	// 	NumberFormat formatter = new DecimalFormat("#0.00000"); 
+	// 	try {
+	// 		Long startTime = System.currentTimeMillis();
+	// 		List<Node> nodes = this.servicioA.getShortestPath(start, objective, LocalDate.now(), LocalTime.now().minusHours(5),false,cantPackages);
+	// 		Long endTime = System.currentTimeMillis();
+	// 		List<List<FlightPlan>> listaFlightPlans = new ArrayList<>();
+	// 		for(Node node: nodes){
+	// 			List<FlightPlan> lista = new ArrayList<>();
+	// 			for(Pair<Node,FlightPlan> p : node.getShortestPath()) {
+	// 				lista.add(p.getValue());
+	// 			}
+	// 			if (node.getId()!=0 && lista.size()>0) {
+	// 				System.out.println("Consiguió resultado");
+	// 				System.out.println("Tiempo en horas: "+formatter.format(node.getDistance()/60));
+	// 			}
+	// 			else {
+	// 				System.out.println("No consiguió resultado");
+	// 			}
+	// 			System.out.println("A* in " +  (endTime-startTime) + " milliseconds");
+	// 			listaFlightPlans.add(lista);
+	// 		}
+	// 		response.setResultado(listaFlightPlans);
+	// 		response.setEstado(Estado.OK);
+	// 		return new ResponseEntity<ResponseObject>(response, HttpStatus.OK);
+	// 	} catch(Exception e) {
+	// 		response.setError(1, "Error", e.getMessage());
+	// 		response.setEstado(Estado.ERROR);
+	// 		return new ResponseEntity<ResponseObject>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+	// 	}
+	// }
 	
 	@GetMapping(path = "/findby/city", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseObject> consultarAeropuertoPorCiudad(@RequestParam("id") Integer id) {

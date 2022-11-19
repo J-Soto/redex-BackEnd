@@ -1,5 +1,6 @@
 package pucp.dp1.redex.router.algorithms;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,13 +18,24 @@ public class Node {
 	private Integer key=0; 
 	private Integer packagesProcesados=0;
 	private Flight arrivalFlight=null;
-	private List<List<Pair<Node,FlightPlan>>> listShortestPath= new LinkedList<>();;
+	private List<List<Pair<Node,FlightPlan>>> listShortestPath= new LinkedList<>();
+	private FlightPlan flightPlan=null; 
+
+	public FlightPlan getFlightPlan() {
+		return flightPlan;
+	}
+
+	public void setFlightPlan(FlightPlan flightPlan) {
+		this.flightPlan = flightPlan;
+	}
+
 	Map<Node, Pair<Double, Flight>> adjacentNodes = new HashMap<>();
 
 	public void addListShortestPath( List<Pair<Node,FlightPlan>> shortestPath){
 		this.listShortestPath.add(shortestPath);
 	}
-
+	
+	
 
 	public Flight getArrivalFlight() {
 		return arrivalFlight;
