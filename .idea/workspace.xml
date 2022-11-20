@@ -4,14 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa94474a-5987-4463-a820-534a5ded8da5" name="Changes" comment="Ultima reestructuracion con base en las listas de listas">
+    <list default="true" id="fa94474a-5987-4463-a820-534a5ded8da5" name="Changes" comment="Solucionado errores de compilacion">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/85a6ec74-1f91-40ad-8ff1-0de2bf4b797f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/85a6ec74-1f91-40ad-8ff1-0de2bf4b797f.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/route/RoutePlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/route/RoutePlanController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/sales/AirportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/sales/AirportController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/DispatchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/DispatchService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/route/RoutePlanController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/route/RoutePlanController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/sales/DispatchController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/sales/DispatchController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/AStar.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/AStar.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService.class" afterDir="false" />
     </list>
@@ -24,9 +22,11 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/RedexApplication.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/route/RoutePlanController.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/sales/AirportController.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/model/route/RoutePlan.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/model/storage/Package.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/router/algorithms/AStar.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/router/algorithms/Node.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/DispatchService.java" root0="SKIP_INSPECTION" />
@@ -100,7 +100,9 @@
       <workItem from="1668295092386" duration="4291000" />
       <workItem from="1668393605372" duration="1050000" />
       <workItem from="1668486995509" duration="1869000" />
-      <workItem from="1668721703375" duration="750000" />
+      <workItem from="1668721703375" duration="1697000" />
+      <workItem from="1668898677999" duration="857000" />
+      <workItem from="1668920270349" duration="5754000" />
     </task>
     <task id="LOCAL-00001" summary="Back arreglado y con los ultimos cambios">
       <created>1668304064027</created>
@@ -123,7 +125,21 @@
       <option name="project" value="LOCAL" />
       <updated>1668664867449</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Solucionado errores de compilacion">
+      <created>1668722543353</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1668722543362</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Solucionado errores de compilacion">
+      <created>1668722565411</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1668722565411</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -143,20 +159,35 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Back arreglado y con los ultimos cambios" />
     <MESSAGE value="Ultima reestructuracion con base en las listas de listas" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ultima reestructuracion con base en las listas de listas" />
+    <MESSAGE value="Solucionado errores de compilacion" />
+    <option name="LAST_COMMIT_MESSAGE" value="Solucionado errores de compilacion" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/router/algorithms/AStar.java</url>
-          <line>355</line>
-          <option name="timeStamp" value="1" />
+          <url>file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/DispatchService.java</url>
+          <line>447</line>
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/DispatchService.java</url>
-          <line>346</line>
-          <option name="timeStamp" value="2" />
+          <line>443</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/DispatchService.java</url>
+          <line>438</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/DispatchService.java</url>
+          <line>389</line>
+          <properties class="pucp.dp1.redex.services.impl.sales.DispatchService" method="masiveLoad">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

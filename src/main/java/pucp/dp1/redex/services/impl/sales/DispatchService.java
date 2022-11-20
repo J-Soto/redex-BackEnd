@@ -4,21 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.TimeZone;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -310,6 +303,88 @@ public class DispatchService implements IDispatchService {
 		}
 	}
 
+
+	class PackageTemp {
+		String originAirport;
+		String destinationAirport;
+		String date;
+		String time;
+		Integer cantPackages;
+
+		public PackageTemp(final String originAirport, final String destinationAirport, final String date, final String time, final Integer cantPackages) {
+			this.originAirport = originAirport;
+			this.destinationAirport = destinationAirport;
+			this.date = date;
+			this.time = time;
+			this.cantPackages = cantPackages;
+		}
+
+		public String getOriginAirport() {
+			return this.originAirport;
+		}
+
+		public void setOriginAirport(final String originAirport) {
+			this.originAirport = originAirport;
+		}
+
+		public String getDestinationAirport() {
+			return this.destinationAirport;
+		}
+
+		public void setDestinationAirport(final String destinationAirport) {
+			this.destinationAirport = destinationAirport;
+		}
+
+		public String getDate() {
+			return this.date;
+		}
+
+		public void setDate(final String date) {
+			this.date = date;
+		}
+
+		public LocalTime getTime() {
+			return LocalTime.parse(this.time);
+		}
+
+		public void setTime(final String time) {
+			this.time = time;
+		}
+
+		public Integer getCantPackages() {
+			return this.cantPackages;
+		}
+
+		public void setCantPackages(final Integer cantPackages) {
+			this.cantPackages = cantPackages;
+		}
+	}
+	public LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
+		return LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(dateToConvert));
+	}
+	public LocalTime convertStringToLocalTime(String time) {
+		try {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+			return LocalTime.parse(time, formatter);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+
+	public LocalDate convertStringToLocalDate(String date) {
+		try {
+			SimpleDateFormat formatterDate = new SimpleDateFormat("yyyyMMdd");
+			Date dateDate;
+			dateDate = formatterDate.parse(date);
+			return convertToLocalDateViaInstant(dateDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	@Override
 	public String masiveLoad(MultipartHttpServletRequest request) {
 		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
@@ -325,6 +400,11 @@ public class DispatchService implements IDispatchService {
 			Enumeration<? extends ZipEntry> entries = zip.entries();
 			ZipEntry entry = entries.nextElement();
 			Integer i=0;
+			PriorityQueue<PackageTemp> pq = new PriorityQueue<PackageTemp>(
+					(a, b) -> {
+						if ( a.getTime().isAfter(b.getTime()) ) return 1;
+						else if (a.getTime().isBefore(b.getTime())) return -1;
+						return 0;});
 			while (entries.hasMoreElements()) {
 				//ZipEntry entry = entries.nextElement();
 				entry = entries.nextElement();
@@ -332,61 +412,87 @@ public class DispatchService implements IDispatchService {
 				InputStreamReader reader = new InputStreamReader(stream, "UTF-8");
 				Scanner inputStream = new Scanner(reader);
 				//lectura de cada linea del archivo
-				Integer stateColapso=0;
+				//Integer stateColapso = 0;
+				SimpleDateFormat formatterDate = new SimpleDateFormat("yyyyMMdd");
+				Date dateDate;
+				dateDate = formatterDate.parse("20220802");
+				LocalDate date1 = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(dateDate));
+				String originAirport;
+				String date;
+				String time;
+				String destinationAirport;
+				Integer cantPackages;
 				while (inputStream.hasNext()) {
 					String data = inputStream.nextLine();
 					List<String> line = Arrays.asList(data.split("-"));
 					//datos de ingreso para el algoritmo
-					String originAirport = line.get(0).substring(0, 4);
-					String date = line.get(1);
-					String time = line.get(2);
-					String destinationAirport = line.get(3).substring(0, 4);
-					Integer cantPackages = Integer.parseInt(line.get(3).substring(5));
+					originAirport = line.get(0).substring(0, 4);
+					date = line.get(1);
+					time = line.get(2);
+					destinationAirport = line.get(3).substring(0, 4);
+					cantPackages = Integer.parseInt(line.get(3).substring(5));
 					// PROCESAR ALGORITMO
 					System.out.println(originAirport + "  " + date + " " + time + " " + destinationAirport + " " + cantPackages);
-					Integer resultPlan = serviceAStart.insertHistoricPackage(originAirport, destinationAirport, date, time, cantPackages);
-					i++;
-					Optional<SummaryCase> sc = this.daoSummary.findById(1);
-					if(!sc.isPresent()) {
-						SummaryCase nsc = new SummaryCase();
-							nsc.setFails(0);
-							nsc.setOk(0);
-							nsc.setLate(0);
-							this.daoSummary.save(nsc);
-							sc = this.daoSummary.findById(1);
-					}
-					if(resultPlan==1) {						
-						if(sc.isPresent()) {
-							sc.get().setOk(sc.get().getOk()+1);
-							this.daoSummary.save(sc.get());
-						}
-					} else if (resultPlan==0){
-						if(sc.isPresent()) {
-							sc.get().setFails(sc.get().getFails()+1);
-							this.daoSummary.save(sc.get());
-						} 
-						stateColapso=1;
-						break;
-					} else if (resultPlan==2){
-						if(sc.isPresent()) {
-							sc.get().setLate(sc.get().getLate()+1);
-							this.daoSummary.save(sc.get());
-						} 
-						stateColapso=2;
-						System.out.println("Fallo: "+originAirport+ " - "+destinationAirport);
-						break;
-					}
+					PackageTemp p = new PackageTemp(originAirport, destinationAirport, date, time, cantPackages);
+					if  (convertStringToLocalDate(date).isAfter(date1)) break;
+					else if (convertStringToLocalDate(date).equals(date1)) pq.add(p);
 				}
-				//System.out.println("Exitosos: "+exitosos.toString()+" Fallos: "+fallidos.toString());
 				reader.close();
 				inputStream.close();
-				if(stateColapso>0) break;
 			}
+			Iterator value = pq.iterator();
+			while (value.hasNext()) {
+				PackageTemp p = (PackageTemp) value.next();
+				System.out.println(p.getOriginAirport() + "  " + p.getDate() + " " + p.getTime() + " " + p.getDestinationAirport() + " " + p.getCantPackages());
+			}
+			/*
+			while (value.hasNext()) {
+					PackageTemp p = (PackageTemp) value.next();
+					Integer resultPlan = serviceAStart.insertHistoricPackage(
+					p.getOriginAirport(),p.getDestinationAirport(),p.getDate(),p.getTime(), p.getCantPackages());
+					Optional<SummaryCase> sc = this.daoSummary.findById(1);
+
+					if(!sc.isPresent()) {
+						SummaryCase nsc = new SummaryCase();
+						nsc.setFails(0);
+						nsc.setOk(0);
+						nsc.setLate(0);
+						this.daoSummary.save(nsc);
+						sc = this.daoSummary.findById(1);
+						if(resultPlan==1) {
+							if(sc.isPresent()) {
+								sc.get().setOk(sc.get().getOk()+1);
+								this.daoSummary.save(sc.get());
+							}
+						} else if (resultPlan==0){
+							if(sc.isPresent()) {
+								sc.get().setFails(sc.get().getFails()+1);
+								this.daoSummary.save(sc.get());
+							}
+							stateColapso=1;
+							break;
+						} else if (resultPlan==2){
+							if(sc.isPresent()) {
+								sc.get().setLate(sc.get().getLate()+1);
+								this.daoSummary.save(sc.get());
+							}
+							stateColapso=2;
+							System.out.println("Fallo: "+p.getOriginAirport()+ " - "+p.getDestinationAirport());
+							break;
+						}
+					}
+				}
+					//Integer resultPlan = serviceAStart.insertHistoricPackage(originAirport, destinationAirport, date, time, cantPackages);
+					//i++;
+				//System.out.println("Exitosos: "+exitosos.toString()+" Fallos: "+fallidos.toString());
+			*/
 			zip.close();
 			tempFile.delete();
 			return "OK";
 		} catch (IOException io) {
 			return "ERROR";
+		} catch (ParseException e) {
+			throw new RuntimeException(e);
 		}
 	}
 	@Override
