@@ -16,8 +16,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -241,7 +239,7 @@ public class DispatchService implements IDispatchService {
 			}
 			j++;
 		}
-		sendEmail(dispatch);
+
 		Dispatch dispatchSave = this.dao.save(dispatch);
 		//GUARDAR REGISTRO TRACKING
 		//INICIAL
@@ -257,28 +255,11 @@ public class DispatchService implements IDispatchService {
 				this.serviceAStart.convertToDateViaSqlDate(dispatch.getRegisterDate().toLocalDate().minusDays(1))));
 		register2.setDescription("EL PAQUETE ESTA EN EL ALMACEN DE " + dispatch.getOriginAirport().getCity().getName().toUpperCase());
 		register2.setDispatch(dispatchSave);
-		this.daoTracking.save(register2);
+		//this.daoTracking.save(register2);
 		return dispatchSave;
 	}
 	
-	@Autowired
-	private JavaMailSender sender;
 	
-	private void sendEmail(Dispatch dispatch) {
-		try {
-			SimpleMailMessage message = new SimpleMailMessage();
-	        message.setTo(dispatch.getSend_client().getEmail()); 
-	        message.setSubject("CONFIRMACION DE ENVIO - REDEXTRACETOOLS"); 
-	        message.setText("Hola, " + dispatch.getSend_client().getName() + "\n\n" +
-	        "Su envio fue registrado exitosamente. Su codigo de rastreo es: " + dispatch.getTrackingCode() 
-	        + "\nPuede consultar el estado de su envío en redextracking.inf.pucp.edu.pe"
-	        + "\n\nRedex: Modern Global Logistics");
-	        sender.send(message);
-		} catch (Exception e){
-			System.out.println(e.getMessage());
-		}
-	}
-
 	@Override
 	public Optional<Dispatch> updateState(String trackingCode, DispatchStatus status) {
 		Optional<Dispatch> findDispatch = this.dao.findByTrackingCode(trackingCode);
@@ -296,7 +277,7 @@ public class DispatchService implements IDispatchService {
 			else
 				return Optional.empty();
 			findDispatch.get().setEndDate(LocalDateTime.now());
-			this.dao.save(findDispatch.get());
+			//this.dao.save(findDispatch.get());
 			return findDispatch;
 		} else {
 			return Optional.empty();
@@ -372,6 +353,16 @@ public class DispatchService implements IDispatchService {
 		}
 	}
 
+	class PackageComparator implements Comparator<PackageTemp>{
+		public int compare(PackageTemp a, PackageTemp b) {
+			if ( a.getTime().isAfter(b.getTime()) ) return 1;
+			else if (a.getTime().isBefore(b.getTime())) return -1;
+			return 0;
+		}
+	}
+
+
+
 
 	public LocalDate convertStringToLocalDate(String date) {
 		try {
@@ -400,11 +391,12 @@ public class DispatchService implements IDispatchService {
 			Enumeration<? extends ZipEntry> entries = zip.entries();
 			ZipEntry entry = entries.nextElement();
 			Integer i=0;
-			PriorityQueue<PackageTemp> pq = new PriorityQueue<PackageTemp>(
-					(a, b) -> {
-						if ( a.getTime().isAfter(b.getTime()) ) return 1;
-						else if (a.getTime().isBefore(b.getTime())) return -1;
-						return 0;});
+			PriorityQueue<PackageTemp> pq = new PriorityQueue<PackageTemp>(new PackageComparator());
+			//List<PackageTemp> pq = new ArrayList<>();
+					// (a, b) -> {
+					// 	if ( a.getTime().isAfter(b.getTime()) ) return 1;
+					// 	else if (a.getTime().isBefore(b.getTime())) return -1;
+					// 	return 0;});
 			while (entries.hasMoreElements()) {
 				//ZipEntry entry = entries.nextElement();
 				entry = entries.nextElement();
@@ -432,60 +424,25 @@ public class DispatchService implements IDispatchService {
 					destinationAirport = line.get(3).substring(0, 4);
 					cantPackages = Integer.parseInt(line.get(3).substring(5));
 					// PROCESAR ALGORITMO
-					System.out.println(originAirport + "  " + date + " " + time + " " + destinationAirport + " " + cantPackages);
 					PackageTemp p = new PackageTemp(originAirport, destinationAirport, date, time, cantPackages);
 					if  (convertStringToLocalDate(date).isAfter(date1)) break;
-					else if (convertStringToLocalDate(date).equals(date1)) pq.add(p);
+					else if (convertStringToLocalDate(date).equals(date1)) 
+						pq.add(p);
+						//insetar(pq,p);
 				}
 				reader.close();
 				inputStream.close();
 			}
-			Iterator value = pq.iterator();
-			while (value.hasNext()) {
-				PackageTemp p = (PackageTemp) value.next();
-				System.out.println(p.getOriginAirport() + "  " + p.getDate() + " " + p.getTime() + " " + p.getDestinationAirport() + " " + p.getCantPackages());
-			}
-			/*
-			while (value.hasNext()) {
-					PackageTemp p = (PackageTemp) value.next();
-					Integer resultPlan = serviceAStart.insertHistoricPackage(
-					p.getOriginAirport(),p.getDestinationAirport(),p.getDate(),p.getTime(), p.getCantPackages());
-					Optional<SummaryCase> sc = this.daoSummary.findById(1);
-
-					if(!sc.isPresent()) {
-						SummaryCase nsc = new SummaryCase();
-						nsc.setFails(0);
-						nsc.setOk(0);
-						nsc.setLate(0);
-						this.daoSummary.save(nsc);
-						sc = this.daoSummary.findById(1);
-						if(resultPlan==1) {
-							if(sc.isPresent()) {
-								sc.get().setOk(sc.get().getOk()+1);
-								this.daoSummary.save(sc.get());
-							}
-						} else if (resultPlan==0){
-							if(sc.isPresent()) {
-								sc.get().setFails(sc.get().getFails()+1);
-								this.daoSummary.save(sc.get());
-							}
-							stateColapso=1;
-							break;
-						} else if (resultPlan==2){
-							if(sc.isPresent()) {
-								sc.get().setLate(sc.get().getLate()+1);
-								this.daoSummary.save(sc.get());
-							}
-							stateColapso=2;
-							System.out.println("Fallo: "+p.getOriginAirport()+ " - "+p.getDestinationAirport());
-							break;
-						}
-					}
+			while (pq.size()!=0) {
+				PackageTemp pack=pq.poll();
+				//System.out.println(pack.getOriginAirport() + "  " + pack.getDate() + " " + pack.getTime() + " " + pack.getDestinationAirport() + " " + pack.getCantPackages());
+				Integer resultPlan = serviceAStart.insertHistoricPackage(pack.getOriginAirport(), pack.getDestinationAirport(), pack.getDate(), pack.getTime(), pack.getCantPackages());
+				if (resultPlan!=1) {
+					System.out.println(pack.getOriginAirport() + "  " + pack.getDate() + " " + pack.getTime() + " " + pack.getDestinationAirport() + " " + pack.getCantPackages());
+					break;
 				}
-					//Integer resultPlan = serviceAStart.insertHistoricPackage(originAirport, destinationAirport, date, time, cantPackages);
-					//i++;
-				//System.out.println("Exitosos: "+exitosos.toString()+" Fallos: "+fallidos.toString());
-			*/
+			}
+		
 			zip.close();
 			tempFile.delete();
 			return "OK";
@@ -495,6 +452,12 @@ public class DispatchService implements IDispatchService {
 			throw new RuntimeException(e);
 		}
 	}
+	private void insetar(List<PackageTemp> pq, PackageTemp newPackage) {
+		for(PackageTemp p :pq){
+			
+		}
+	}
+
 	@Override
 	public void deleteSimulated(DispatchStatus status){
 		this.dao.deleteSimulated(status);

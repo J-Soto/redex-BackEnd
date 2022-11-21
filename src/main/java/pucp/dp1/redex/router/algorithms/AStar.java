@@ -202,16 +202,8 @@ public class AStar {
 			if(node.getId()==start.getId()) break;
 			Flight f=node.getArrivalFlight();
 			Warehouse w=f.getArrivalAirport().getWarehouse();			
-			//f.setOccupiedCapacity(f.getOccupiedCapacity()+minComunCapac);
-			//w.setOccupiedCapacity(w.getOccupiedCapacity()+minComunCapac);
-			
-			
-			serviceFlight.updateOccupiedCapacity(f.getIdFlight(),f.getOccupiedCapacity()+minComunCapac);		
+			//serviceFlight.updateOccupiedCapacity(f.getIdFlight(),f.getOccupiedCapacity()+minComunCapac);		
 			serviceWarehouse.updateOccupiedCapacity(w.getId(), w.getOccupiedCapacity()+minComunCapac);
-
-			//serviceFlight.updateCapacity(f.getIdFlight(),f.getOccupiedCapacity()+minComunCapac);		
-			//serviceWarehouse.updateCapacity(w.getId(), w.getOccupiedCapacity()+minComunCapac);
-
 			node=node.getFather();
 
 		}	
@@ -457,7 +449,7 @@ public class AStar {
 	// 	}
 	// 	return listplan;
 	// }
-	public Integer insertHistoricPackage(String originAirport, String destinationAirport, String dateS, String timeS, Integer cantPackages) {
+	public Integer insertHistoricPackage(String originAirport, String destinationAirport, String dateS, LocalTime time, Integer cantPackages) {
 		List <RoutePlan> listplan = new ArrayList<>();
 		int resultado=0;
 		/* Obtener id de aeropuertos */
@@ -467,7 +459,6 @@ public class AStar {
 			Airport origin = oOrigin.get();
 			Airport destination = oDestination.get();
 			LocalDate date = convertStringToLocalDate(dateS);
-			LocalTime time = convertStringToLocalTime(timeS);
 			time.plusHours(5);
 			if (date == null || time == null) {
 				System.out.println("Error en convertir fechas u horas");
@@ -483,28 +474,9 @@ public class AStar {
 					if (plan.getFlightPlans().size() > 0) {
 						/* Se encontró resultado */
 
-						// System.out.println("Crear cliente");
-
-						/* Crear cliente */
-						Client c = new Client();
-						c.setCellphone("987654321");
-						c.setDocument("1234568");
-						c.setEmail("historia@gmail.com");
-						// c.setId(0);
-						c.setLastname("Historia");
-						c.setName("Historia");
-						c.setRegisterDate(LocalDateTime.now());
-
-						// System.out.println("Crear paquete");
-
 						/* Crear package */
 						Package p = new Package();
-						p.setFragile(false);
 						p.setDescription("Paquete de registro histórico");
-						p.setHigh(1.0);
-						p.setLarge(1.0);
-						p.setWidth(1.0);
-						p.setWeight(1.0);
 						p.setRoutePlan(plan);
 						p.setStatus(PackageStatus.SIMULADO);
 						p.setActive(true);
@@ -523,7 +495,7 @@ public class AStar {
 						d.setReceiveClientName("History");
 						d.setRegisterDate(LocalDateTime.now());
 						d.setStatus(DispatchStatus.SIMULADO);
-						d.setSend_client(c);
+						//d.setSend_client(c);
 						d.setActive(true);
 
 						// System.out.println("insertar dispatch");

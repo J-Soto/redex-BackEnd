@@ -239,9 +239,6 @@ INSERT INTO `client`(cellphone,document,email,lastname,name,register_date) VALUE
 --INSERT INTO `routeplan_flightplan`(route_plan_id,flight_plan_id) VALUES(2,3)
 --INSERT INTO `routeplan_flightplan`(route_plan_id,flight_plan_id) VALUES(3,4)
 
---INSERT INTO `package`(description, weight, large, width, high, route_plan_id, fragile, status, active) VALUES ('Productos de limpieza', 13.44, 10, 23, 14, 1, 0, 0, 1)
---INSERT INTO `package`(description, weight, large, width, high, route_plan_id, fragile, status, active) VALUES ('Videojuegos', 14.42, 90, 23, 44, 2, 0, 0, 1)
---INSERT INTO `package`(description, weight, large, width, high, route_plan_id, fragile, status, active) VALUES ('Libros', 12.45, 83, 41, 33, 3, 0, 0, 1)
 
 INSERT INTO `flight` (take_off_airport_id,arrival_airport_id,take_off_time,arrival_time,capacity,occupied_Capacity) VALUES (1,2,STR_TO_DATE('03:34', '%H:%i'),STR_TO_DATE('07:52', '%H:%i'),280,0)
 INSERT INTO `flight` (take_off_airport_id,arrival_airport_id,take_off_time,arrival_time,capacity,occupied_Capacity) VALUES (2,1,STR_TO_DATE('04:29', '%H:%i'),STR_TO_DATE('07:51', '%H:%i'),280,0)

@@ -36,9 +36,7 @@ public class Package implements Serializable {
 	
 	@Column(name = "high")
 	private Double high;
-	
-	@Column(name = "fragile")
-	private Boolean fragile;
+
 	
 	@Column(name = "status")
 	private PackageStatus status;
@@ -69,13 +67,6 @@ public class Package implements Serializable {
 		this.weight = weight;
 	}
 
-	public Boolean getFragile() {
-		return fragile;
-	}
-
-	public void setFragile(Boolean fragile) {
-		this.fragile = fragile;
-	}
 
 	public PackageStatus getStatus() {
 		return status;
