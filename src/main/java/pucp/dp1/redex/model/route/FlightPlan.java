@@ -67,9 +67,7 @@ public class FlightPlan implements Serializable{
 	public FlightPlan() {
 	}
 
-	public FlightPlan(Date takeOffDate, Date arrivalDate, Flight flight) {
-		this.takeOffDate = takeOffDate;
-		this.arrivalDate = arrivalDate;
+	public FlightPlan( Flight flight) {
 		this.flight = flight;
 	}
 

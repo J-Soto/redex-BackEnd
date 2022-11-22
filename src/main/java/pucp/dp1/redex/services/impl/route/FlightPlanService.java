@@ -32,6 +32,18 @@ public class FlightPlanService implements IFlightPlanService{
 		dao.cleanSimulated();
 	}
 
+	@Override
+	public Optional<FlightPlan> updateOccupiedCapacity(Integer id, Integer capacity) {
+		Optional<FlightPlan> ff = this.dao.findById(id);
+		if(ff.isPresent()) {
+			ff.get().setPackagesNumberSimulated(capacity);
+			this.dao.save(ff.get());
+			return ff;
+		} else {
+			return Optional.empty();
+		}
+	}
+
 	
 
 }

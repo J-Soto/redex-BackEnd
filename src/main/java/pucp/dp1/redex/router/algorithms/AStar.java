@@ -114,18 +114,10 @@ public class AStar {
 					Flight f = adjacencyPair.getValue().getValue();
 					LocalTime takeOff, arrival;
 					Integer takeOffUtc, arrivalUtc;
-					Double newDistance;
-					Boolean isStart=false;
-					Date dia;
-					dia=Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
-					Double horas;
-					// horas=durationBetweenTime(takeOff, arrival, takeOffUtc, arrivalUtc);
-					// time.plusMinutes(horas.longValue());
-					// if(time.isBefore(LocalTime.parse("23:59:59")) ){
-					// }
-
-					FlightPlan fp = new FlightPlan(dia, dia, f);
-					//fp = actualizarDiasFP(fp);
+					Double newDistance=0.0;
+					Boolean isStart=false;				
+					FlightPlan fp = new FlightPlan(f);
+					fp = buscarFP(f);
 					if(f.getTakeOffAirport().getId() == start.getId()) isStart=true;
 					takeOff= f.getTakeOffTime().toLocalTime();
 					arrival = f.getArrivalTime().toLocalTime();
@@ -139,9 +131,7 @@ public class AStar {
 					fp.setPackagesNumberSimulated(packagesProcesados);
 					adjacentNode.setFlightPlan(fp);
 					if(packagesProcesados > 0){
-						//if(minComunCap > packagesProcesados) minComunCap = packagesProcesados;
-						//fp.setPackagesNumber(packagesProcesados);
-						newDistance=durationBetweenTime(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc);
+						newDistance=durationBetweenTime(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc,fp);//actualiza el fp
 						adjacentNode.setDistance(currentNode.getDistance() + newDistance);
 						adjacentNode.setPackagesProcesados(packagesProcesados);
 						adjacentNode.setArrivalFlight(f);
@@ -187,6 +177,17 @@ public class AStar {
 		
 		return bestWays;
 	}
+	private FlightPlan buscarFP(Flight f) {
+		FlightPlan fpResult=null;
+		List<FlightPlan> listFP;
+		listFP = serviceFlightPlan.findAll();
+		for(FlightPlan fp:listFP){
+			if(fp.getFlight().getIdFlight()==f.getIdFlight()){
+				fpResult=fp;
+			}
+		}
+		return fpResult;
+	}
 	Node contiene(Set<Node> unsettledNodes, Integer id){
 		Node result=null;
 		for (Node node :  unsettledNodes){
@@ -201,8 +202,10 @@ public class AStar {
 		while(true){
 			if(node.getId()==start.getId()) break;
 			Flight f=node.getArrivalFlight();
+			FlightPlan fp=node.getFlightPlan();
 			Warehouse w=f.getArrivalAirport().getWarehouse();			
 			//serviceFlight.updateOccupiedCapacity(f.getIdFlight(),f.getOccupiedCapacity()+minComunCapac);		
+			serviceFlight.updateOccupiedCapacity(fp.getId(),fp.getPackagesNumberSimulated()+minComunCapac);
 			serviceWarehouse.updateOccupiedCapacity(w.getId(), w.getOccupiedCapacity()+minComunCapac);
 			node=node.getFather();
 
@@ -291,31 +294,14 @@ public class AStar {
 			List<Flight> flights = graphOld.get(airport);
 			for (Flight f : flights) {
 				nodes.get(airport.getId()).addDestination(nodes.get(f.getArrivalAirport().getId()), 0, f,timeHeu);
-/*
-				double duration = durationBetweenTime(f.getTakeOffTime().toLocalTime(),f.getArrivalTime().toLocalTime(),
-				f.getArrivalAirport().getCity().getCountry().getUtc(),f.getTakeOffAirport().getCity().getCountry().getUtc());
-				
-				if (airport.getId() == start) {
-					//Agregar espera al primer vuelo, no usa utc
-					duration+=durationBetweenTime(time, f.getTakeOffTime().toLocalTime());
-				}
-
-				if(f.getIdFlight()==4755 ||f.getIdFlight()==4757 ||f.getIdFlight()==4759 ){
-					Integer i;
-					i=f.getIdFlight();
-				}
-
- */			//nodes.get(airport.getId()).addDestination(nodes.get(f.getArrivalAirport().getId()), duration, f,timeHeu);
 				
 			}
-			// distancia = raiz((x2-x1)^2 + (y2-y1)^2), ya no es asi
-		
-			
+
 
 			graphNew.addNode(nodes.get(airport.getId()));
 		}
 
-		//Node result = calculateShortestPathFromSource( nodes.get(start),nodes.get(objective), date, time, cantPackages);
+		
 		List <Node> listResult = calculateShortestPathFromSource( nodes.get(start),nodes.get(objective), date, time, cantPackages);
 
 		// Logica que pablo comento ya implementada
@@ -326,18 +312,10 @@ public class AStar {
 			RoutePlan rPlan = new RoutePlan();
 			List<FlightPlan> listFlightPlan = new ArrayList<>();
 			while(true){
-				//if (result.equals(null))break;
-				
-				//dentro del result habia un flight y lo asigne
-				//Flight f= result.getArrivalFlight();
 				FlightPlan fp= result.getFlightPlan();
 				rPlan.setCurrentStage(0);
 				rPlan.setStatus(RoutePlanStatus.EN_EJECUCION);
 				listFlightPlan.add(fp);
-				//creo un optional con el flight y el date que se envia como parametro
-				//Optional<FlightPlan> existent = serviceFlightPlan.findByFlight_IdFlightAndTakeOffDate(f.getIdFlight(),convertToDateViaSqlDate(date));
-				//creo un flightPlan
-				//FlightPlan flightPlan;
 				if(fp!=null){
 					Pair<Node, FlightPlan> pair = new Pair<Node, FlightPlan>(result,fp);
 					//agrego el par al shortestPath
@@ -347,19 +325,7 @@ public class AStar {
 				}
 				result = result.getFather();
 				if (result.getFather()==null) break;
-				//si el optional no esta vacio
-				// if (existent.isPresent()) {
-				// 	//asigno el optional a el flightPlan
-				// 	flightPlan = existent.get();
-				// 	//creo el par necesario para el shortestPath, con el nodo result y el flightPlan
-				// 	Pair<Node, FlightPlan> pair = new Pair<Node, FlightPlan>(result,flightPlan);
-				// 	//agrego el par al shortestPath
-				// 	shortestPath.add(pair);
-				// 	//obtengo el nodo padre anterior
-				// 	result = result.getFather();
-				// }
-				//si el optional esta vacio
-				//else System.out.println("No se encontro el vuelo");
+
 				
 			}
 			//result.setShortestPath(shortestPath);
@@ -372,83 +338,7 @@ public class AStar {
 	private Double getBestTime(Integer start, Integer objective) {
 		return null;
 	}
-	// public List <RoutePlan> determinRoute(Integer start, Integer objective, LocalDate date, LocalTime time, boolean simulated, Integer cantPackages) {
-	// 	List <RoutePlan> listplan = new ArrayList<>();
-	// 	/*Verificar si almacen de origen tiene espacio*/
-	// 	Optional<Warehouse> oWarehouse = serviceWarehouse.findByAirport_id(start);
-	// 	if (oWarehouse.isPresent()) {
-	// 		Warehouse warehouse = oWarehouse.get();
-	// 		Date dateStorage;
-	// 		Date arrivalDate = convertToDateViaSqlDate(date);
-	// 		Time arrivalTime = Time.valueOf(time);
-	// 		dateStorage = convertDateAndTimeToDate(arrivalDate, arrivalTime);
-	// 		if (dateStorage == null) {
-	// 			System.out.println("Error en conversión");
-	// 		} else {
-	// 			/*Calendar c = Calendar.getInstance();
-	// 			c.setTime(dateStorage);
-	// 			c.add(Calendar.HOUR, -5);
-	// 			Date dateStoragePatch=c.getTime();
-	// 			System.out.println(dateStorage);*/
-	// 			List<StorageRegister> listRegisters = serviceStorage.findAllPresentOnDate(dateStorage/*Patch*/,warehouse.getId());
-	// 			if (listRegisters.size() >= warehouse.getCapacity()) {
-	// 				//System.out.println("No hay espacio en almacen");
-	// 				Incident incident = new Incident();
-	// 				incident.setAirport(warehouse.getAirport());
-	// 				incident.setRegisterDate(convertToDateViaSqlDate(convertToLocalDateViaInstant(dateStorage)));
-	// 				incident.setDescription("FULL WAREHOUSE");
-	// 				incident.setActive(true);
-	// 				incident.setSimulated(simulated);
-	// 				incident.setRegisterDate(dateStorage);
-	// 				this.daoIncident.save(incident);
-					
-	// 				RoutePlan plan=new RoutePlan();
-	// 				plan.setStatus(RoutePlanStatus.CANCELADO);
-	// 				plan.setCurrentStage(0);
-	// 				plan.setEstimatedTime(0.0);
-	// 				plan.setFlightPlans(new ArrayList<FlightPlan>());
-	// 				listplan.add(plan);
-	// 				return listplan;
-	// 			}
-	// 		}
-	// 	}
-	// 	else {
-	// 		System.out.println("No existe el almacen?");
-			
-	// 		RoutePlan plan=new RoutePlan();
-	// 		plan.setStatus(RoutePlanStatus.CANCELADO);
-	// 		plan.setCurrentStage(0);
-	// 		plan.setEstimatedTime(0.0);
-	// 		plan.setFlightPlans(new ArrayList<FlightPlan>());
-	// 		listplan.add(plan);
-	// 		return listplan;
-	// 	}
-
-	// 	List <Node> listResult = getShortestPath(start, objective, date, time, simulated,cantPackages);
-	// 	//obtengo el shortestPath hasta este momento
-	// 	for(Node result: listResult){
-	// 			RoutePlan plan = new RoutePlan();
-	// 			if (result.getId() == 0) {
-	// 				/* Sin resultado */
-	// 				return listplan;
-	// 			}
-	// 			plan.setCurrentStage(0);
-	// 			plan.setStatus(RoutePlanStatus.EN_EJECUCION);
-	// 			List<FlightPlan> listFlightPlan = new ArrayList<>();
-	// 			List<Pair<Node, FlightPlan>> listPairs = result.getShortestPath();
-	// 			if (listPairs.size() == 0) {
-	// 				System.out.println("Sin resultado");
-	// 			}
-	// 			for (Pair<Node, FlightPlan> p : listPairs) {
-	// 				FlightPlan fp = p.getValue();
-	// 				listFlightPlan.add(fp);
-	// 			}
-	// 			plan.setFlightPlans(listFlightPlan);
-	// 			plan.setEstimatedTime(result.getDistance());
-	// 			listplan.add(plan);
-	// 	}
-	// 	return listplan;
-	// }
+	
 	public Integer insertHistoricPackage(String originAirport, String destinationAirport, String dateS, LocalTime time, Integer cantPackages) {
 		List <RoutePlan> listplan = new ArrayList<>();
 		int resultado=0;
@@ -481,27 +371,15 @@ public class AStar {
 						p.setStatus(PackageStatus.SIMULADO);
 						p.setActive(true);
 
-						/* Insertar resultados */
-
-						// System.out.println("Crear dispatch");
-
 						/* Crear dispatch */
 						Dispatch d = new Dispatch();
 						d.setDestinationAirport(destination);
 						d.setOriginAirport(origin);
 						d.setPack(p);
-						d.setReceiveClientDocument("00000000");
-						d.setReceiveClientLastname("History");
-						d.setReceiveClientName("History");
 						d.setRegisterDate(LocalDateTime.now());
 						d.setStatus(DispatchStatus.SIMULADO);
-						//d.setSend_client(c);
 						d.setActive(true);
-
-						// System.out.println("insertar dispatch");
 						d = serviceDispatch.save(d,true,convertDateAndTimeToDate(convertToDateViaSqlDate(date), Time.valueOf(time)));
-
-						// System.out.println("obtener paquete dispatch");
 						p = d.getPack();
 						resultado= 1;
 					}
@@ -592,8 +470,12 @@ public class AStar {
 		}		
 		return res;
 	}
-	public double durationBetweenTime(Boolean isStart, LocalDate date,LocalTime time,LocalTime start, LocalTime end, Integer utcStart, Integer utcEnd)  {
+	public double durationBetweenTime(Boolean isStart, LocalDate date,LocalTime time,LocalTime start, LocalTime end, Integer utcStart, Integer utcEnd, FlightPlan fp)  {
 		double acumulator=0;
+		Integer dia=0;
+		LocalDate diaFinLC=date;
+		Date diaIni,diaFin;
+		
 
 		if(!isStart) acumulator+=60; //agregar una hora si es escala
 
@@ -614,6 +496,7 @@ public class AStar {
 			acumulator += Duration.between(time, start).toMinutes();
 		}
 		else {
+			dia++;
 			acumulator += Duration.between(time, LocalTime.parse("23:59:59")).toMinutes();
 			acumulator += Duration.between( LocalTime.parse("00:00:00"),start).toMinutes();
 		}
@@ -622,9 +505,16 @@ public class AStar {
 		if (start.isBefore(end)) {
 			acumulator += Duration.between(start, end).toMinutes();
 		} else {
+			dia++;
 			acumulator += Duration.between(start, LocalTime.parse("23:59:59")).toMinutes();
 			acumulator += Duration.between(LocalTime.parse("00:00:00"), end).toMinutes();
 		}
+
+		diaIni=Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		diaFinLC.plusDays(dia);
+		diaFin=Date.from(diaFinLC.atStartOfDay(ZoneId.systemDefault()).toInstant());	
+		fp.setTakeOffDate(diaIni);
+		fp.setArrivalDate(diaFin);
 		return acumulator;
 	}
 	public LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
