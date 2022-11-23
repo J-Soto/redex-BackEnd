@@ -126,12 +126,12 @@ public class AStar {
 					adjacentNode.setArrivalFlight(f);
 					adjacentNode.setFather(currentNode);
 					adjacentNode.setHeuristic(heuristic(adjacentNode.getArrivalFlight().getArrivalAirport(),currentNode.getId(), objective.getId(), time));
-					packagesProcesados= hayCapacidad(f, f.getArrivalAirport().getWarehouse(), cantPackages);
+					newDistance=durationBetweenTime(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc,fp);//actualiza el fp
+					packagesProcesados= hayCapacidad(f, f.getArrivalAirport().getWarehouse(), cantPackages,fp);
 					fp.setPackagesNumber(packagesProcesados);
 					fp.setPackagesNumberSimulated(packagesProcesados);
 					adjacentNode.setFlightPlan(fp);
-					if(packagesProcesados > 0){
-						newDistance=durationBetweenTime(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc,fp);//actualiza el fp
+					if(packagesProcesados > 0){						
 						adjacentNode.setDistance(currentNode.getDistance() + newDistance);
 						adjacentNode.setPackagesProcesados(packagesProcesados);
 						adjacentNode.setArrivalFlight(f);
@@ -442,13 +442,13 @@ public class AStar {
 		acumulator  =durationBetweenTime( start,  end);
 		return acumulator;
 	}
-	public Integer hayCapacidad(Flight f,Warehouse w,Integer cantPackages){
+	public Integer hayCapacidad(Flight f,Warehouse w,Integer cantPackages, FlightPlan fp){
 		Integer res=0;
 
 		Integer cantOcupadaAntF=0,cantOcupadaAntA=0,cantMaxF,cantMaxA,cantDisponible,cantDisponibleA,cantDisponibleF,cantPorOcupar,packagesPorProcesar;
 		cantMaxF=f.getCapacity();
 		cantMaxA=w.getCapacity();
-		cantOcupadaAntF=f.getOccupiedCapacity();
+		//cantOcupadaAntF=fp.getOccupiedCapacity();
 		cantOcupadaAntA=w.getOccupiedCapacity();
 		cantDisponibleA=cantMaxA-cantOcupadaAntA;
 		cantDisponibleF=cantMaxF-cantOcupadaAntF;
