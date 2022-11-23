@@ -1,5 +1,6 @@
 package pucp.dp1.redex.controller.sales;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -155,8 +156,13 @@ public class DispatchController {
 	
 	@PostMapping(path = "/upload/zip", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseObject> procesamientoMasivo(MultipartHttpServletRequest request) {
+	//public ResponseEntity<ResponseObject> procesamientoMasivo(MultipartHttpServletRequest request, Date date) {
 		ResponseObject response = new ResponseObject();
 		try {
+			//MultipartHttpServletRequest request = (MultipartHttpServletRequest) params.getFile("file");
+
+			//Date date=params.get("date");
+			
 			String check = this.service.masiveLoad(request);
 			if (check.equals("OK")) {
 				response.setEstado(Estado.OK);

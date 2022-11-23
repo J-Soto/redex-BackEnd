@@ -133,6 +133,7 @@ public class AStar {
 					packagesProcesados= hayCapacidad(f, f.getArrivalAirport().getWarehouse(), cantPackages,fp);
 					fp.setPackagesNumber(packagesProcesados);
 					fp.setPackagesNumberSimulated(packagesProcesados);
+					fp.setOccupiedCapacity(packagesProcesados);
 					adjacentNode.setFlightPlan(fp);
 					if(packagesProcesados > 0){						
 						adjacentNode.setDistance(currentNode.getDistance() + newDistance);
@@ -179,31 +180,18 @@ public class AStar {
 	}
 	private LocalDate calcularTakeOfDate(Boolean isStart, LocalDate date,LocalTime time,LocalTime start, LocalTime end, Integer utcStart, Integer utcEnd) {
 
-		double acumulator=0;
-		Integer dia=0;
+		//Integer dia=0;
 		LocalDate diaTakeOff=date;
-		LocalDate diaIni,diaFin;
-		
-
-		if(!isStart) acumulator+=60; //agregar una hora si es escala
 
 		if(utcStart>0) start.minusHours(utcStart);		
-		else {
+		else if(utcStart<0){
 			utcStart*=-1;
 			start.plusHours(utcStart);
 		}
-
-		if(utcEnd>0) end.minusHours(utcEnd);		
-		else {
-			utcEnd*=-1;
-			end.plusHours(utcEnd);
-		}
 		
 		//calcular tiempo hasta el vuelo
-		if(time.isBefore(start));
-		else 	dia++;
-
-		diaTakeOff.plusDays(dia);	
+		if(time.isAfter(start))	diaTakeOff.plusDays(1);
+			
 		return diaTakeOff;
 		
 	}
@@ -234,7 +222,7 @@ public class AStar {
 			FlightPlan fp=node.getFlightPlan();
 			Warehouse w=f.getArrivalAirport().getWarehouse();
 			//serviceFlight.updateOccupiedCapacity(f.getIdFlight(),f.getOccupiedCapacity()+minComunCapac);
-			serviceFlightPlan.updateOccupiedCapacity(fp.getId(),fp.getPackagesNumberSimulated()+minComunCapac);
+			serviceFlightPlan.updateOccupiedCapacity(fp.getId(),fp.getOccupiedCapacity()+minComunCapac);
 			serviceWarehouse.updateOccupiedCapacity(w.getId(), w.getOccupiedCapacity()+minComunCapac);
 			node=node.getFather();
 		}

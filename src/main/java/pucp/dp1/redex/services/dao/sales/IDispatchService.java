@@ -2,6 +2,7 @@ package pucp.dp1.redex.services.dao.sales;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -23,7 +24,7 @@ public interface IDispatchService {
 	
 	public Optional<Dispatch> updateState(String trackingCode, DispatchStatus status);
 	
-	public String masiveLoad(MultipartHttpServletRequest request); 
+	public String masiveLoad(MultipartHttpServletRequest file); 
 	
 	public void deleteSimulated(DispatchStatus status);
 	
