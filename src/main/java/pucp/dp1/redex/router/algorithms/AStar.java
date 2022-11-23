@@ -121,6 +121,11 @@ public class AStar {
 					arrivalUtc =f.getArrivalAirport().getCity().getCountry().getUtc();
 					LocalDate takeOfDate = calcularTakeOfDate(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc);
 					FlightPlan fp = buscarFP(f,takeOfDate);
+					if(fp==null){
+						fp= new FlightPlan(f);
+						Date takeOfDate2=Date.from(takeOfDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+						fp.setTakeOffDate(takeOfDate2);
+					}
 					adjacentNode.setArrivalFlight(f);
 					adjacentNode.setFather(currentNode);
 					adjacentNode.setHeuristic(heuristic(adjacentNode.getArrivalFlight().getArrivalAirport(),currentNode.getId(), objective.getId(), time));

@@ -104,9 +104,9 @@ public class DispatchService implements IDispatchService {
 		dispatch.setRegisterDate(LocalDateTime.now().minusHours(5));
 		dispatch.setTrackingCode(trackingCode);
 		// guardar clientes
-		dispatch.getSend_client().setRegisterDate(LocalDateTime.now().minusHours(5));
+		//dispatch.getSend_client().setRegisterDate(LocalDateTime.now().minusHours(5));
 		//System.out.println("Crear cliente");
-		this.daoClient.save(dispatch.getSend_client());
+		//this.daoClient.save(dispatch.getSend_client());
 		// actualizar flight plans
 		List<FlightPlan> plans = dispatch.getPack().getRoutePlan().getFlightPlans();
 		// sirve para guardar el aeropuerto destino como atributo de envio
@@ -152,8 +152,7 @@ public class DispatchService implements IDispatchService {
 			}
 		}
 		//fecha estimada de fin
-		dispatch.setEndDate((this.serviceAStart.convertDateAndTimeToDate(plans.get(plans.size()-1).getArrivalDate(), 
-				plans.get(plans.size()-1).getFlight().getArrivalTime()).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()));
+		//dispatch.setEndDate((this.serviceAStart.convertDateAndTimeToDate(plans.get(plans.size()-1).getArrivalDate(), plans.get(plans.size()-1).getFlight().getArrivalTime()).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()));
 		// guardar ruta
 		this.daoRoutePlan.save(dispatch.getPack().getRoutePlan());
 		this.daoPackage.save(dispatch.getPack());
@@ -183,78 +182,78 @@ public class DispatchService implements IDispatchService {
 		sr.setSimulated(simulated);
 		this.daoStorageRegister.save(sr);
 		Integer j = 0;
-		while (j < listSize) {
-			/* Crear StorageRegister */
-			if (j < listSize - 1) {
-				sr = new StorageRegister();
-				sr.setPack(dispatch.getPack());
-				checkIn = this.serviceAStart.convertDateAndTimeToDate(rp.getFlightPlans().get(j).getArrivalDate(),
-						rp.getFlightPlans().get(j).getFlight().getArrivalTime());
-				checkOut = this.serviceAStart.convertDateAndTimeToDate(rp.getFlightPlans().get(j + 1).getTakeOffDate(),
-						rp.getFlightPlans().get(j + 1).getFlight().getTakeOffTime());
-				sr.setCheckInDate(checkIn);
-				sr.setCheckOutDate(checkOut);
-				oWare = this.daoWarehouse.findByAirport_id(
-						rp.getFlightPlans().get(j).getFlight().getArrivalAirport().getId());
-				if (oWare.isPresent()) {
-					Warehouse warehouse = oWare.get();
-					sr.setWarehouse(warehouse);
-				} else {
-					System.out.println("No hay almacen? SR");
-				}
-				sr.setInWarehouse(false);
-				sr.setActive(true);
-				sr.setSimulated(simulated);
-				this.daoStorageRegister.save(sr);
-			} else {
-				sr = new StorageRegister();
-				sr.setPack(dispatch.getPack());
-				checkIn = this.serviceAStart.convertDateAndTimeToDate(rp.getFlightPlans().get(j).getArrivalDate(),
-						rp.getFlightPlans().get(j).getFlight().getArrivalTime());
-				sr.setCheckInDate(checkIn);
-				oWare = this.daoWarehouse.findByAirport_id(
-						rp.getFlightPlans().get(j).getFlight().getArrivalAirport().getId());
-				if (oWare.isPresent()) {
-					Warehouse warehouse = oWare.get();
-					sr.setWarehouse(warehouse);
-				} else {
-					System.out.println("No hay almacen? SR");
-				}
-				sr.setInWarehouse(false);
-				sr.setActive(true);
-				sr.setSimulated(simulated);
-				if(!simulated) {
-					this.daoStorageRegister.save(sr);
-				}
-				else {
-					Date checkcoutFake = this.serviceAStart.convertDateAndTimeToDate(rp.getFlightPlans().get(j).getArrivalDate(),
-							rp.getFlightPlans().get(j).getFlight().getArrivalTime());
-					Calendar c = Calendar.getInstance();
-					c.setTime(checkcoutFake);
-					c.add(Calendar.DATE, 1);
-					checkcoutFake=c.getTime();
-					sr.setCheckOutDate(checkcoutFake);
-					this.daoStorageRegister.save(sr);
-				}
-			}
-			j++;
-		}
+		// while (j < listSize) {
+		// 	/* Crear StorageRegister */
+		// 	if (j < listSize - 1) {
+		// 		sr = new StorageRegister();
+		// 		sr.setPack(dispatch.getPack());
+		// 		checkIn = this.serviceAStart.convertDateAndTimeToDate(rp.getFlightPlans().get(j).getArrivalDate(),
+		// 				rp.getFlightPlans().get(j).getFlight().getArrivalTime());
+		// 		checkOut = this.serviceAStart.convertDateAndTimeToDate(rp.getFlightPlans().get(j + 1).getTakeOffDate(),
+		// 				rp.getFlightPlans().get(j + 1).getFlight().getTakeOffTime());
+		// 		sr.setCheckInDate(checkIn);
+		// 		sr.setCheckOutDate(checkOut);
+		// 		oWare = this.daoWarehouse.findByAirport_id(
+		// 				rp.getFlightPlans().get(j).getFlight().getArrivalAirport().getId());
+		// 		if (oWare.isPresent()) {
+		// 			Warehouse warehouse = oWare.get();
+		// 			sr.setWarehouse(warehouse);
+		// 		} else {
+		// 			System.out.println("No hay almacen? SR");
+		// 		}
+		// 		sr.setInWarehouse(false);
+		// 		sr.setActive(true);
+		// 		sr.setSimulated(simulated);
+		// 		this.daoStorageRegister.save(sr);
+		// 	} else {
+		// 		sr = new StorageRegister();
+		// 		sr.setPack(dispatch.getPack());
+		// 		checkIn = this.serviceAStart.convertDateAndTimeToDate(rp.getFlightPlans().get(j).getArrivalDate(),
+		// 				rp.getFlightPlans().get(j).getFlight().getArrivalTime());
+		// 		sr.setCheckInDate(checkIn);
+		// 		oWare = this.daoWarehouse.findByAirport_id(
+		// 				rp.getFlightPlans().get(j).getFlight().getArrivalAirport().getId());
+		// 		if (oWare.isPresent()) {
+		// 			Warehouse warehouse = oWare.get();
+		// 			sr.setWarehouse(warehouse);
+		// 		} else {
+		// 			System.out.println("No hay almacen? SR");
+		// 		}
+		// 		sr.setInWarehouse(false);
+		// 		sr.setActive(true);
+		// 		sr.setSimulated(simulated);
+		// 		if(!simulated) {
+		// 			this.daoStorageRegister.save(sr);
+		// 		}
+		// 		else {
+		// 			Date checkcoutFake = this.serviceAStart.convertDateAndTimeToDate(rp.getFlightPlans().get(j).getArrivalDate(),
+		// 					rp.getFlightPlans().get(j).getFlight().getArrivalTime());
+		// 			Calendar c = Calendar.getInstance();
+		// 			c.setTime(checkcoutFake);
+		// 			c.add(Calendar.DATE, 1);
+		// 			checkcoutFake=c.getTime();
+		// 			sr.setCheckOutDate(checkcoutFake);
+		// 			this.daoStorageRegister.save(sr);
+		// 		}
+		// 	}
+		// 	j++;
+		// }
 
 		Dispatch dispatchSave = this.dao.save(dispatch);
 		//GUARDAR REGISTRO TRACKING
 		//INICIAL
-		TrackingHistory register = new TrackingHistory();
-		register.setRegisterDate(this.serviceAStart.convertToLocalDateViaInstant(
-				this.serviceAStart.convertToDateViaSqlDate(dispatch.getRegisterDate().toLocalDate().minusDays(1))));
-		register.setDescription("EL PAQUETE FUE RECIBIDO");
-		register.setDispatch(dispatchSave);
-		this.daoTracking.save(register);
-		//PRIMER AEROPUERTO
-		TrackingHistory register2 = new TrackingHistory();
-		register2.setRegisterDate(this.serviceAStart.convertToLocalDateViaInstant(
-				this.serviceAStart.convertToDateViaSqlDate(dispatch.getRegisterDate().toLocalDate().minusDays(1))));
-		register2.setDescription("EL PAQUETE ESTA EN EL ALMACEN DE " + dispatch.getOriginAirport().getCity().getName().toUpperCase());
-		register2.setDispatch(dispatchSave);
+		// TrackingHistory register = new TrackingHistory();
+		// register.setRegisterDate(this.serviceAStart.convertToLocalDateViaInstant(
+		// 		this.serviceAStart.convertToDateViaSqlDate(dispatch.getRegisterDate().toLocalDate().minusDays(1))));
+		// register.setDescription("EL PAQUETE FUE RECIBIDO");
+		// register.setDispatch(dispatchSave);
+		// this.daoTracking.save(register);
+		// //PRIMER AEROPUERTO
+		// TrackingHistory register2 = new TrackingHistory();
+		// register2.setRegisterDate(this.serviceAStart.convertToLocalDateViaInstant(
+		// 		this.serviceAStart.convertToDateViaSqlDate(dispatch.getRegisterDate().toLocalDate().minusDays(1))));
+		// register2.setDescription("EL PAQUETE ESTA EN EL ALMACEN DE " + dispatch.getOriginAirport().getCity().getName().toUpperCase());
+		// register2.setDispatch(dispatchSave);
 		//this.daoTracking.save(register2);
 		return dispatchSave;
 	}
