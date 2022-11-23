@@ -86,8 +86,7 @@ public class AStar {
 		Integer minComunCap=0;
 		Node currentNode=null;
 		List<Node>  bestWays =new LinkedList<>();
-		Integer packagesProcesados,packagesProcesadosR;	
-
+		Integer packagesProcesados,packagesProcesadosR;
 		while(true){
 			if(cantPackages <= 0) break;
 			minComunCap=cantPackages;				
@@ -96,20 +95,16 @@ public class AStar {
 			currentNode=null;
 			start.setDistance(0.0);
 			unsettledNodes.add(start);
-			
 			while (unsettledNodes.size() != 0) {
 				currentNode = getLowestDistanceNode(unsettledNodes);
 				if(minComunCap > currentNode.getPackagesProcesados() && currentNode.getId()!=start.getId()) minComunCap = currentNode.getPackagesProcesados();
 				unsettledNodes.remove(currentNode);
 				settledNodes.add(currentNode);
-
 				if(currentNode.getId() == objective.getId() ){
 					//deberá retornar el current node
 					break;
 				}
-	
 				for (Entry<Node, Pair<Double, Flight>> adjacencyPair : currentNode.getAdjacentNodes().entrySet()) {//aqui se generan suscesores de node_n
-					
 					Node adjacentNode = adjacencyPair.getKey();
 					Flight f = adjacencyPair.getValue().getValue();
 					LocalTime takeOff, arrival;
@@ -119,13 +114,7 @@ public class AStar {
 					Date dia;
 					dia=Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
 					Double horas;
-					// horas=durationBetweenTime(takeOff, arrival, takeOffUtc, arrivalUtc);
-					// time.plusMinutes(horas.longValue());
-					// if(time.isBefore(LocalTime.parse("23:59:59")) ){
-					// }
-
-					FlightPlan fp = new FlightPlan(dia, dia, f);
-					//fp = actualizarDiasFP(fp);
+					FlightPlan fp = buscarFP(f,date);
 					if(f.getTakeOffAirport().getId() == start.getId()) isStart=true;
 					takeOff= f.getTakeOffTime().toLocalTime();
 					arrival = f.getArrivalTime().toLocalTime();
@@ -139,8 +128,6 @@ public class AStar {
 					fp.setPackagesNumberSimulated(packagesProcesados);
 					adjacentNode.setFlightPlan(fp);
 					if(packagesProcesados > 0){
-						//if(minComunCap > packagesProcesados) minComunCap = packagesProcesados;
-						//fp.setPackagesNumber(packagesProcesados);
 						newDistance=durationBetweenTime(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc);
 						adjacentNode.setDistance(currentNode.getDistance() + newDistance);
 						adjacentNode.setPackagesProcesados(packagesProcesados);
@@ -150,7 +137,6 @@ public class AStar {
 						Double n=Double.MAX_VALUE;
 						adjacentNode.setDistance(n);
 					}
-	
 					if (!settledNodes.contains(adjacentNode) && !unsettledNodes.contains(adjacentNode)) {
 						unsettledNodes.add(adjacentNode);
 					}
@@ -175,17 +161,25 @@ public class AStar {
 							}
 						}
 					}
-	
 				}
-				
 			}
 			actualizarCapacidad(start,currentNode,minComunCap);
 			cantPackages-=minComunCap;
 			bestWays.add(currentNode);
 			actualizarStart(start, objective.getId());
 		}
-		
 		return bestWays;
+	}
+	private FlightPlan buscarFP(Flight f, LocalDate date) {
+		FlightPlan fpResult=null;
+		List<FlightPlan> listFP;
+		listFP = serviceFlightPlan.findAll();
+		for(FlightPlan fp:listFP){
+			if(fp.getFlight().getIdFlight()==f.getIdFlight() && fp.getTakeOffDate().equals(date)){
+				fpResult=fp;
+			}
+		}
+		return fpResult;
 	}
 	Node contiene(Set<Node> unsettledNodes, Integer id){
 		Node result=null;
@@ -197,17 +191,16 @@ public class AStar {
 		return result;
 	}
 	private void actualizarCapacidad(Node start, Node node, Integer minComunCapac) {
-		
 		while(true){
 			if(node.getId()==start.getId()) break;
 			Flight f=node.getArrivalFlight();
-			Warehouse w=f.getArrivalAirport().getWarehouse();			
-			//serviceFlight.updateOccupiedCapacity(f.getIdFlight(),f.getOccupiedCapacity()+minComunCapac);		
+			FlightPlan fp=node.getFlightPlan();
+			Warehouse w=f.getArrivalAirport().getWarehouse();
+			//serviceFlight.updateOccupiedCapacity(f.getIdFlight(),f.getOccupiedCapacity()+minComunCapac);
+			serviceFlightPlan.updateOccupiedCapacity(fp.getId(),fp.getPackagesNumberSimulated()+minComunCapac);
 			serviceWarehouse.updateOccupiedCapacity(w.getId(), w.getOccupiedCapacity()+minComunCapac);
 			node=node.getFather();
-
-		}	
-		
+		}
 	}
 	public double heuristic(Airport arrivalAirport, Integer takeOffNode, Integer objective, LocalTime time){
 		double  timeHeu= 10000000.0;
@@ -372,83 +365,6 @@ public class AStar {
 	private Double getBestTime(Integer start, Integer objective) {
 		return null;
 	}
-	// public List <RoutePlan> determinRoute(Integer start, Integer objective, LocalDate date, LocalTime time, boolean simulated, Integer cantPackages) {
-	// 	List <RoutePlan> listplan = new ArrayList<>();
-	// 	/*Verificar si almacen de origen tiene espacio*/
-	// 	Optional<Warehouse> oWarehouse = serviceWarehouse.findByAirport_id(start);
-	// 	if (oWarehouse.isPresent()) {
-	// 		Warehouse warehouse = oWarehouse.get();
-	// 		Date dateStorage;
-	// 		Date arrivalDate = convertToDateViaSqlDate(date);
-	// 		Time arrivalTime = Time.valueOf(time);
-	// 		dateStorage = convertDateAndTimeToDate(arrivalDate, arrivalTime);
-	// 		if (dateStorage == null) {
-	// 			System.out.println("Error en conversión");
-	// 		} else {
-	// 			/*Calendar c = Calendar.getInstance();
-	// 			c.setTime(dateStorage);
-	// 			c.add(Calendar.HOUR, -5);
-	// 			Date dateStoragePatch=c.getTime();
-	// 			System.out.println(dateStorage);*/
-	// 			List<StorageRegister> listRegisters = serviceStorage.findAllPresentOnDate(dateStorage/*Patch*/,warehouse.getId());
-	// 			if (listRegisters.size() >= warehouse.getCapacity()) {
-	// 				//System.out.println("No hay espacio en almacen");
-	// 				Incident incident = new Incident();
-	// 				incident.setAirport(warehouse.getAirport());
-	// 				incident.setRegisterDate(convertToDateViaSqlDate(convertToLocalDateViaInstant(dateStorage)));
-	// 				incident.setDescription("FULL WAREHOUSE");
-	// 				incident.setActive(true);
-	// 				incident.setSimulated(simulated);
-	// 				incident.setRegisterDate(dateStorage);
-	// 				this.daoIncident.save(incident);
-					
-	// 				RoutePlan plan=new RoutePlan();
-	// 				plan.setStatus(RoutePlanStatus.CANCELADO);
-	// 				plan.setCurrentStage(0);
-	// 				plan.setEstimatedTime(0.0);
-	// 				plan.setFlightPlans(new ArrayList<FlightPlan>());
-	// 				listplan.add(plan);
-	// 				return listplan;
-	// 			}
-	// 		}
-	// 	}
-	// 	else {
-	// 		System.out.println("No existe el almacen?");
-			
-	// 		RoutePlan plan=new RoutePlan();
-	// 		plan.setStatus(RoutePlanStatus.CANCELADO);
-	// 		plan.setCurrentStage(0);
-	// 		plan.setEstimatedTime(0.0);
-	// 		plan.setFlightPlans(new ArrayList<FlightPlan>());
-	// 		listplan.add(plan);
-	// 		return listplan;
-	// 	}
-
-	// 	List <Node> listResult = getShortestPath(start, objective, date, time, simulated,cantPackages);
-	// 	//obtengo el shortestPath hasta este momento
-	// 	for(Node result: listResult){
-	// 			RoutePlan plan = new RoutePlan();
-	// 			if (result.getId() == 0) {
-	// 				/* Sin resultado */
-	// 				return listplan;
-	// 			}
-	// 			plan.setCurrentStage(0);
-	// 			plan.setStatus(RoutePlanStatus.EN_EJECUCION);
-	// 			List<FlightPlan> listFlightPlan = new ArrayList<>();
-	// 			List<Pair<Node, FlightPlan>> listPairs = result.getShortestPath();
-	// 			if (listPairs.size() == 0) {
-	// 				System.out.println("Sin resultado");
-	// 			}
-	// 			for (Pair<Node, FlightPlan> p : listPairs) {
-	// 				FlightPlan fp = p.getValue();
-	// 				listFlightPlan.add(fp);
-	// 			}
-	// 			plan.setFlightPlans(listFlightPlan);
-	// 			plan.setEstimatedTime(result.getDistance());
-	// 			listplan.add(plan);
-	// 	}
-	// 	return listplan;
-	// }
 	public Integer insertHistoricPackage(String originAirport, String destinationAirport, String dateS, LocalTime time, Integer cantPackages) {
 		List <RoutePlan> listplan = new ArrayList<>();
 		int resultado=0;

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pucp.dp1.redex.dao.route.IFlightPlan;
+import pucp.dp1.redex.model.PACK.Flight;
 import pucp.dp1.redex.model.route.FlightPlan;
 import pucp.dp1.redex.services.dao.route.IFlightPlanService;
 
@@ -32,6 +33,17 @@ public class FlightPlanService implements IFlightPlanService{
 		dao.cleanSimulated();
 	}
 
-	
+
+	@Override
+	public Optional<FlightPlan> updateOccupiedCapacity(Integer id, Integer capacity) {
+		Optional<FlightPlan> ff = this.dao.findById(id);
+		if(ff.isPresent()) {
+			ff.get().setOccupiedCapacity(capacity);
+			this.dao.save(ff.get());
+			return ff;
+		} else {
+			return Optional.empty();
+		}
+	}
 
 }
