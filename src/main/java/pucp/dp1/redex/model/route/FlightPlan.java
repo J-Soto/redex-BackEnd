@@ -35,7 +35,10 @@ public class FlightPlan implements Serializable{
 
 	@Column(name = "packagesNumber")
 	private Integer packagesNumber;
-	
+
+	@Column(name = "occupied_Capacity")
+	private Integer occupiedCapacity;
+
 	@Column(name = "full")
 	private Boolean full;
 	
@@ -61,8 +64,6 @@ public class FlightPlan implements Serializable{
 	@OneToOne
 	@JsonIgnoreProperties("flightPlan")
 	private Flight flight;
-
-	
 
 	public FlightPlan() {
 	}
@@ -95,6 +96,13 @@ public class FlightPlan implements Serializable{
 		this.full = full;
 	}
 
+	public Integer getOccupiedCapacity() {
+		return this.occupiedCapacity;
+	}
+
+	public void setOccupiedCapacity(final Integer occupiedCapacity) {
+		this.occupiedCapacity = occupiedCapacity;
+	}
 	public FlightPlanStatus getStatus() {
 		return status;
 	}
@@ -134,7 +142,6 @@ public class FlightPlan implements Serializable{
 	public void setPackagesNumberSimulated(Integer packagesNumberSimulated) {
 		this.packagesNumberSimulated = packagesNumberSimulated;
 	}
-
 	public Boolean getFullSimulated() {
 		return fullSimulated;
 	}

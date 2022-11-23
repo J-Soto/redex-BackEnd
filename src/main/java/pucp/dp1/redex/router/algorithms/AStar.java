@@ -86,8 +86,7 @@ public class AStar {
 		Integer minComunCap=0;
 		Node currentNode=null;
 		List<Node>  bestWays =new LinkedList<>();
-		Integer packagesProcesados,packagesProcesadosR;	
-
+		Integer packagesProcesados,packagesProcesadosR;
 		while(true){
 			if(cantPackages <= 0) break;
 			minComunCap=cantPackages;				
@@ -96,33 +95,32 @@ public class AStar {
 			currentNode=null;
 			start.setDistance(0.0);
 			unsettledNodes.add(start);
-			
 			while (unsettledNodes.size() != 0) {
 				currentNode = getLowestDistanceNode(unsettledNodes);
 				if(minComunCap > currentNode.getPackagesProcesados() && currentNode.getId()!=start.getId()) minComunCap = currentNode.getPackagesProcesados();
 				unsettledNodes.remove(currentNode);
 				settledNodes.add(currentNode);
-
 				if(currentNode.getId() == objective.getId() ){
 					//deberá retornar el current node
 					break;
 				}
-	
 				for (Entry<Node, Pair<Double, Flight>> adjacencyPair : currentNode.getAdjacentNodes().entrySet()) {//aqui se generan suscesores de node_n
-					
 					Node adjacentNode = adjacencyPair.getKey();
 					Flight f = adjacencyPair.getValue().getValue();
 					LocalTime takeOff, arrival;
 					Integer takeOffUtc, arrivalUtc;
 					Double newDistance=0.0;
 					Boolean isStart=false;				
-					FlightPlan fp = new FlightPlan(f);
-					fp = buscarFP(f);
+					Date dia;
+					dia=Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+					Double horas;
 					if(f.getTakeOffAirport().getId() == start.getId()) isStart=true;
 					takeOff= f.getTakeOffTime().toLocalTime();
 					arrival = f.getArrivalTime().toLocalTime();
 					takeOffUtc =f.getTakeOffAirport().getCity().getCountry().getUtc();
 					arrivalUtc =f.getArrivalAirport().getCity().getCountry().getUtc();
+					LocalDate takeOfDate = calcularTakeOfDate(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc);
+					FlightPlan fp = buscarFP(f,takeOfDate);
 					adjacentNode.setArrivalFlight(f);
 					adjacentNode.setFather(currentNode);
 					adjacentNode.setHeuristic(heuristic(adjacentNode.getArrivalFlight().getArrivalAirport(),currentNode.getId(), objective.getId(), time));
@@ -140,10 +138,10 @@ public class AStar {
 						Double n=Double.MAX_VALUE;
 						adjacentNode.setDistance(n);
 					}
-	
 					if (!settledNodes.contains(adjacentNode) && !unsettledNodes.contains(adjacentNode)) {
 						unsettledNodes.add(adjacentNode);
 					}
+
 					else{
 						//if unsettlet tiene un nodo que es el mismo pais
 						Node oldCurrentNode;
@@ -154,7 +152,7 @@ public class AStar {
 								//debe actualizarse a en el espacio de memoria, para que se actualice en la cola
 								
 								//ver disponibilidad
-								packagesProcesadosR= hayCapacidad(adjacentNode.getArrivalFlight(), adjacentNode.getArrivalFlight().getArrivalAirport().getWarehouse(), minComunCap);
+								packagesProcesadosR= hayCapacidad(adjacentNode.getArrivalFlight(), adjacentNode.getArrivalFlight().getArrivalAirport().getWarehouse(), minComunCap,fp);
 								if(packagesProcesadosR>=minComunCap){
 									//solo se actualiza si tenía mayor o igual capacidad que la otra opcion
 									oldCurrentNode.setPackagesProcesados(adjacentNode.getPackagesProcesados());
@@ -165,24 +163,51 @@ public class AStar {
 							}
 						}
 					}
-	
 				}
-				
 			}
 			actualizarCapacidad(start,currentNode,minComunCap);
 			cantPackages-=minComunCap;
 			bestWays.add(currentNode);
 			actualizarStart(start, objective.getId());
 		}
-		
 		return bestWays;
 	}
-	private FlightPlan buscarFP(Flight f) {
+	private LocalDate calcularTakeOfDate(Boolean isStart, LocalDate date,LocalTime time,LocalTime start, LocalTime end, Integer utcStart, Integer utcEnd) {
+
+		double acumulator=0;
+		Integer dia=0;
+		LocalDate diaTakeOff=date;
+		LocalDate diaIni,diaFin;
+		
+
+		if(!isStart) acumulator+=60; //agregar una hora si es escala
+
+		if(utcStart>0) start.minusHours(utcStart);		
+		else {
+			utcStart*=-1;
+			start.plusHours(utcStart);
+		}
+
+		if(utcEnd>0) end.minusHours(utcEnd);		
+		else {
+			utcEnd*=-1;
+			end.plusHours(utcEnd);
+		}
+		
+		//calcular tiempo hasta el vuelo
+		if(time.isBefore(start));
+		else 	dia++;
+
+		diaTakeOff.plusDays(dia);	
+		return diaTakeOff;
+		
+	}
+	private FlightPlan buscarFP(Flight f, LocalDate date) {
 		FlightPlan fpResult=null;
 		List<FlightPlan> listFP;
 		listFP = serviceFlightPlan.findAll();
 		for(FlightPlan fp:listFP){
-			if(fp.getFlight().getIdFlight()==f.getIdFlight()){
+			if(fp.getFlight().getIdFlight()==f.getIdFlight() && fp.getTakeOffDate().equals(date)){
 				fpResult=fp;
 			}
 		}
@@ -198,19 +223,16 @@ public class AStar {
 		return result;
 	}
 	private void actualizarCapacidad(Node start, Node node, Integer minComunCapac) {
-		
 		while(true){
 			if(node.getId()==start.getId()) break;
 			Flight f=node.getArrivalFlight();
 			FlightPlan fp=node.getFlightPlan();
-			Warehouse w=f.getArrivalAirport().getWarehouse();			
-			//serviceFlight.updateOccupiedCapacity(f.getIdFlight(),f.getOccupiedCapacity()+minComunCapac);		
-			serviceFlight.updateOccupiedCapacity(fp.getId(),fp.getPackagesNumberSimulated()+minComunCapac);
+			Warehouse w=f.getArrivalAirport().getWarehouse();
+			//serviceFlight.updateOccupiedCapacity(f.getIdFlight(),f.getOccupiedCapacity()+minComunCapac);
+			serviceFlightPlan.updateOccupiedCapacity(fp.getId(),fp.getPackagesNumberSimulated()+minComunCapac);
 			serviceWarehouse.updateOccupiedCapacity(w.getId(), w.getOccupiedCapacity()+minComunCapac);
 			node=node.getFather();
-
-		}	
-		
+		}
 	}
 	public double heuristic(Airport arrivalAirport, Integer takeOffNode, Integer objective, LocalTime time){
 		double  timeHeu= 10000000.0;
@@ -338,7 +360,6 @@ public class AStar {
 	private Double getBestTime(Integer start, Integer objective) {
 		return null;
 	}
-	
 	public Integer insertHistoricPackage(String originAirport, String destinationAirport, String dateS, LocalTime time, Integer cantPackages) {
 		List <RoutePlan> listplan = new ArrayList<>();
 		int resultado=0;
@@ -513,8 +534,8 @@ public class AStar {
 		diaIni=Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		diaFinLC.plusDays(dia);
 		diaFin=Date.from(diaFinLC.atStartOfDay(ZoneId.systemDefault()).toInstant());	
-		fp.setTakeOffDate(diaIni);
-		fp.setArrivalDate(diaFin);
+		//fp.setTakeOffDate(diaIni);
+		//fp.setArrivalDate(diaFin);
 		return acumulator;
 	}
 	public LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
