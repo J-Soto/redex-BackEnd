@@ -120,7 +120,7 @@ public class DispatchService implements IDispatchService {
 
 				*/
 
-				//this.daoFlightPlan.save(actual_plan.get());
+				this.daoFlightPlan.save(actual_plan.get());
 				if (listSize - 1 == i) {
 					dispatch.setDestinationAirport(actual_plan.get().getFlight().getArrivalAirport());
 				} else {
@@ -138,7 +138,7 @@ public class DispatchService implements IDispatchService {
 				}
 				*/
 
-				//this.daoFlightPlan.save(plan);
+				this.daoFlightPlan.save(plan);
 				if (listSize - 1 == i) {
 					dispatch.setDestinationAirport(plan.getFlight().getArrivalAirport());
 				} else {
@@ -147,7 +147,7 @@ public class DispatchService implements IDispatchService {
 			}
 		}
 		//fecha estimada de fin
-		dispatch.setEndDate((this.serviceAStart.convertDateAndTimeToDate(plans.get(plans.size()-1).getArrivalDate(), plans.get(plans.size()-1).getFlight().getArrivalTime()).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()));
+		//dispatch.setEndDate((this.serviceAStart.convertDateAndTimeToDate(plans.get(plans.size()-1).getArrivalDate(), plans.get(plans.size()-1).getFlight().getArrivalTime()).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()));
 		// guardar ruta
 		this.daoRoutePlan.save(dispatch.getPack().getRoutePlan());
 		this.daoPackage.save(dispatch.getPack());
@@ -275,10 +275,6 @@ public class DispatchService implements IDispatchService {
 			//Convierte multifile a zip
 			File tempFile = File.createTempFile("upload", null);
 			mf.transferTo(tempFile);
-			ZipFile zip = new ZipFile(tempFile);
-			//loop por cada archivo del zip
-			Enumeration<? extends ZipEntry> entries = zip.entries();
-			ZipEntry entry = entries.nextElement();
 			Integer i = 0;
 			PriorityQueue<PackageTemp> pq = new PriorityQueue<PackageTemp>(new PackageComparator());
 			SimpleDateFormat formatterDate = new SimpleDateFormat("yyyyMMdd");
@@ -288,6 +284,11 @@ public class DispatchService implements IDispatchService {
 			boolean colapso = false;
 			int aumentos=0;
 			while(true){
+				ZipFile zip = new ZipFile(tempFile);
+				//loop por cada archivo del zip
+				Enumeration<? extends ZipEntry> entries = zip.entries();
+				ZipEntry entry = entries.nextElement();
+						
 				while (entries.hasMoreElements()) {
 					//ZipEntry entry = entries.nextElement();
 					entry = entries.nextElement();
@@ -331,13 +332,13 @@ public class DispatchService implements IDispatchService {
 					}
 				}
 				//se aumenta en 1 el dia de la fecha enviada por front luego de terminar de procesar 1 dia el algoritmo
-				date1.plusDays(1);
+				date1=date1.plusDays(1);
 				//se aumenta en 1 el numero de aumentos de dias para controlar el numero de iteraciones
 				aumentos++;
 				//si no se esta evaluando el colapso y ya pasaron 5 dias termina la ejecucion
 				if(!colapso && aumentos==5) break;
+				zip.close();
 			}
-			zip.close();
 			tempFile.delete();
 			return "OK";
 		} catch (IOException io) {
