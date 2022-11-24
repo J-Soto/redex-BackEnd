@@ -382,7 +382,7 @@ public class DispatchService implements IDispatchService {
 		try {
 			Iterator<String> it = request.getFileNames();
 			MultipartFile mf = request.getFile(it.next());
-			String datereq = request.getParameter("date").substring(1,11).replace("-", "");
+			String datereq = request.getParameter("date").substring(1, 11).replace("-", "");
 			System.out.println("1 \n");
 			//Convierte multifile a zip
 			File tempFile = File.createTempFile("upload", null);
@@ -391,54 +391,63 @@ public class DispatchService implements IDispatchService {
 			//loop por cada archivo del zip
 			Enumeration<? extends ZipEntry> entries = zip.entries();
 			ZipEntry entry = entries.nextElement();
-			Integer i=0;
+			Integer i = 0;
 			PriorityQueue<PackageTemp> pq = new PriorityQueue<PackageTemp>(new PackageComparator());
-			while (entries.hasMoreElements()) {
-				//ZipEntry entry = entries.nextElement();
-				entry = entries.nextElement();
-				InputStream stream = zip.getInputStream(entry);
-				InputStreamReader reader = new InputStreamReader(stream, "UTF-8");
-				Scanner inputStream = new Scanner(reader);
-				//lectura de cada linea del archivo
-				//Integer stateColapso = 0;
-				SimpleDateFormat formatterDate = new SimpleDateFormat("yyyyMMdd");
-				Date dateDate;
-				dateDate = formatterDate.parse(datereq);
-				LocalDate date1 = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(dateDate));
-				String originAirport;
-				String date;
-				String time;
-				String destinationAirport;
-				Integer cantPackages;
-				while (inputStream.hasNext()) {
-					String data = inputStream.nextLine();
-					List<String> line = Arrays.asList(data.split("-"));
-					//datos de ingreso para el algoritmo
-					originAirport = line.get(0).substring(0, 4);
-					date = line.get(1);
-					time = line.get(2);
-					destinationAirport = line.get(3).substring(0, 4);
-					cantPackages = Integer.parseInt(line.get(3).substring(5));
-					// PROCESAR ALGORITMO
-					PackageTemp p = new PackageTemp(originAirport, destinationAirport, date, time, cantPackages);
-					if  (convertStringToLocalDate(date).isAfter(date1)) break;
-					else if (convertStringToLocalDate(date).equals(date1)) 
-						pq.add(p);
+			SimpleDateFormat formatterDate = new SimpleDateFormat("yyyyMMdd");
+			Date dateDate;
+			dateDate = formatterDate.parse(datereq);
+			LocalDate date1 = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(dateDate));
+			boolean colapso = false;
+			int aumentos=0;
+			while(true){
+				while (entries.hasMoreElements()) {
+					//ZipEntry entry = entries.nextElement();
+					entry = entries.nextElement();
+					InputStream stream = zip.getInputStream(entry);
+					InputStreamReader reader = new InputStreamReader(stream, "UTF-8");
+					Scanner inputStream = new Scanner(reader);
+					//lectura de cada linea del archivo
+					//Integer stateColapso = 0;
+					String originAirport;
+					String date;
+					String time;
+					String destinationAirport;
+					Integer cantPackages;
+					while (inputStream.hasNext()) {
+						String data = inputStream.nextLine();
+						List<String> line = Arrays.asList(data.split("-"));
+						//datos de ingreso para el algoritmo
+						originAirport = line.get(0).substring(0, 4);
+						date = line.get(1);
+						time = line.get(2);
+						destinationAirport = line.get(3).substring(0, 4);
+						cantPackages = Integer.parseInt(line.get(3).substring(5));
+						// PROCESAR ALGORITMO
+						PackageTemp p = new PackageTemp(originAirport, destinationAirport, date, time, cantPackages);
+						if (convertStringToLocalDate(date).isAfter(date1)) break;
+						else if (convertStringToLocalDate(date).equals(date1))
+							pq.add(p);
 						//insetar(pq,p);
+					}
+					reader.close();
+					inputStream.close();
 				}
-				reader.close();
-				inputStream.close();
-			}
-			while (pq.size()!=0) {
-				PackageTemp pack=pq.poll();
-				//System.out.println(pack.getOriginAirport() + "  " + pack.getDate() + " " + pack.getTime() + " " + pack.getDestinationAirport() + " " + pack.getCantPackages());
-				Integer resultPlan = serviceAStart.insertHistoricPackage(pack.getOriginAirport(), pack.getDestinationAirport(), pack.getDate(), pack.getTime(), pack.getCantPackages());
-				if (resultPlan!=1) {
-					System.out.println(pack.getOriginAirport() + "  " + pack.getDate() + " " + pack.getTime() + " " + pack.getDestinationAirport() + " " + pack.getCantPackages());
-					break;
+				while (pq.size() != 0) {
+					PackageTemp pack = pq.poll();
+					//System.out.println(pack.getOriginAirport() + "  " + pack.getDate() + " " + pack.getTime() + " " + pack.getDestinationAirport() + " " + pack.getCantPackages());
+					Integer resultPlan = serviceAStart.insertHistoricPackage(pack.getOriginAirport(), pack.getDestinationAirport(), pack.getDate(), pack.getTime(), pack.getCantPackages());
+					if (resultPlan != 1) {
+						System.out.println(pack.getOriginAirport() + "  " + pack.getDate() + " " + pack.getTime() + " " + pack.getDestinationAirport() + " " + pack.getCantPackages());
+						break;
+					}
 				}
-			}
-		
+				//se aumenta en 1 el dia de la fecha enviada por front luego de terminar de procesar 1 dia el algoritmo
+				date1.plusDays(1);
+				//se aumenta en 1 el numero de aumentos de dias para controlar el numero de iteraciones
+				aumentos++;
+				//si no se esta evaluando el colapso y ya pasaron 5 dias termina la ejecucion
+				if(!colapso && aumentos==5) break;
+		}
 			zip.close();
 			tempFile.delete();
 			return "OK";
