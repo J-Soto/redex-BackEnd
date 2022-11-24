@@ -120,7 +120,7 @@ public class DispatchService implements IDispatchService {
 
 				*/
 
-				this.daoFlightPlan.save(actual_plan.get());
+				//this.daoFlightPlan.save(actual_plan.get());
 				if (listSize - 1 == i) {
 					dispatch.setDestinationAirport(actual_plan.get().getFlight().getArrivalAirport());
 				} else {
@@ -138,7 +138,7 @@ public class DispatchService implements IDispatchService {
 				}
 				*/
 
-				this.daoFlightPlan.save(plan);
+				//this.daoFlightPlan.save(plan);
 				if (listSize - 1 == i) {
 					dispatch.setDestinationAirport(plan.getFlight().getArrivalAirport());
 				} else {
@@ -266,7 +266,6 @@ public class DispatchService implements IDispatchService {
 	}
 	@Override
 	public String masiveLoad(MultipartHttpServletRequest request) {
-		//"2022-08-01
 		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 		try {
 			Iterator<String> it = request.getFileNames();

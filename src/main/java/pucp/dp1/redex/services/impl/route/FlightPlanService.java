@@ -14,26 +14,20 @@ import pucp.dp1.redex.services.dao.route.IFlightPlanService;
 
 @Service
 public class FlightPlanService implements IFlightPlanService{
-	
 	@Autowired
 	private IFlightPlan dao;
-
 	@Override
 	public List<FlightPlan> findAll() {
 		return dao.findAll();
 	}
-
 	@Override
 	public Optional<FlightPlan> findByFlight_IdFlightAndTakeOffDate(Integer id, Date date) {
 		return dao.findByFlight_IdFlightAndTakeOffDate(id, date);
 	}
-	
 	@Override
 	public void clenaSimulated() {
 		dao.cleanSimulated();
 	}
-
-
 	@Override
 	public Optional<FlightPlan> updateOccupiedCapacity(Integer id, Integer capacity) {
 		Optional<FlightPlan> ff = this.dao.findById(id);
@@ -45,5 +39,4 @@ public class FlightPlanService implements IFlightPlanService{
 			return Optional.empty();
 		}
 	}
-
 }
