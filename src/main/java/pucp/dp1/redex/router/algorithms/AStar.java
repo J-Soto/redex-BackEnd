@@ -147,7 +147,6 @@ public class AStar {
 					if (!settledNodes.contains(adjacentNode) && !unsettledNodes.contains(adjacentNode)) {
 						unsettledNodes.add(adjacentNode);
 					}
-
 					else{
 						//if unsettlet tiene un nodo que es el mismo pais
 						Node oldCurrentNode;
@@ -390,7 +389,7 @@ public class AStar {
 						d.setDestinationAirport(destination);
 						d.setOriginAirport(origin);
 						d.setPack(p);
-						d.setRegisterDate(LocalDateTime.now());
+						d.setRegisterDate(LocalDateTime.of(date, time));
 						d.setStatus(DispatchStatus.SIMULADO);
 						d.setActive(true);
 						d = serviceDispatch.save(d,true,convertDateAndTimeToDate(convertToDateViaSqlDate(date), Time.valueOf(time)));
