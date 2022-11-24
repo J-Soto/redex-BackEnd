@@ -1,0 +1,24 @@
+<changelist name="Uncommitted_changes_before_Update_at_23_11_2022_03_21_a_ m__[Changes]1" date="1669191684742" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_11_2022_03_21_a_ m__[Changes]1/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 23/11/2022 03:21 a. m. [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/pucp/dp1/redex/model/route/FlightPlan.class" />
+    <option name="AFTER_PATH" value="target/classes/pucp/dp1/redex/model/route/FlightPlan.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_11_2022_03_21_a_ m__[Changes]1/FlightPlan.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/pucp/dp1/redex/router/algorithms/AStar2.class" />
+    <option name="AFTER_PATH" value="target/classes/pucp/dp1/redex/router/algorithms/AStar2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_11_2022_03_21_a_ m__[Changes]1/AStar2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/pucp/dp1/redex/router/algorithms/Dijkstra.class" />
+    <option name="AFTER_PATH" value="target/classes/pucp/dp1/redex/router/algorithms/Dijkstra.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_11_2022_03_21_a_ m__[Changes]1/Dijkstra.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/pucp/dp1/redex/services/dao/route/IFlightPlanService.class" />
+    <option name="AFTER_PATH" value="target/classes/pucp/dp1/redex/services/dao/route/IFlightPlanService.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_11_2022_03_21_a_ m__[Changes]1/IFlightPlanService.class" />
+  </binary>
+</changelist>

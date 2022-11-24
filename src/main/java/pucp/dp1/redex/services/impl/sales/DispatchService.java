@@ -377,10 +377,12 @@ public class DispatchService implements IDispatchService {
 
 	@Override
 	public String masiveLoad(MultipartHttpServletRequest request) {
+		//"2022-08-01
 		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 		try {
 			Iterator<String> it = request.getFileNames();
 			MultipartFile mf = request.getFile(it.next());
+			String datereq = request.getParameter("date").substring(1,11).replace("-", "");
 			System.out.println("1 \n");
 			//Convierte multifile a zip
 			File tempFile = File.createTempFile("upload", null);
@@ -391,11 +393,6 @@ public class DispatchService implements IDispatchService {
 			ZipEntry entry = entries.nextElement();
 			Integer i=0;
 			PriorityQueue<PackageTemp> pq = new PriorityQueue<PackageTemp>(new PackageComparator());
-			//List<PackageTemp> pq = new ArrayList<>();
-					// (a, b) -> {
-					// 	if ( a.getTime().isAfter(b.getTime()) ) return 1;
-					// 	else if (a.getTime().isBefore(b.getTime())) return -1;
-					// 	return 0;});
 			while (entries.hasMoreElements()) {
 				//ZipEntry entry = entries.nextElement();
 				entry = entries.nextElement();
@@ -406,7 +403,7 @@ public class DispatchService implements IDispatchService {
 				//Integer stateColapso = 0;
 				SimpleDateFormat formatterDate = new SimpleDateFormat("yyyyMMdd");
 				Date dateDate;
-				dateDate = formatterDate.parse("20220802");
+				dateDate = formatterDate.parse(datereq);
 				LocalDate date1 = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(dateDate));
 				String originAirport;
 				String date;
