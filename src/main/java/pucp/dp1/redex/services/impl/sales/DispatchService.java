@@ -281,9 +281,9 @@ public class DispatchService implements IDispatchService {
 			Date dateDate;
 			dateDate = formatterDate.parse(datereq);
 			LocalDate date1 = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(dateDate));
-			boolean colapso = false;
-			int aumentos=0;
-			while(true){
+			//boolean colapso = false;
+			//int aumentos=0;
+			//while(true){
 				ZipFile zip = new ZipFile(tempFile);
 				//loop por cada archivo del zip
 				Enumeration<? extends ZipEntry> entries = zip.entries();
@@ -332,13 +332,13 @@ public class DispatchService implements IDispatchService {
 					}
 				}
 				//se aumenta en 1 el dia de la fecha enviada por front luego de terminar de procesar 1 dia el algoritmo
-				date1=date1.plusDays(1);
+				//date1=date1.plusDays(1);
 				//se aumenta en 1 el numero de aumentos de dias para controlar el numero de iteraciones
-				aumentos++;
+				//aumentos++;
 				//si no se esta evaluando el colapso y ya pasaron 5 dias termina la ejecucion
-				if(!colapso && aumentos==5) break;
+				//if(!colapso && aumentos==5) break;
 				zip.close();
-			}
+			//}
 			tempFile.delete();
 			return "OK";
 		} catch (IOException io) {
