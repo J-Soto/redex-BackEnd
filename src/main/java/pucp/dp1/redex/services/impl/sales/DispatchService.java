@@ -20,8 +20,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import pucp.dp1.redex.dao.location.ICountry;
 import pucp.dp1.redex.dao.route.IFlightPlan;
 import pucp.dp1.redex.dao.route.IRoutePlan;
+import pucp.dp1.redex.dao.sales.IAirport;
 import pucp.dp1.redex.dao.sales.IClient;
 import pucp.dp1.redex.dao.sales.IDispatch;
 import pucp.dp1.redex.dao.storage.IPackage;
@@ -29,8 +31,10 @@ import pucp.dp1.redex.dao.storage.IStorageRegister;
 import pucp.dp1.redex.dao.storage.IWarehouse;
 import pucp.dp1.redex.dao.utils.ISummaryCase;
 import pucp.dp1.redex.dao.utils.ITrackingHistory;
+import pucp.dp1.redex.model.location.Country;
 import pucp.dp1.redex.model.route.FlightPlan;
 import pucp.dp1.redex.model.route.RoutePlan;
+import pucp.dp1.redex.model.sales.Airport;
 import pucp.dp1.redex.model.sales.Dispatch;
 import pucp.dp1.redex.model.sales.DispatchStatus;
 import pucp.dp1.redex.model.storage.Package;
@@ -73,6 +77,10 @@ public class DispatchService implements IDispatchService {
 	private ITrackingHistory daoTracking;
 	@Autowired
 	private AStar serviceAStart;
+	@Autowired
+	private IAirport daoAirport;
+	@Autowired
+	private ICountry daoCountry;
 	@Override
 	public List<Dispatch> findByActiveTrue() {
 		return this.dao.findByActiveTrue();
@@ -182,18 +190,35 @@ public class DispatchService implements IDispatchService {
 	class PackageTemp {
 		String originAirport;
 		String destinationAirport;
-		String date;
-		String time;
+		LocalDate date;
+		LocalTime time;
 		Integer cantPackages;
-
-		public PackageTemp(final String originAirport, final String destinationAirport, final String date, final String time, final Integer cantPackages) {
+		public LocalTime toUtc(Integer utc) {
+			LocalTime aux;
+			aux=this.time;
+			if(utc>0){
+				time=time.minusHours(utc);
+				if(time.isAfter(aux)) {
+					date=date.minusDays(1);
+				}
+			}
+			else{
+				utc*=-1;
+				time=time.plusHours(utc);
+				if(time.isBefore(aux)) {
+					date=date.plusDays(1);
+				}
+			}
+			return time;
+		}
+		public PackageTemp(final String originAirport, final String destinationAirport, final LocalDate date, final LocalTime time, final Integer cantPackages,Integer utc) {
 			this.originAirport = originAirport;
 			this.destinationAirport = destinationAirport;
 			this.date = date;
 			this.time = time;
+			this.time=toUtc(utc);
 			this.cantPackages = cantPackages;
 		}
-
 		public String getOriginAirport() {
 			return this.originAirport;
 		}
@@ -210,19 +235,19 @@ public class DispatchService implements IDispatchService {
 			this.destinationAirport = destinationAirport;
 		}
 
-		public String getDate() {
+		public LocalDate getDate() {
 			return this.date;
 		}
 
-		public void setDate(final String date) {
+		public void setDate(final LocalDate date) {
 			this.date = date;
 		}
 
 		public LocalTime getTime() {
-			return LocalTime.parse(this.time);
+			return this.time;
 		}
 
-		public void setTime(final String time) {
+		public void setTime(final LocalTime time) {
 			this.time = time;
 		}
 
@@ -284,11 +309,12 @@ public class DispatchService implements IDispatchService {
 			//boolean colapso = false;
 			//int aumentos=0;
 			//while(true){
-				ZipFile zip = new ZipFile(tempFile);
+			ZipFile zip = new ZipFile(tempFile);
 				//loop por cada archivo del zip
 				Enumeration<? extends ZipEntry> entries = zip.entries();
 				ZipEntry entry = entries.nextElement();
-						
+				Optional <Airport> auxA = null;
+				Optional <Country> auxC = null;
 				while (entries.hasMoreElements()) {
 					//ZipEntry entry = entries.nextElement();
 					entry = entries.nextElement();
@@ -302,6 +328,7 @@ public class DispatchService implements IDispatchService {
 					String time;
 					String destinationAirport;
 					Integer cantPackages;
+					Integer utc;
 					while (inputStream.hasNext()) {
 						String data = inputStream.nextLine();
 						List<String> line = Arrays.asList(data.split("-"));
@@ -311,8 +338,11 @@ public class DispatchService implements IDispatchService {
 						time = line.get(2);
 						destinationAirport = line.get(3).substring(0, 4);
 						cantPackages = Integer.parseInt(line.get(3).substring(5));
+						auxA=this.daoAirport.findByCode(originAirport);
+						auxC=this.daoCountry.findById(auxA.get().getId());
+						utc=auxC.get().getUtc();
 						// PROCESAR ALGORITMO
-						PackageTemp p = new PackageTemp(originAirport, destinationAirport, date, time, cantPackages);
+						PackageTemp p = new PackageTemp(originAirport, destinationAirport, convertStringToLocalDate(date), convertStringToLocalTime(time), cantPackages,utc);
 						if (convertStringToLocalDate(date).isAfter(date1)) break;
 						else if (convertStringToLocalDate(date).equals(date1))
 							pq.add(p);

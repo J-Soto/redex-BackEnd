@@ -160,9 +160,7 @@ public class DispatchController {
 		ResponseObject response = new ResponseObject();
 		try {
 			//MultipartHttpServletRequest request = (MultipartHttpServletRequest) params.getFile("file");
-
 			//Date date=params.get("date");
-			
 			String check = this.service.masiveLoad(request);
 			if (check.equals("OK")) {
 				response.setEstado(Estado.OK);

@@ -352,7 +352,7 @@ public class AStar {
 	private Double getBestTime(Integer start, Integer objective) {
 		return null;
 	}
-	public Integer insertHistoricPackage(String originAirport, String destinationAirport, String dateS, LocalTime time, Integer cantPackages) {
+	public Integer insertHistoricPackage(String originAirport, String destinationAirport, LocalDate dateS, LocalTime time, Integer cantPackages) {
 		List <RoutePlan> listplan = new ArrayList<>();
 		int resultado=0;
 		/* Obtener id de aeropuertos */
@@ -361,7 +361,7 @@ public class AStar {
 		if (oDestination.isPresent() && oOrigin.isPresent()) {
 			Airport origin = oOrigin.get();
 			Airport destination = oDestination.get();
-			LocalDate date = convertStringToLocalDate(dateS);
+			LocalDate date = dateS;
 			time.plusHours(5);
 			if (date == null || time == null) {
 				System.out.println("Error en convertir fechas u horas");
@@ -437,19 +437,19 @@ public class AStar {
 	public double durationBetweenTime(LocalTime start, LocalTime end, Integer utcStart, Integer utcEnd) {
 		double acumulator;
 		if(utcStart>0){
-			start.minusHours(utcStart);
+			start=start.minusHours(utcStart);
 		}
 		else{
 			utcStart*=-1;
-			start.plusHours(utcStart);
+			start=start.plusHours(utcStart);
 		}
 
 		if(utcEnd>0){
-			end.minusHours(utcEnd);
+			end=end.minusHours(utcEnd);
 		}
 		else{
 			utcEnd*=-1;
-			end.plusHours(utcEnd);
+			end=end.plusHours(utcEnd);
 		}
 	
 		acumulator  =durationBetweenTime( start,  end);
@@ -492,16 +492,16 @@ public class AStar {
 
 		if(!isStart) acumulator+=60; //agregar una hora si es escala
 
-		if(utcStart>0) start.minusHours(utcStart);		
+		if(utcStart>0) start=start.minusHours(utcStart);
 		else {
 			utcStart*=-1;
-			start.plusHours(utcStart);
+			start=start.plusHours(utcStart);
 		}
 
-		if(utcEnd>0) end.minusHours(utcEnd);		
+		if(utcEnd>0) end=end.minusHours(utcEnd);
 		else {
 			utcEnd*=-1;
-			end.plusHours(utcEnd);
+			end=end.plusHours(utcEnd);
 		}
 		
 		//calcular tiempo hasta el vuelo
