@@ -8,19 +8,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TimeZone;
+import java.util.*;
 import java.util.Map.Entry;
 import javax.print.attribute.standard.Destination;
-import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javafx.util.Pair;
@@ -97,79 +88,87 @@ public class AStar {
 			unsettledNodes.add(start);
 			while (unsettledNodes.size() != 0) {
 				currentNode = getLowestDistanceNode(unsettledNodes);
-				if(minComunCap > currentNode.getPackagesProcesados() && currentNode.getId()!=start.getId()) minComunCap = currentNode.getPackagesProcesados();
-				unsettledNodes.remove(currentNode);
-				settledNodes.add(currentNode);
-				if(currentNode.getId() == objective.getId() ){
-					//deberá retornar el current node
+				if(Objects.isNull(currentNode)){
+					currentNode.setColapso(true);
+					System.out.println("Colapso");
 					break;
 				}
-				for (Entry<Node, Pair<Double, Flight>> adjacencyPair : currentNode.getAdjacentNodes().entrySet()) {//aqui se generan suscesores de node_n
-					Node adjacentNode = adjacencyPair.getKey();
-					Flight f = adjacencyPair.getValue().getValue();
-					LocalTime takeOff, arrival;
-					Integer takeOffUtc, arrivalUtc;
-					Double newDistance=0.0;
-					Boolean isStart=false;				
-					Date dia;
-					dia=Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
-					Double horas;
-					if(f.getTakeOffAirport().getId() == start.getId()) isStart=true;
-					takeOff= f.getTakeOffTime().toLocalTime();
-					arrival = f.getArrivalTime().toLocalTime();
-					takeOffUtc =f.getTakeOffAirport().getCity().getCountry().getUtc();
-					arrivalUtc =f.getArrivalAirport().getCity().getCountry().getUtc();
-					LocalDate takeOfDate = calcularTakeOfDate(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc);
-					FlightPlan fp = buscarFP(f,takeOfDate);
-					if(fp==null){
-						fp= new FlightPlan(f);
-						Date takeOfDate2=Date.from(takeOfDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-						fp.setTakeOffDate(takeOfDate2);
+				else{
+					if(minComunCap > currentNode.getPackagesProcesados() && currentNode.getId()!=start.getId()) minComunCap = currentNode.getPackagesProcesados();
+					unsettledNodes.remove(currentNode);
+					settledNodes.add(currentNode);
+					if(currentNode.getId() == objective.getId() ){
+						//deberá retornar el current node
+						break;
 					}
-					adjacentNode.setArrivalFlight(f);
-					adjacentNode.setFather(currentNode);
-					adjacentNode.setHeuristic(heuristic(adjacentNode.getArrivalFlight().getArrivalAirport(),currentNode.getId(), objective.getId(), time));
-					newDistance=durationBetweenTime(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc,fp);//actualiza el fp
-					packagesProcesados= hayCapacidad(f, f.getArrivalAirport().getWarehouse(), cantPackages,fp);
-					fp.setPackagesNumber(packagesProcesados);
-					fp.setPackagesNumberSimulated(packagesProcesados);
-					fp.setOccupiedCapacity(packagesProcesados);
-					adjacentNode.setFlightPlan(fp);
-					if(packagesProcesados > 0){						
-						adjacentNode.setDistance(currentNode.getDistance() + newDistance);
-						adjacentNode.setPackagesProcesados(packagesProcesados);
+					for (Entry<Node, Pair<Double, Flight>> adjacencyPair : currentNode.getAdjacentNodes().entrySet()) {//aqui se generan suscesores de node_n
+						Node adjacentNode = adjacencyPair.getKey();
+						Flight f = adjacencyPair.getValue().getValue();
+						LocalTime takeOff, arrival;
+						Integer takeOffUtc, arrivalUtc;
+						Double newDistance=0.0;
+						Boolean isStart=false;
+						Date dia;
+						dia=Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+						Double horas;
+						if(f.getTakeOffAirport().getId() == start.getId()) isStart=true;
+						takeOff= f.getTakeOffTime().toLocalTime();
+						arrival = f.getArrivalTime().toLocalTime();
+						takeOffUtc =f.getTakeOffAirport().getCity().getCountry().getUtc();
+						arrivalUtc =f.getArrivalAirport().getCity().getCountry().getUtc();
+						LocalDate takeOfDate = calcularTakeOfDate(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc);
+						FlightPlan fp = buscarFP(f,takeOfDate);
+						if(fp==null){
+							fp= new FlightPlan(f);
+							Date takeOfDate2=Date.from(takeOfDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+							fp.setTakeOffDate(takeOfDate2);
+						}
 						adjacentNode.setArrivalFlight(f);
-					}
-					else{
-						Double n=Double.MAX_VALUE;
-						adjacentNode.setDistance(n);
-					}
-					if (!settledNodes.contains(adjacentNode) && !unsettledNodes.contains(adjacentNode)) {
-						unsettledNodes.add(adjacentNode);
-					}
-					else{
-						//if unsettlet tiene un nodo que es el mismo pais
-						Node oldCurrentNode;
-						oldCurrentNode = contiene(unsettledNodes,adjacentNode.getId());
-						if(oldCurrentNode!=null){						
-							if(adjacentNode.getDistance() < oldCurrentNode.getDistance()){
-								//actualizar el nodo anterior con un nuevo papá, nueva distancia y demás
-								//debe actualizarse a en el espacio de memoria, para que se actualice en la cola
-								
-								//ver disponibilidad
-								packagesProcesadosR= hayCapacidad(adjacentNode.getArrivalFlight(), adjacentNode.getArrivalFlight().getArrivalAirport().getWarehouse(), minComunCap,fp);
-								if(packagesProcesadosR>=minComunCap){
-									//solo se actualiza si tenía mayor o igual capacidad que la otra opcion
-									oldCurrentNode.setPackagesProcesados(adjacentNode.getPackagesProcesados());
-									oldCurrentNode.setDistance(adjacentNode.getDistance());
-									oldCurrentNode.setArrivalFlight(adjacentNode.getArrivalFlight());
-									oldCurrentNode.setFather(adjacentNode.getFather());
-								}	
+						adjacentNode.setFather(currentNode);
+						adjacentNode.setHeuristic(heuristic(adjacentNode.getArrivalFlight().getArrivalAirport(),currentNode.getId(), objective.getId(), time));
+						newDistance=durationBetweenTime(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc,fp);//actualiza el fp
+						packagesProcesados= hayCapacidad(f, f.getArrivalAirport().getWarehouse(), cantPackages,fp);
+						fp.setPackagesNumber(packagesProcesados);
+						fp.setPackagesNumberSimulated(packagesProcesados);
+						fp.setOccupiedCapacity(packagesProcesados);
+						adjacentNode.setFlightPlan(fp);
+						if(packagesProcesados > 0){
+							adjacentNode.setDistance(currentNode.getDistance() + newDistance);
+							adjacentNode.setPackagesProcesados(packagesProcesados);
+							adjacentNode.setArrivalFlight(f);
+						}
+						else{
+							Double n=Double.MAX_VALUE;
+							adjacentNode.setDistance(n);
+						}
+						if (!settledNodes.contains(adjacentNode) && !unsettledNodes.contains(adjacentNode)) {
+							unsettledNodes.add(adjacentNode);
+						}
+						else{
+							//if unsettlet tiene un nodo que es el mismo pais
+							Node oldCurrentNode;
+							oldCurrentNode = contiene(unsettledNodes,adjacentNode.getId());
+							if(oldCurrentNode!=null){
+								if(adjacentNode.getDistance() < oldCurrentNode.getDistance()){
+									//actualizar el nodo anterior con un nuevo papá, nueva distancia y demás
+									//debe actualizarse a en el espacio de memoria, para que se actualice en la cola
+
+									//ver disponibilidad
+									packagesProcesadosR= hayCapacidad(adjacentNode.getArrivalFlight(), adjacentNode.getArrivalFlight().getArrivalAirport().getWarehouse(), minComunCap,fp);
+									if(packagesProcesadosR>=minComunCap){
+										//solo se actualiza si tenía mayor o igual capacidad que la otra opcion
+										oldCurrentNode.setPackagesProcesados(adjacentNode.getPackagesProcesados());
+										oldCurrentNode.setDistance(adjacentNode.getDistance());
+										oldCurrentNode.setArrivalFlight(adjacentNode.getArrivalFlight());
+										oldCurrentNode.setFather(adjacentNode.getFather());
+									}
+								}
 							}
 						}
-					}
+				}
 				}
 			}
+			//
 			actualizarCapacidad(start,currentNode,minComunCap);
 			cantPackages-=minComunCap;
 			bestWays.add(currentNode);

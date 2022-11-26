@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa94474a-5987-4463-a820-534a5ded8da5" name="Changes" comment="Back optimizado a la velocidad de la luz usando tecnicas venezolanas e ICPC" />
+    <list default="true" id="fa94474a-5987-4463-a820-534a5ded8da5" name="Changes" comment="Back optimizado a la velocidad de la luz usando tecnicas venezolanas e ICPC">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/router/algorithms/AStar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/router/algorithms/AStar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/router/algorithms/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/router/algorithms/Node.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -109,7 +113,7 @@
       <workItem from="1669181714014" duration="2442000" />
       <workItem from="1669188176713" duration="18000" />
       <workItem from="1669246134570" duration="10396000" />
-      <workItem from="1669436471537" duration="7354000" />
+      <workItem from="1669436471537" duration="9224000" />
     </task>
     <task id="LOCAL-00001" summary="Back arreglado y con los ultimos cambios">
       <created>1668304064027</created>
@@ -202,7 +206,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669445732371</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Back optimizado a la velocidad de la luz usando tecnicas venezolanas e ICPC">
+      <created>1669445774640</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1669445774640</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -216,11 +227,11 @@
             <State>
               <option name="COLUMN_ID_WIDTH">
                 <map>
-                  <entry key="Table.Default.Author.ColumnIdWidth" value="167" />
-                  <entry key="Table.Default.Date.ColumnIdWidth" value="205" />
-                  <entry key="Table.Default.Hash.ColumnIdWidth" value="115" />
-                  <entry key="Table.Git.CommitSignature.ColumnIdWidth" value="113" />
-                  <entry key="Table.Space.CommitStatus.ColumnIdWidth" value="104" />
+                  <entry key="Table.Default.Author.ColumnIdWidth" value="106" />
+                  <entry key="Table.Default.Date.ColumnIdWidth" value="146" />
+                  <entry key="Table.Default.Hash.ColumnIdWidth" value="91" />
+                  <entry key="Table.Git.CommitSignature.ColumnIdWidth" value="90" />
+                  <entry key="Table.Space.CommitStatus.ColumnIdWidth" value="92" />
                 </map>
               </option>
             </State>

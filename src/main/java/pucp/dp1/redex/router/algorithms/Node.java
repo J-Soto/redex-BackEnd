@@ -19,7 +19,16 @@ public class Node {
 	private Integer packagesProcesados=0;
 	private Flight arrivalFlight=null;
 	private List<List<Pair<Node,FlightPlan>>> listShortestPath= new LinkedList<>();
-	private FlightPlan flightPlan=null; 
+	private FlightPlan flightPlan=null;
+	private Boolean Colapso = false;
+
+	public Boolean getColapso() {
+		return this.Colapso;
+	}
+
+	public void setColapso(final Boolean colapso) {
+		this.Colapso = colapso;
+	}
 
 	public FlightPlan getFlightPlan() {
 		return flightPlan;
