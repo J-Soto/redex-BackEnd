@@ -19,4 +19,5 @@ public class ContinentService implements IContinentService {
 	public List<Continent> findAll() {
 		return dao.findAll();
 	}
+	
 }

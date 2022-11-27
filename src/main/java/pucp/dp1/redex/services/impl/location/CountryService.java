@@ -1,6 +1,7 @@
 package pucp.dp1.redex.services.impl.location;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,11 @@ public class CountryService implements ICountryService{
 	@Override
 	public List<Country> findAll() {
 		return dao.findAllByOrderByName();
+	}
+
+	@Override
+	public Optional<Country> findById(Integer id) {
+		return this.dao.findById(id);
 	}
 
 	

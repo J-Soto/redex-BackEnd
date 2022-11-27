@@ -353,20 +353,14 @@ public class DispatchService implements IDispatchService {
 				}
 				while (pq.size() != 0) {
 					PackageTemp pack = pq.poll();
-					//System.out.println(pack.getOriginAirport() + "  " + pack.getDate() + " " + pack.getTime() + " " + pack.getDestinationAirport() + " " + pack.getCantPackages());
 					Integer resultPlan = serviceAStart.insertHistoricPackage(pack.getOriginAirport(), pack.getDestinationAirport(), pack.getDate(), pack.getTime(), pack.getCantPackages());
 					if (resultPlan != 1) {
 						System.out.println(pack.getOriginAirport() + "  " + pack.getDate() + " " + pack.getTime() + " " + pack.getDestinationAirport() + " " + pack.getCantPackages());
 						System.out.println("El sistema fallo");
-						break;
+						return "COLAPSO";
 					}
 				}
-				//se aumenta en 1 el dia de la fecha enviada por front luego de terminar de procesar 1 dia el algoritmo
-				//date1=date1.plusDays(1);
-				//se aumenta en 1 el numero de aumentos de dias para controlar el numero de iteraciones
-				//aumentos++;
-				//si no se esta evaluando el colapso y ya pasaron 5 dias termina la ejecucion
-				//if(!colapso && aumentos==5) break;
+
 				zip.close();
 			//}
 			tempFile.delete();

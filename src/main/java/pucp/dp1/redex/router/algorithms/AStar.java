@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javafx.util.Pair;
 import pucp.dp1.redex.dao.sales.IIncident;
 import pucp.dp1.redex.model.PACK.Flight;
+import pucp.dp1.redex.model.location.Country;
 import pucp.dp1.redex.model.route.FlightPlan;
 import pucp.dp1.redex.model.route.FlightPlanStatus;
 import pucp.dp1.redex.model.route.RoutePlan;
@@ -38,6 +39,8 @@ import pucp.dp1.redex.services.impl.sales.DispatchService;
 import pucp.dp1.redex.services.impl.storage.StorageRegisterService;
 import pucp.dp1.redex.services.impl.storage.WarehouseService;
 import pucp.dp1.redex.services.impl.PACK.FlightService;
+import pucp.dp1.redex.services.impl.location.ContinentService;
+import pucp.dp1.redex.services.impl.location.CountryService;
 @Service
 public class AStar {
 	@Autowired
@@ -54,6 +57,8 @@ public class AStar {
 	private DispatchService serviceDispatch;
 	@Autowired
 	private IIncident daoIncident;
+	@Autowired
+	private CountryService daoCountry;
 	@Autowired
 	private FlightService serviceFlight;
 	private Map<Airport, List<Flight>> map;
@@ -78,6 +83,8 @@ public class AStar {
 		Node currentNode=null;
 		List<Node>  bestWays =new LinkedList<>();
 		Integer packagesProcesados,packagesProcesadosR;
+		Double timeAc=0.0,tMax;
+		tMax=maxTiempo(start,objective);
 		while(true){
 			if(cantPackages <= 0) break;
 			minComunCap=cantPackages;				
@@ -87,87 +94,88 @@ public class AStar {
 			start.setDistance(0.0);
 			unsettledNodes.add(start);
 			while (unsettledNodes.size() != 0) {
-				currentNode = getLowestDistanceNode(unsettledNodes);
-				if(Objects.isNull(currentNode)){
-					currentNode.setColapso(true);
+				currentNode = getLowestDistanceNode(unsettledNodes);				
+				if(minComunCap > currentNode.getPackagesProcesados() && currentNode.getId()!=start.getId()) minComunCap = currentNode.getPackagesProcesados();
+				unsettledNodes.remove(currentNode);
+				settledNodes.add(currentNode);
+				timeAc+=currentNode.getDistance();
+				if(timeAc>tMax){
 					System.out.println("Colapso");
+					Node nodoColapso=new Node();
+					nodoColapso.setColapso(true);
+					List<Node> listaColapso =new LinkedList<>();
+					listaColapso.add(nodoColapso);
+					return listaColapso;
+					}
+				if(currentNode.getId() == objective.getId() ){
+					//deberá retornar el current node
 					break;
 				}
-				else{
-					if(minComunCap > currentNode.getPackagesProcesados() && currentNode.getId()!=start.getId()) minComunCap = currentNode.getPackagesProcesados();
-					unsettledNodes.remove(currentNode);
-					settledNodes.add(currentNode);
-					if(currentNode.getId() == objective.getId() ){
-						//deberá retornar el current node
-						break;
+				for (Entry<Node, Pair<Double, Flight>> adjacencyPair : currentNode.getAdjacentNodes().entrySet()) {//aqui se generan suscesores de node_n
+					Node adjacentNode = adjacencyPair.getKey();
+					Flight f = adjacencyPair.getValue().getValue();
+					LocalTime takeOff, arrival;
+					Integer takeOffUtc, arrivalUtc;
+					Double newDistance=0.0;
+					Boolean isStart=false;
+					Date dia;
+					dia=Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+					if(f.getTakeOffAirport().getId() == start.getId()) isStart=true;
+					takeOff= f.getTakeOffTime().toLocalTime();
+					arrival = f.getArrivalTime().toLocalTime();
+					takeOffUtc =f.getTakeOffAirport().getCity().getCountry().getUtc();
+					arrivalUtc =f.getArrivalAirport().getCity().getCountry().getUtc();
+					LocalDate takeOfDate = calcularTakeOfDate(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc);
+					FlightPlan fp = buscarFP(f,takeOfDate);
+					if(fp==null){
+						fp= new FlightPlan(f);
+						Date takeOfDate2=Date.from(takeOfDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+						fp.setTakeOffDate(takeOfDate2);
 					}
-					for (Entry<Node, Pair<Double, Flight>> adjacencyPair : currentNode.getAdjacentNodes().entrySet()) {//aqui se generan suscesores de node_n
-						Node adjacentNode = adjacencyPair.getKey();
-						Flight f = adjacencyPair.getValue().getValue();
-						LocalTime takeOff, arrival;
-						Integer takeOffUtc, arrivalUtc;
-						Double newDistance=0.0;
-						Boolean isStart=false;
-						Date dia;
-						dia=Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
-						Double horas;
-						if(f.getTakeOffAirport().getId() == start.getId()) isStart=true;
-						takeOff= f.getTakeOffTime().toLocalTime();
-						arrival = f.getArrivalTime().toLocalTime();
-						takeOffUtc =f.getTakeOffAirport().getCity().getCountry().getUtc();
-						arrivalUtc =f.getArrivalAirport().getCity().getCountry().getUtc();
-						LocalDate takeOfDate = calcularTakeOfDate(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc);
-						FlightPlan fp = buscarFP(f,takeOfDate);
-						if(fp==null){
-							fp= new FlightPlan(f);
-							Date takeOfDate2=Date.from(takeOfDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-							fp.setTakeOffDate(takeOfDate2);
-						}
+					adjacentNode.setArrivalFlight(f);
+					adjacentNode.setFather(currentNode);
+					adjacentNode.setHeuristic(heuristic(adjacentNode.getArrivalFlight().getArrivalAirport(),currentNode.getId(), objective.getId(), time));
+					newDistance=durationBetweenTime(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc,fp);//actualiza el fp
+					packagesProcesados= hayCapacidad(f, f.getArrivalAirport().getWarehouse(), cantPackages,fp);
+					fp.setPackagesNumber(packagesProcesados);
+					fp.setPackagesNumberSimulated(packagesProcesados);
+					fp.setOccupiedCapacity(packagesProcesados);
+					adjacentNode.setFlightPlan(fp);
+					if(packagesProcesados > 0){
+						adjacentNode.setDistance(currentNode.getDistance() + newDistance);
+						adjacentNode.setPackagesProcesados(packagesProcesados);
 						adjacentNode.setArrivalFlight(f);
-						adjacentNode.setFather(currentNode);
-						adjacentNode.setHeuristic(heuristic(adjacentNode.getArrivalFlight().getArrivalAirport(),currentNode.getId(), objective.getId(), time));
-						newDistance=durationBetweenTime(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc,fp);//actualiza el fp
-						packagesProcesados= hayCapacidad(f, f.getArrivalAirport().getWarehouse(), cantPackages,fp);
-						fp.setPackagesNumber(packagesProcesados);
-						fp.setPackagesNumberSimulated(packagesProcesados);
-						fp.setOccupiedCapacity(packagesProcesados);
-						adjacentNode.setFlightPlan(fp);
-						if(packagesProcesados > 0){
-							adjacentNode.setDistance(currentNode.getDistance() + newDistance);
-							adjacentNode.setPackagesProcesados(packagesProcesados);
-							adjacentNode.setArrivalFlight(f);
-						}
-						else{
-							Double n=Double.MAX_VALUE;
-							adjacentNode.setDistance(n);
-						}
-						if (!settledNodes.contains(adjacentNode) && !unsettledNodes.contains(adjacentNode)) {
-							unsettledNodes.add(adjacentNode);
-						}
-						else{
-							//if unsettlet tiene un nodo que es el mismo pais
-							Node oldCurrentNode;
-							oldCurrentNode = contiene(unsettledNodes,adjacentNode.getId());
-							if(oldCurrentNode!=null){
-								if(adjacentNode.getDistance() < oldCurrentNode.getDistance()){
-									//actualizar el nodo anterior con un nuevo papá, nueva distancia y demás
-									//debe actualizarse a en el espacio de memoria, para que se actualice en la cola
-
-									//ver disponibilidad
-									packagesProcesadosR= hayCapacidad(adjacentNode.getArrivalFlight(), adjacentNode.getArrivalFlight().getArrivalAirport().getWarehouse(), minComunCap,fp);
-									if(packagesProcesadosR>=minComunCap){
-										//solo se actualiza si tenía mayor o igual capacidad que la otra opcion
-										oldCurrentNode.setPackagesProcesados(adjacentNode.getPackagesProcesados());
-										oldCurrentNode.setDistance(adjacentNode.getDistance());
-										oldCurrentNode.setArrivalFlight(adjacentNode.getArrivalFlight());
-										oldCurrentNode.setFather(adjacentNode.getFather());
-									}
+					}
+					else{
+						Double n=Double.MAX_VALUE;
+						adjacentNode.setDistance(n);
+					}
+					if (!settledNodes.contains(adjacentNode) && !unsettledNodes.contains(adjacentNode)) {
+						unsettledNodes.add(adjacentNode);
+					}
+					else{
+						//if unsettlet tiene un nodo que es el mismo pais
+						Node oldCurrentNode;
+						oldCurrentNode = contiene(unsettledNodes,adjacentNode.getId());
+						if(oldCurrentNode!=null){
+							if(adjacentNode.getDistance() < oldCurrentNode.getDistance()){
+								//actualizar el nodo anterior con un nuevo papá, nueva distancia y demás
+								//debe actualizarse a en el espacio de memoria, para que se actualice en la cola
+								//ver disponibilidad
+								packagesProcesadosR= hayCapacidad(adjacentNode.getArrivalFlight(), adjacentNode.getArrivalFlight().getArrivalAirport().getWarehouse(), minComunCap,fp);
+								if(packagesProcesadosR>=minComunCap){
+									//solo se actualiza si tenía mayor o igual capacidad que la otra opcion
+									oldCurrentNode.setPackagesProcesados(adjacentNode.getPackagesProcesados());
+									oldCurrentNode.setDistance(adjacentNode.getDistance());
+									oldCurrentNode.setArrivalFlight(adjacentNode.getArrivalFlight());
+									oldCurrentNode.setFather(adjacentNode.getFather());
 								}
 							}
 						}
-				}
+					}
 				}
 			}
+		
 			//
 			actualizarCapacidad(start,currentNode,minComunCap);
 			cantPackages-=minComunCap;
@@ -175,6 +183,25 @@ public class AStar {
 			actualizarStart(start, objective.getId());
 		}
 		return bestWays;
+	}
+	private Double maxTiempo(Node start, Node objective) {
+		String continentSt,continentObj;
+		Country c;
+		Double maxTime=0.0;
+		c=(daoCountry.findById(start.getId())).get();
+		continentSt=c.getContinent().getName();
+
+		c=(daoCountry.findById(objective.getId())).get();
+		continentObj=c.getContinent().getName();
+
+		if(continentSt==continentObj){
+			maxTime=24.0*60;
+		}else{
+			maxTime=48.0*60;
+		}
+
+		return maxTime;
+
 	}
 	private LocalDate calcularTakeOfDate(Boolean isStart, LocalDate date,LocalTime time,LocalTime start, LocalTime end, Integer utcStart, Integer utcEnd) {
 
@@ -321,6 +348,11 @@ public class AStar {
 		List <RoutePlan> listplan = new ArrayList<>();
 		//obtengo el shortestPath hasta este momento
 		for(Node result: listResult){
+			if(result.getColapso()==true){
+				List <RoutePlan> rpColapso = null;
+				return rpColapso;
+			}
+
 			LinkedList<Pair<Node, FlightPlan>> shortestPath = new LinkedList<Pair<Node, FlightPlan>>(result.getShortestPath());
 			RoutePlan rPlan = new RoutePlan();
 			List<FlightPlan> listFlightPlan = new ArrayList<>();
@@ -371,6 +403,7 @@ public class AStar {
 
 				listplan = getShortestPath(origin.getId(), destination.getId(), date, time,true,cantPackages);
 				//RoutePlan plan = determinRoute(origin.getId(), destination.getId(), date, time,true,cantPackages);
+				if(listplan==null) return 0;
 
 				for(RoutePlan plan: listplan){
 					if (plan.getFlightPlans().size() > 0) {
