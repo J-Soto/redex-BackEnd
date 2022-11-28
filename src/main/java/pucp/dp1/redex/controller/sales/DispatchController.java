@@ -165,6 +165,9 @@ public class DispatchController {
 			if (check.equals("OK")) {
 				response.setEstado(Estado.OK);
 			} else {
+				if(check.equals("COLAPSO")){
+					response.setEstado(Estado.COLAPSO);
+				}
 				response.setError(1, "ERROR EN EL PROCESO", "");
 				response.setEstado(Estado.ERROR);
 			}
