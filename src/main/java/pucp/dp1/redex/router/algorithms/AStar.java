@@ -186,19 +186,24 @@ public class AStar {
 	}
 	private Double maxTiempo(Node start, Node objective) {
 		String continentSt,continentObj;
+		Integer utcSt,utcObj,izqDer=-1;//izq=-1,der=1
 		Country c;
 		Double maxTime=0.0;
+		
 		c=(daoCountry.findById(start.getId())).get();
 		continentSt=c.getContinent().getName();
+		utcSt=c.getUtc();
 
 		c=(daoCountry.findById(objective.getId())).get();
 		continentObj=c.getContinent().getName();
+		utcObj=c.getUtc();
+		if(utcSt<utcObj) izqDer=1;
 
-		if(continentSt==continentObj){
-			maxTime=24.0*60;
-		}else{
-			maxTime=48.0*60;
-		}
+		if(continentSt==continentObj) maxTime=24.0*60;
+		else maxTime=48.0*60;
+			
+		if(izqDer>0) maxTime-=utcObj;
+		else maxTime+=utcObj;
 
 		return maxTime;
 
