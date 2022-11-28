@@ -54,6 +54,7 @@ public class FlightPlanController {
 			response.setEstado(Estado.OK);
 			return new ResponseEntity<ResponseObject>(response, HttpStatus.OK);
 		} catch(Exception e) {
+			//e.printStackTrace();
 			response.setError(1, "Error", e.getMessage());
 			response.setEstado(Estado.ERROR);
 			return new ResponseEntity<ResponseObject>(response, HttpStatus.INTERNAL_SERVER_ERROR);
