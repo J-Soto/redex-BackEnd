@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ public class FlightPlanController {
 		}
 	}
 	@GetMapping(path = "/allDay", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResponseObject> consultarTodosPorDia(@RequestParam("fecha") String fecha) {
+	public ResponseEntity<ResponseObject> consultarTodosPorDia(@Param("fecha") String fecha) {
 		ResponseObject response = new ResponseObject();
 		try {
 			String datereq = fecha.substring(1, 11).replace("-", "");
@@ -49,7 +50,7 @@ public class FlightPlanController {
 			dateDate = formatterDate.parse(datereq);
 			LocalDate date1 = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(dateDate));
 			List<FlightPlan> lista = this.service.findAll();
-			List<FlightPlan> listaFiltrada = lista.stream().filter(x -> x.getTakeOffDate().equals(date1)).collect(Collectors.toList());
+			List<FlightPlan> listaFiltrada = lista.stream().filter(x -> x.getTakeOffDate().equals(dateDate)).collect(Collectors.toList());
 			response.setResultado(listaFiltrada);
 			response.setEstado(Estado.OK);
 			return new ResponseEntity<ResponseObject>(response, HttpStatus.OK);
