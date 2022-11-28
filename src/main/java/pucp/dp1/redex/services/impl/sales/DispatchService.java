@@ -306,6 +306,7 @@ public class DispatchService implements IDispatchService {
 			Date dateDate;
 			dateDate = formatterDate.parse(datereq);
 			LocalDate date1 = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(dateDate));
+			LocalDate date3;
 			//boolean colapso = false;
 			//int aumentos=0;
 			//while(true){
@@ -343,8 +344,9 @@ public class DispatchService implements IDispatchService {
 						utc=auxC.get().getUtc();
 						// PROCESAR ALGORITMO
 						PackageTemp p = new PackageTemp(originAirport, destinationAirport, convertStringToLocalDate(date), convertStringToLocalTime(time), cantPackages,utc);
-						if (convertStringToLocalDate(date).isAfter(date1)) break;
-						else if (convertStringToLocalDate(date).equals(date1))
+						date3 = date1.plusDays(1);
+						if (p.getDate().isAfter(date3) ) break;
+						else if (p.getDate().equals(date1))
 							pq.add(p);
 						//insetar(pq,p);
 					}
