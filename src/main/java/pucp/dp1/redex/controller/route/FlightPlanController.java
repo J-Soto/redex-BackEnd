@@ -1,5 +1,6 @@
 package pucp.dp1.redex.controller.route;
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -81,14 +82,20 @@ public class FlightPlanController {
 			String datereq = null;
 			//Fecha
 			date = date.substring(1, 11).replace("-", "");
-			//date: 2022-08-03
+			//date: 20220803
 			//Hora
 			hour = hour.substring(12, 17);
 			//hour: 07:00
 			datereq = date + hour;
 			//datereq: 2022-08-0307:00
-			LocalDate date1 = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(date));
-			LocalTime hour1 = LocalTime.parse(new SimpleDateFormat("HH:mm").format(hour));
+			SimpleDateFormat formatterDate = new SimpleDateFormat("yyyyMMdd");
+			Date dateDate;
+			dateDate = formatterDate.parse(date);
+			LocalDate date1 = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(dateDate));
+			SimpleDateFormat formatterHour= new SimpleDateFormat("HH:mm");
+			Date dateTime;
+			dateTime = formatterHour.parse(hour);
+			LocalTime hour1 = LocalTime.parse(new SimpleDateFormat("HH:mm").format(dateTime));
 			FlightPlan fpResult=null;
 			List<FlightPlan> listFP;
 			Date dia;
