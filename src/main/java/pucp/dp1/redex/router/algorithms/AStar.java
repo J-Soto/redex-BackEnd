@@ -117,7 +117,7 @@ public class AStar {
 					LocalTime takeOff, arrival;
 					Integer takeOffUtc, arrivalUtc;
 					Double newDistance=0.0;
-					Boolean isStart=false;
+					Boolean isStart=false, flagFP=false;
 					Date dia;
 					dia=Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
 					if(f.getTakeOffAirport().getId() == start.getId()) isStart=true;
@@ -126,20 +126,24 @@ public class AStar {
 					takeOffUtc =f.getTakeOffAirport().getCity().getCountry().getUtc();
 					arrivalUtc =f.getArrivalAirport().getCity().getCountry().getUtc();
 					LocalDate takeOfDate = calcularTakeOfDate(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc);
+					LocalDate arrivalDate = calcularArrivalDate(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc);
 					FlightPlan fp = buscarFP(f,takeOfDate);
 					if(fp==null){
+						flagFP = true;
 						fp= new FlightPlan(f);
 						Date takeOfDate2=Date.from(takeOfDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+						Date arrivalDate2=Date.from(arrivalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 						fp.setTakeOffDate(takeOfDate2);
+						fp.setArrivalDate(arrivalDate2);
 					}
 					adjacentNode.setArrivalFlight(f);
 					adjacentNode.setFather(currentNode);
 					adjacentNode.setHeuristic(heuristic(adjacentNode.getArrivalFlight().getArrivalAirport(),currentNode.getId(), objective.getId(), time));
 					newDistance=durationBetweenTime(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc,fp);//actualiza el fp
 					packagesProcesados= hayCapacidad(f, f.getArrivalAirport().getWarehouse(), cantPackages,fp);
-					fp.setPackagesNumber(packagesProcesados);
-					fp.setPackagesNumberSimulated(packagesProcesados);
-					fp.setOccupiedCapacity(packagesProcesados);
+					//fp.setPackagesNumber(packagesProcesados);
+					//fp.setPackagesNumberSimulated(packagesProcesados);
+					if(flagFP) fp.setOccupiedCapacity(packagesProcesados);
 					adjacentNode.setFlightPlan(fp);
 					if(packagesProcesados > 0){
 						adjacentNode.setDistance(currentNode.getDistance() + newDistance);
@@ -183,6 +187,25 @@ public class AStar {
 			actualizarStart(start, objective.getId());
 		}
 		return bestWays;
+	}
+	private LocalDate calcularArrivalDate(Boolean isStart, LocalDate date,LocalTime time,LocalTime start, LocalTime end, Integer utcStart, Integer utcEnd) {
+
+		//Integer dia=0;
+		LocalDate arrivalDate=date;
+
+		if(utcStart>0) start.minusHours(utcStart);		
+		else if(utcStart<0){
+			utcStart*=-1;
+			start.plusHours(utcStart);
+		}
+		
+		//calcular tiempo hasta el vuelo
+		if(time.isAfter(start))	arrivalDate.plusDays(1);
+
+		//calcular tiempo desde el arrivo hasta la llegada
+		if (start.isAfter(end)) arrivalDate.plusDays(1);
+			
+		return arrivalDate;
 	}
 	private Double maxTiempo(Node start, Node objective) {
 		String continentSt,continentObj;
