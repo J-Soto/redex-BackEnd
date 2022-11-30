@@ -229,8 +229,10 @@ public class AStar {
 		FlightPlan fpResult=null;
 		List<FlightPlan> listFP;
 		listFP = serviceFlightPlan.findAll();
+		Date dia;
+		dia=Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		for(FlightPlan fp:listFP){
-			if(fp.getFlight().getIdFlight()==f.getIdFlight() && fp.getTakeOffDate().equals(date)){
+			if(fp.getFlight().getIdFlight()==f.getIdFlight() && fp.getTakeOffDate().equals(dia)){
 				fpResult=fp;
 			}
 		}
