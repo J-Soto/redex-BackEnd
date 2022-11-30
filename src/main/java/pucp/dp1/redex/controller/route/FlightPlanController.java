@@ -102,7 +102,7 @@ public class FlightPlanController {
 			listFP = serviceFlightPlan.findAll();
 			for(FlightPlan fp:listFP){
 				dia=Date.from(date1.atStartOfDay(ZoneId.systemDefault()).toInstant());
-				if(fp.getArrivalDate().before(dia) && fp.getFlight().getArrivalTime().toLocalTime().isBefore(hour1)){
+				if((fp.getArrivalDate().before(dia) || fp.getArrivalDate().equals(dia)  )&& fp.getFlight().getArrivalTime().toLocalTime().isBefore(hour1)){
 					actualizarWarehouse(fp);
 				}
 			}
@@ -121,7 +121,7 @@ public class FlightPlanController {
 		Integer cant=null;
 		Warehouse start = null;
 		Warehouse end = null;
-		cant=fp.getFlight().getOccupiedCapacity();
+		cant=fp.getOccupiedCapacity();
 		start = fp.getFlight().getArrivalAirport().getWarehouse();
 		end = fp.getFlight().getTakeOffAirport().getWarehouse();
 		start.setCapacity(start.getCapacity()-cant);
