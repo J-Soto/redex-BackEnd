@@ -5,11 +5,68 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa94474a-5987-4463-a820-534a5ded8da5" name="Changes" comment="Logica de colapso implementada, falta comprobar pq aun no me se la logica completa de pablo pero intente hacer lo que me dijo xdxd">
+      <change afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/sales/HistoricoController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/dao/sales/IHistorico.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/model/sales/Historico.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/dao/sales/IHistoricoService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/HistoricoService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_BIKF.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_EBCI.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_EDDI.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_EETN.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_EFHK.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_EGLL.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_EHAM.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_EIDW.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_EKCH.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_ELLX.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_ENGM.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_EPMO.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_ESKN.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_EVRA.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LATI.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LBSF.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LDZA.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LEMD.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LFPG.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LGAV.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LHBP.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LIRA.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LJLJ.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LKPR.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LMML.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LOWW.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LPPT.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LSZB.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LZIB.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_SABE.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_SBBR.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_SCEL.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_SEQM.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_SGAS.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_SKBO.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_SLLP.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_SPIM.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_SUAA.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_SVMI.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_UMMS.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/85a6ec74-1f91-40ad-8ff1-0de2bf4b797f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/85a6ec74-1f91-40ad-8ff1-0de2bf4b797f.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_11_2022_11_53_p__m___Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_11_2022_11_53_p_ m__[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_11_2022_03_21_a__m___Changes_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_11_2022_03_21_a_ m__[Changes]1/AStar2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_11_2022_03_21_a_ m__[Changes]1/Dijkstra.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_11_2022_03_21_a_ m__[Changes]1/FlightPlan.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_11_2022_03_21_a_ m__[Changes]1/IFlightPlanService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_11_2022_03_21_a_ m__[Changes]1/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/route/FlightPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/route/FlightPlanController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/sales/AirportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/sales/AirportController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/import.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/import.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/import.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/import.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/route/FlightPlanController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/route/FlightPlanController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/sales/AirportController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/sales/AirportController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/AStar.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/AStar.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService$PackageComparator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService$PackageComparator.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService$PackageTemp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService$PackageTemp.class" afterDir="false" />
@@ -19,6 +76,14 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
@@ -35,17 +100,23 @@
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/route/RoutePlanController.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/sales/AirportController.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/sales/DispatchController.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/sales/HistoricoController.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/dao/sales/IHistorico.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/model/PACK/Flight.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/model/route/FlightPlan.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/model/route/RoutePlan.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/model/sales/Dispatch.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/model/sales/Historico.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/model/storage/Package.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/model/storage/StorageRegister.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/router/algorithms/AStar.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/router/algorithms/Node.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/dao/sales/IHistoricoService.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/PACK/FlightService.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/route/FlightPlanService.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/AirportService.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/DispatchService.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/HistoricoService.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/resources/import.sql" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -73,6 +144,8 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "database.data.extractors.current.export.id": "Comma-separated (CSV)_id",
+    "extract.method.default.visibility": "private",
+    "last_opened_file_path": "C:/Users/DUXAT/Desktop/redex-BackEnd/src/main/resources",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.stylelint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -81,8 +154,9 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "music.id",
-    "spring.configuration.checksum": "835865bcf96d169a9ac7f1ca4bf02848"
+    "settings.editor.selected.configurable": "database.query.execution",
+    "spring.configuration.checksum": "835865bcf96d169a9ac7f1ca4bf02848",
+    "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
@@ -90,6 +164,11 @@
     ]
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\DUXAT\Desktop\redex-BackEnd\src\main\resources" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
@@ -130,6 +209,15 @@
       <workItem from="1669590907906" duration="5238000" />
       <workItem from="1669779750769" duration="167000" />
       <workItem from="1669779965229" duration="5406000" />
+      <workItem from="1669834385776" duration="539000" />
+      <workItem from="1669851098976" duration="638000" />
+      <workItem from="1669865985488" duration="417000" />
+      <workItem from="1669866985970" duration="168000" />
+      <workItem from="1669867213185" duration="58000" />
+      <workItem from="1669949478057" duration="3022000" />
+      <workItem from="1669953363209" duration="41000" />
+      <workItem from="1669953415247" duration="30000" />
+      <workItem from="1669953460347" duration="2439000" />
     </task>
     <task id="LOCAL-00001" summary="Back arreglado y con los ultimos cambios">
       <created>1668304064027</created>
