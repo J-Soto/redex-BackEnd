@@ -13,6 +13,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ import pucp.dp1.redex.dao.route.IRoutePlan;
 import pucp.dp1.redex.dao.sales.IAirport;
 import pucp.dp1.redex.dao.sales.IClient;
 import pucp.dp1.redex.dao.sales.IDispatch;
+import pucp.dp1.redex.dao.sales.IHistorico;
 import pucp.dp1.redex.dao.storage.IPackage;
 import pucp.dp1.redex.dao.storage.IStorageRegister;
 import pucp.dp1.redex.dao.storage.IWarehouse;
@@ -37,6 +39,7 @@ import pucp.dp1.redex.model.route.RoutePlan;
 import pucp.dp1.redex.model.sales.Airport;
 import pucp.dp1.redex.model.sales.Dispatch;
 import pucp.dp1.redex.model.sales.DispatchStatus;
+import pucp.dp1.redex.model.sales.Historico;
 import pucp.dp1.redex.model.storage.Package;
 import pucp.dp1.redex.model.storage.StorageRegister;
 import pucp.dp1.redex.model.storage.Warehouse;
@@ -51,28 +54,20 @@ public class DispatchService implements IDispatchService {
 
 	@Autowired
 	private IDispatch dao;
-
 	@Autowired
 	private IClient daoClient;
-
 	@Autowired
 	private IFlightPlan daoFlightPlan;
-
 	@Autowired
 	private IPackage daoPackage;
-
 	@Autowired
 	private IRoutePlan daoRoutePlan;
-	
 	@Autowired
 	private ISummaryCase daoSummary;
-	
 	@Autowired
 	private IWarehouse daoWarehouse;
-	
 	@Autowired
 	private IStorageRegister daoStorageRegister;
-	
 	@Autowired
 	private ITrackingHistory daoTracking;
 	@Autowired
@@ -81,6 +76,10 @@ public class DispatchService implements IDispatchService {
 	private IAirport daoAirport;
 	@Autowired
 	private ICountry daoCountry;
+	@Autowired
+	private HistoricoService historicoService;
+	@Autowired
+	private IHistorico daoHistorico;
 	@Override
 	public List<Dispatch> findByActiveTrue() {
 		return this.dao.findByActiveTrue();
@@ -97,7 +96,6 @@ public class DispatchService implements IDispatchService {
 	public List<Dispatch> findByDestinationAirport_idAndStatusNotOrderByRegisterDateDesc(Integer id) {
 		return this.dao.findByDestinationAirport_idAndStatusNotOrderByRegisterDateDesc(id, DispatchStatus.SIMULADO);
 	}
-	//CAMBIO URGENTE
 	@Override
 	public Dispatch save(Dispatch dispatch, Boolean simulated, Date dateCheckIn) {
 		dispatch.setActive(true);
@@ -271,10 +269,10 @@ public class DispatchService implements IDispatchService {
 			return null;
 		}
 	}
-	class PackageComparator implements Comparator<PackageTemp>{
-		public int compare(PackageTemp a, PackageTemp b) {
-			if ( a.getTime().isAfter(b.getTime()) ) return 1;
-			else if (a.getTime().isBefore(b.getTime())) return -1;
+	class PackageComparator implements Comparator<Historico>{
+		public int compare(Historico a, Historico b) {
+			if ( a.getHora().after(b.getHora()) ) return 1;
+			else if (a.getHora().before(b.getHora())) return -1;
 			return 0;
 		}
 	}
@@ -294,85 +292,57 @@ public class DispatchService implements IDispatchService {
 	public String masiveLoad(MultipartHttpServletRequest request) {
 		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 		try {
-			Iterator<String> it = request.getFileNames();
-			MultipartFile mf = request.getFile(it.next());
+			List<Historico> historicos = new ArrayList<Historico>();
+			PriorityQueue<Historico> pqHistoricos = new PriorityQueue<Historico>(new PackageComparator());
 			String datereq = request.getParameter("date").substring(1, 11).replace("-", "");
-			System.out.println("1 \n");
-			//Convierte multifile a zip
-			File tempFile = File.createTempFile("upload", null);
-			mf.transferTo(tempFile);
-			Integer i = 0;
-			PriorityQueue<PackageTemp> pq = new PriorityQueue<PackageTemp>(new PackageComparator());
+			Integer resultPlan =1, dias =0;
+			Boolean fallo = false, cinco =true;
+			//Creamos el date con el cual se buscara la lista de envios historicos a partir del date enviado por front (fecha inicio)
 			SimpleDateFormat formatterDate = new SimpleDateFormat("yyyyMMdd");
 			Date dateDate;
 			dateDate = formatterDate.parse(datereq);
-			LocalDate date1 = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(dateDate));
-			LocalDate date3;
-			//boolean colapso = false;
-			//int aumentos=0;
-			//while(true){
-			ZipFile zip = new ZipFile(tempFile);
-				//loop por cada archivo del zip
-				Enumeration<? extends ZipEntry> entries = zip.entries();
-				ZipEntry entry = entries.nextElement();
-				Optional <Airport> auxA = null;
-				Optional <Country> auxC = null;
-				while (entries.hasMoreElements()) {
-					//ZipEntry entry = entries.nextElement();
-					entry = entries.nextElement();
-					InputStream stream = zip.getInputStream(entry);
-					InputStreamReader reader = new InputStreamReader(stream, "UTF-8");
-					Scanner inputStream = new Scanner(reader);
-					//lectura de cada linea del archivo
-					//Integer stateColapso = 0;
-					String originAirport;
-					String date;
-					String time;
-					String destinationAirport;
-					Integer cantPackages;
-					Integer utc;
-					while (inputStream.hasNext()) {
-						String data = inputStream.nextLine();
-						List<String> line = Arrays.asList(data.split("-"));
-						//datos de ingreso para el algoritmo
-						originAirport = line.get(0).substring(0, 4);
-						date = line.get(1);
-						time = line.get(2);
-						destinationAirport = line.get(3).substring(0, 4);
-						cantPackages = Integer.parseInt(line.get(3).substring(5));
-						auxA=this.daoAirport.findByCode(originAirport);
-						auxC=this.daoCountry.findById(auxA.get().getId());
-						utc=auxC.get().getUtc();
-						// PROCESAR ALGORITMO
-						PackageTemp p = new PackageTemp(originAirport, destinationAirport, convertStringToLocalDate(date), convertStringToLocalTime(time), cantPackages,utc);
-						date3 = date1.plusDays(1);
-						if (p.getDate().isAfter(date3) ) break;
-						else if (p.getDate().equals(date1))
-							pq.add(p);
-						//insetar(pq,p);
-					}
-					reader.close();
-					inputStream.close();
-				}
-				while (pq.size() != 0) {
-					PackageTemp pack = pq.poll();
-					Integer resultPlan = serviceAStart.insertHistoricPackage(pack.getOriginAirport(), pack.getDestinationAirport(), pack.getDate(), pack.getTime(), pack.getCantPackages());
-					if (resultPlan != 1) {
-						System.out.println(pack.getOriginAirport() + "  " + pack.getDate() + " " + pack.getTime() + " " + pack.getDestinationAirport() + " " + pack.getCantPackages());
-						System.out.println("El sistema fallo");
-						return "COLAPSO";
-					}
-				}
 
-				zip.close();
-			//}
-			tempFile.delete();
+			//Creamos un Local date con la fecha inicio enviada por front para poder ir avanzando en el tiempo
+			LocalDate date1 = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(dateDate));
+
+			// PROCESAR ALGORITMO
+			while(!fallo && (dias != 3 || !cinco) ) {
+				//le enviamos la fecha Date yyyyMMdd para que retorne la lista de envios historicos de esa fecha
+				historicos = daoHistorico.findAllByFecha(dateDate);
+
+				//colocamos los datos de la lista de envios historicos a la pq
+				pqHistoricos.addAll(historicos);
+
+				//enviamos los envios historicos al algoritmo a ver si falla
+				fallo =procesarAlgoritmo(pqHistoricos);
+				if (fallo) return "COLAPSO";
+
+				//Si no fallo, entonces aumentamos el LocalDate en 1 dia y los dias procesados en 1
+				date1 = date1.plusDays(1);
+				dias +=1;
+
+				//Asignamos la fecha aumentada al date para que busque los encios historicos del dia siguiente
+				dateDate = Date.from(date1.atStartOfDay(ZoneId.systemDefault()).toInstant());
+			}
 			return "OK";
-		} catch (IOException io) {
-			return "ERROR";
-		} catch (ParseException e) {
-			throw new RuntimeException(e);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "COLAPSO";
 		}
+	}
+	private Boolean procesarAlgoritmo(PriorityQueue<Historico> pqHistoricos) {
+		while (pqHistoricos.size() != 0) {
+			Historico pack = pqHistoricos.poll();
+			LocalDate fecha = convertToLocalDateViaInstant(pack.getFecha());
+			LocalTime hora = LocalTime.parse(new SimpleDateFormat("HH:mm").format(pack.getHora()));
+			Integer	resultPlan = serviceAStart.insertHistoricPackage(pack.getCodigoPaisSalida(), pack.getCodigoPaisLlegada(), fecha, hora, pack.getNroPaquetes());
+			if (resultPlan != 1) {
+				System.out.println(pack.getCodigoPaisSalida() + "  " + fecha + " " + hora + " " + pack.getCodigoPaisLlegada() + " " + pack.getNroPaquetes());
+				System.out.println("El sistema fallo");
+				return true;
+			}
+		}
+		return false;
 	}
 	private void insetar(List<PackageTemp> pq, PackageTemp newPackage) {
 		for(PackageTemp p :pq){

@@ -1,11 +1,13 @@
 package pucp.dp1.redex.services.impl.sales;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import pucp.dp1.redex.dao.sales.IHistorico;
 import pucp.dp1.redex.model.sales.Historico;
 import pucp.dp1.redex.services.dao.sales.IHistoricoService;
 
@@ -13,7 +15,7 @@ import pucp.dp1.redex.services.dao.sales.IHistoricoService;
 public class HistoricoService implements IHistoricoService {
 
     @Autowired
-    private IHistoricoService dao;
+    private IHistorico dao;
 
     @Override
     public List<Historico> findAll() {
@@ -24,5 +26,10 @@ public class HistoricoService implements IHistoricoService {
     @Override
     public Optional<Historico> findById(Integer id){
         return dao.findById(id);
+    }
+
+    @Override
+    public List<Historico> findAllByFecha(Date fecha) {
+        return dao.findAllByFecha(fecha);
     }
 }

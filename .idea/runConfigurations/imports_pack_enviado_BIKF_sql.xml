@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="imports_pack_enviado_BIKF.sql" type="DatabaseScript" editBeforeRun="true" singleton="false" nameIsGenerated="true">
+    <script-file value="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_BIKF.sql" />
+    <script-mode>FILE</script-mode>
+    <data-source id="85a6ec74-1f91-40ad-8ff1-0de2bf4b797f" />
+    <method v="2" />
+  </configuration>
+</component>

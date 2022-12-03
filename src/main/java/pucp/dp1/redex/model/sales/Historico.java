@@ -3,6 +3,7 @@ package pucp.dp1.redex.model.sales;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
+
 import java.sql.Time;
 import java.util.Date;
 import javax.persistence.*;
@@ -15,7 +16,6 @@ public class Historico implements Serializable {
      *
      */
     private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name =  "historico_id")
@@ -24,8 +24,9 @@ public class Historico implements Serializable {
     @Column(name = "codigo_pais_salida")
     private String codigoPaisSalida;
 
-    @Column(name = "nro_vuelo")
-    private Long nroVuelo;
+    //el numero de vuelo es identico al id
+    //@Column(name = "nro_vuelo")
+    //private Long nroVuelo;
 
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
@@ -55,14 +56,6 @@ public class Historico implements Serializable {
 
     public void setCodigoPaisSalida(final String codigoPaisSalida) {
         this.codigoPaisSalida = codigoPaisSalida;
-    }
-
-    public Long getNroVuelo() {
-        return this.nroVuelo;
-    }
-
-    public void setNroVuelo(final Long nroVuelo) {
-        this.nroVuelo = nroVuelo;
     }
 
     public Date getFecha() {
