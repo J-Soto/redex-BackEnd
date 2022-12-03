@@ -4,16 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa94474a-5987-4463-a820-534a5ded8da5" name="Changes" comment="Imports terminados ahora si">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/route/FlightPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/route/FlightPlanController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/dao/route/IFlightPlan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/dao/route/IFlightPlan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/model/route/FlightPlan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/model/route/FlightPlan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/router/algorithms/AStar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/router/algorithms/AStar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/dao/route/IFlightPlanService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/dao/route/IFlightPlanService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/route/FlightPlanService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/route/FlightPlanService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/HistoricoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/HistoricoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/AStar.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/AStar.class" afterDir="false" />
+    <list default="true" id="fa94474a-5987-4463-a820-534a5ded8da5" name="Changes" comment="Back arreglado">
+      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/route/FlightPlanController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/route/FlightPlanController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/route/IFlightPlan.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/route/IFlightPlan.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/route/FlightPlan.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/route/FlightPlan.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/route/IFlightPlanService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/route/IFlightPlanService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/route/FlightPlanService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/route/FlightPlanService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/HistoricoService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/HistoricoService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +30,12 @@
       <list>
         <option value="PabloPerezAlbela &lt;p.perezalbela@pucp.edu.pe&gt;" />
       </list>
+    </option>
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--tags" />
+        <option name="title" value="All" />
+      </GitPushTagMode>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -363,7 +366,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670041831214</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Back arreglado">
+      <created>1670111209359</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1670111209360</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -403,9 +413,19 @@
     <MESSAGE value="Aparentemente solucionado" />
     <MESSAGE value="Imports terminados" />
     <MESSAGE value="Imports terminados ahora si" />
-    <option name="LAST_COMMIT_MESSAGE" value="Imports terminados ahora si" />
+    <MESSAGE value="Back arreglado" />
+    <option name="LAST_COMMIT_MESSAGE" value="Back arreglado" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/route/FlightPlanController.java</url>
+          <line>64</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="SpringBootApplicationConfigurationType">
         <watch expression="request" />
