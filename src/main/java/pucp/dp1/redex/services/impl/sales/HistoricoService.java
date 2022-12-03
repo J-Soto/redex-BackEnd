@@ -1,11 +1,13 @@
 package pucp.dp1.redex.services.impl.sales;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import pucp.dp1.redex.dao.sales.IHistorico;
@@ -29,8 +31,17 @@ public class HistoricoService implements IHistoricoService {
         return dao.findById(id);
     }
 
+    @Query("SELECT h FROM Historico h WHERE h.fecha = :fecha")
     @Override
     public List<Historico> findByFecha(LocalDate fecha) {
         return dao.findByFecha(fecha);
     }
+
+    @Query("SELECT h FROM Historico h WHERE h.fecha = :fecha AND h.hora > :horaI AND h.hora < :horaF order by h.hora")
+    @Override
+    public List<Historico> findByFechaHora(LocalDate fecha, LocalTime horaI, LocalTime horaF) {
+        return dao.findByFecha(fecha);
+    }
+
+
 }

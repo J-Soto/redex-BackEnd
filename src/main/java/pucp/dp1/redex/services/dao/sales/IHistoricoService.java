@@ -1,6 +1,7 @@
 package pucp.dp1.redex.services.dao.sales;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -15,4 +16,6 @@ public interface IHistoricoService {
     Optional<Historico> findById(Integer id);
 
     List<Historico> findByFecha(LocalDate fecha);
+
+    List<Historico> findByFechaHora(LocalDate fecha, LocalTime horaI, LocalTime horaF);
 }

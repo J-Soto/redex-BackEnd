@@ -4,19 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa94474a-5987-4463-a820-534a5ded8da5" name="Changes" comment="Imports arreglados y anadidos &#10;&#10;Columna redundante nro_vuelo eliminada &#10;&#10;Carga masiva 2M datos agregada al startup de la aplicaion &#10;&#10;Colocados controladores del ciclo de inicio de la aplciacion&#10;&#10;IHistoricoService terminado&#10;&#10;HistoricoService terminado&#10;&#10;IHistorico terminado&#10;&#10;HistoricoController terminado&#10;&#10;Logica de api para filtrar historico por fechas &#10;&#10;Logica de api para filtrar historico por fechas y codigo de pais salida &#10;&#10;Culminada la logica de prueba con los datos de 1 txt extraidos desde la base de datos para &#10;&#10;la ejecucion dia a dia &#10;la ejecucion de 5 dias &#10;la ejecucion hasta colapso">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/85a6ec74-1f91-40ad-8ff1-0de2bf4b797f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/85a6ec74-1f91-40ad-8ff1-0de2bf4b797f.xml" afterDir="false" />
+    <list default="true" id="fa94474a-5987-4463-a820-534a5ded8da5" name="Changes" comment="Aparentemente solucionado">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/RedexApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/RedexApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/sales/HistoricoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/sales/HistoricoController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/dao/sales/IHistorico.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/dao/sales/IHistorico.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/model/sales/Historico.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/model/sales/Historico.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/dao/sales/IHistoricoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/dao/sales/IHistoricoService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/DispatchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/DispatchService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/HistoricoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/HistoricoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/sales/HistoricoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/sales/HistoricoController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/sales/IHistorico.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/sales/IHistorico.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/sales/Historico.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/sales/Historico.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/sales/IHistoricoService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/sales/IHistoricoService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService$PackageComparator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService$PackageComparator.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService$PackageTemp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService$PackageTemp.class" afterDir="false" />
@@ -187,7 +181,7 @@
       <workItem from="1669953460347" duration="2439000" />
       <workItem from="1670010077601" duration="1816000" />
       <workItem from="1670011911479" duration="999000" />
-      <workItem from="1670016651906" duration="11963000" />
+      <workItem from="1670016651906" duration="15142000" />
     </task>
     <task id="LOCAL-00001" summary="Back arreglado y con los ultimos cambios">
       <created>1668304064027</created>
@@ -329,7 +323,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670027209207</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Aparentemente solucionado">
+      <created>1670029238020</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1670029238020</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -366,12 +367,29 @@
     <MESSAGE value="Back optimizado a la velocidad de la luz usando tecnicas venezolanas e ICPC" />
     <MESSAGE value="Logica de colapso implementada, falta comprobar pq aun no me se la logica completa de pablo pero intente hacer lo que me dijo xdxd" />
     <MESSAGE value="Imports arreglados y anadidos &#10;&#10;Columna redundante nro_vuelo eliminada &#10;&#10;Carga masiva 2M datos agregada al startup de la aplicaion &#10;&#10;Colocados controladores del ciclo de inicio de la aplciacion&#10;&#10;IHistoricoService terminado&#10;&#10;HistoricoService terminado&#10;&#10;IHistorico terminado&#10;&#10;HistoricoController terminado&#10;&#10;Logica de api para filtrar historico por fechas &#10;&#10;Logica de api para filtrar historico por fechas y codigo de pais salida &#10;&#10;Culminada la logica de prueba con los datos de 1 txt extraidos desde la base de datos para &#10;&#10;la ejecucion dia a dia &#10;la ejecucion de 5 dias &#10;la ejecucion hasta colapso" />
-    <option name="LAST_COMMIT_MESSAGE" value="Imports arreglados y anadidos &#10;&#10;Columna redundante nro_vuelo eliminada &#10;&#10;Carga masiva 2M datos agregada al startup de la aplicaion &#10;&#10;Colocados controladores del ciclo de inicio de la aplciacion&#10;&#10;IHistoricoService terminado&#10;&#10;HistoricoService terminado&#10;&#10;IHistorico terminado&#10;&#10;HistoricoController terminado&#10;&#10;Logica de api para filtrar historico por fechas &#10;&#10;Logica de api para filtrar historico por fechas y codigo de pais salida &#10;&#10;Culminada la logica de prueba con los datos de 1 txt extraidos desde la base de datos para &#10;&#10;la ejecucion dia a dia &#10;la ejecucion de 5 dias &#10;la ejecucion hasta colapso" />
+    <MESSAGE value="Aparentemente solucionado" />
+    <option name="LAST_COMMIT_MESSAGE" value="Aparentemente solucionado" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/DispatchService.java</url>
+          <line>302</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/DispatchService.java</url>
+          <line>284</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="SpringBootApplicationConfigurationType">
         <watch expression="request" />
+        <watch expression="daoHistorico" />
+        <watch expression="historicos" />
       </configuration>
     </watches-manager>
   </component>

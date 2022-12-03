@@ -8,6 +8,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -284,8 +285,9 @@ public class DispatchService implements IDispatchService {
 		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 		try {
 			List<Historico> historicos = new ArrayList<Historico>();
-			PriorityQueue<Historico> pqHistoricos = new PriorityQueue<Historico>(new PackageComparator());
 			String datereq = request.getParameter("date").substring(1, 11).replace("-", "");
+			String horaI = request.getParameter("horai");
+			String horaF = request.getParameter("horaf");
 			Integer resultPlan =1, dias =0;
 			Boolean fallo = false, cinco =true;
 			//Creamos el date con el cual se buscara la lista de envios historicos a partir del date enviado por front (fecha inicio)
@@ -295,35 +297,34 @@ public class DispatchService implements IDispatchService {
 
 			//Creamos un Local date con la fecha inicio enviada por front para poder ir avanzando en el tiempo
 			LocalDate date1 = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(dateDate));
-
+			LocalTime time1 = convertStringToLocalTime(horaI);
+			LocalTime time2 = convertStringToLocalTime(horaF);
 			// PROCESAR ALGORITMO
-			while(!fallo && (dias != 3 || !cinco) ) {
-				//le enviamos la fecha Date yyyyMMdd para que retorne la lista de envios historicos de esa fecha
-				historicos = daoHistorico.findByFecha(date1);
+			//while(!fallo && (dias != 3 || !cinco) ) {
+			//le enviamos la fecha Date yyyyMMdd para que retorne la lista de envios historicos de esa fecha
+			historicos = daoHistorico.findByFechaHora(date1,time1,time2);
 
-				//colocamos los datos de la lista de envios historicos a la pq
-				pqHistoricos.addAll(historicos);
+			//enviamos los envios historicos al algoritmo a ver si falla
+			fallo =procesarAlgoritmo(historicos);
+			if (fallo) return "COLAPSO";
 
-				//enviamos los envios historicos al algoritmo a ver si falla
-				fallo =procesarAlgoritmo(pqHistoricos);
-				if (fallo) return "COLAPSO";
+			//Si no fallo, entonces aumentamos el LocalDate en 1 dia y los dias procesados en 1
+			//date1 = date1.plusDays(1);
+			//dias +=1;
 
-				//Si no fallo, entonces aumentamos el LocalDate en 1 dia y los dias procesados en 1
-				date1 = date1.plusDays(1);
-				dias +=1;
-
-				//Asignamos la fecha aumentada al date para que busque los encios historicos del dia siguiente
-				//dateDate = Date.from(date1.atStartOfDay(ZoneId.systemDefault()).toInstant());
-			}
+			//Asignamos la fecha aumentada al date para que busque los encios historicos del dia siguiente
+			//dateDate = Date.from(date1.atStartOfDay(ZoneId.systemDefault()).toInstant());
+			//}
 			return "OK";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "COLAPSO";
 		}
 	}
-	private Boolean procesarAlgoritmo(PriorityQueue<Historico> pqHistoricos) {
-		while (pqHistoricos.size() != 0) {
-			Historico pack = pqHistoricos.poll();
+	private Boolean procesarAlgoritmo(List<Historico> pqHistoricos) {
+
+		while (!pqHistoricos.isEmpty()){
+			Historico pack = pqHistoricos.remove(0);
 			Integer	resultPlan = serviceAStart.insertHistoricPackage(pack.getCodigoPaisSalida(), pack.getCodigoPaisLlegada(), pack.getFecha(),pack.getHora(), pack.getNroPaquetes());
 			if (resultPlan != 1) {
 				System.out.println(pack.getCodigoPaisSalida() + "  " + pack.getFecha()+ " " + pack.getHora() + " " + pack.getCodigoPaisLlegada() + " " + pack.getNroPaquetes());
