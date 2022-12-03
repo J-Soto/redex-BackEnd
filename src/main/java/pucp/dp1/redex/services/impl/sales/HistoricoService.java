@@ -37,10 +37,10 @@ public class HistoricoService implements IHistoricoService {
         return dao.findByFecha(fecha);
     }
 
-    @Query("SELECT h FROM Historico h WHERE h.fecha = :fecha AND h.hora > :horaI AND h.hora < :horaF order by h.hora")
+    @Query("SELECT h FROM Historico h WHERE h.fecha = :fecha AND h.hora BETWEEN :horaI AND  :horaF order by h.hora")
     @Override
     public List<Historico> findByFechaHora(LocalDate fecha, LocalTime horaI, LocalTime horaF) {
-        return dao.findByFecha(fecha);
+        return dao.findByFechaHora(fecha,horaI,horaF);
     }
 
 

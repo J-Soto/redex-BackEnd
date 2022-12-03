@@ -1,5 +1,6 @@
 package pucp.dp1.redex.services.impl.route;
 
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -38,5 +39,9 @@ public class FlightPlanService implements IFlightPlanService{
 		} else {
 			return Optional.empty();
 		}
+	}
+
+	public List<FlightPlan> findByFechaHora(Date fecha, LocalTime horaI, LocalTime horaF){
+		return dao.findByFechaHora(fecha, horaI, horaF);
 	}
 }

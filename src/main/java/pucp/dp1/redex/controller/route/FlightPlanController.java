@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,8 +51,17 @@ public class FlightPlanController {
 			return new ResponseEntity<ResponseObject>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	public LocalTime convertStringToLocalTime(String time) {
+		try {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+			return LocalTime.parse(time, formatter);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	@GetMapping(path = "/allDay", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResponseObject> consultarTodosPorDia(@Param("fecha") String fecha) {
+	public ResponseEntity<ResponseObject> consultarTodosPorDia(@Param("fecha") String fecha,@Param("horaI") String horaI,@Param("horaF") String horaF) {
 		ResponseObject response = new ResponseObject();
 		try {
 			String datereq = fecha.substring(1, 11).replace("-", "");
@@ -59,9 +69,11 @@ public class FlightPlanController {
 			SimpleDateFormat formatterDate = new SimpleDateFormat("yyyyMMdd");
 			dateDate = formatterDate.parse(datereq);
 			LocalDate date1 = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(dateDate));
-			List<FlightPlan> lista = this.service.findAll();
-			List<FlightPlan> listaFiltrada = lista.stream().filter(x -> x.getTakeOffDate().equals(dateDate)).collect(Collectors.toList());
-			response.setResultado(listaFiltrada);
+			LocalTime time1 = convertStringToLocalTime(horaI);
+			LocalTime time2 = convertStringToLocalTime(horaF);
+			List<FlightPlan> lista = this.service.findByFechaHora(dateDate,time1,time2);
+			//List<FlightPlan> listaFiltrada = lista.stream().filter(x -> x.getTakeOffDate().equals(dateDate)).collect(Collectors.toList());
+			response.setResultado(lista);
 			response.setEstado(Estado.OK);
 			return new ResponseEntity<ResponseObject>(response, HttpStatus.OK);
 		} catch(Exception e) {

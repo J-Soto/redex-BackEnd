@@ -1,5 +1,7 @@
 package pucp.dp1.redex.dao.route;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +26,8 @@ public interface IFlightPlan extends JpaRepository<FlightPlan, Integer>{
 	@Modifying
 	@Query(value = "update FlightPlan f set f.fullSimulated = false, f.packagesNumberSimulated=0 where f.id>0")
 	void cleanSimulated();
-	
+
+	@Query("SELECT '*' FROM flight_plan fp, flight f where fp.flight_id = f.id and fp.take_off_date = :fecha AND f.take_off_time between :horaI AND :horaF")
+	List<FlightPlan> findByFechaHora(Date fecha, LocalTime horaI, LocalTime horaF);
 	
 }
