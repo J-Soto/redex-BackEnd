@@ -1,5 +1,6 @@
 package pucp.dp1.redex.dao.sales;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,6 @@ public interface IHistorico extends JpaRepository<Historico, Integer> {
     Optional<Historico> findById(Integer id);
 
     //pattern "dd/MM/yyyy"
-     List<Historico> findAllByFecha(Date fecha);
+    List<Historico> findByFecha(LocalDate fecha);
 }
 

@@ -1,5 +1,6 @@
 package pucp.dp1.redex.services.impl.sales;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +30,7 @@ public class HistoricoService implements IHistoricoService {
     }
 
     @Override
-    public List<Historico> findAllByFecha(Date fecha) {
-        return dao.findAllByFecha(fecha);
+    public List<Historico> findByFecha(LocalDate fecha) {
+        return dao.findByFecha(fecha);
     }
 }

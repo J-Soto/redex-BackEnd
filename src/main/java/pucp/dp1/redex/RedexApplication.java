@@ -32,7 +32,7 @@ public  class RedexApplication {
         SimpleDateFormat formatterDate = new SimpleDateFormat("yyyyMMdd");
         Date dateDate;
         dateDate = formatterDate.parse(datereq);
-        tutorials =  IHistorico.findAllByFecha(dateDate);
+        tutorials =  IHistorico.findByFecha(dateDate);
 	 */
 	public static void main(String[] args)  {
 		SpringApplication.run(RedexApplication.class, args);

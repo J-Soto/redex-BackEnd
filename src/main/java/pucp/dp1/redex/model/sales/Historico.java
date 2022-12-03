@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 
 import java.sql.Time;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import javax.persistence.*;
 
 @Table(name = "historico")
@@ -29,12 +30,12 @@ public class Historico implements Serializable {
     //private Long nroVuelo;
 
     @Column(name = "fecha")
-    @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern="dd/MM/yyyy")
-    private Date fecha;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalDate fecha;
 
+    @JsonFormat(pattern="HH:mm")
     @Column(name = "hora")
-    private Time hora;
+    private LocalTime hora;
 
     @Column(name = "codigo_pais_llegada")
     private String codigoPaisLlegada;
@@ -58,19 +59,19 @@ public class Historico implements Serializable {
         this.codigoPaisSalida = codigoPaisSalida;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return this.fecha;
     }
 
-    public void setFecha(final Date fecha) {
+    public void setFecha(final LocalDate fecha) {
         this.fecha = fecha;
     }
 
-    public Time getHora() {
+    public LocalTime getHora() {
         return this.hora;
     }
 
-    public void setHora(final Time hora) {
+    public void setHora(final LocalTime hora) {
         this.hora = hora;
     }
 

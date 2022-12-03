@@ -1,9 +1,5 @@
 package pucp.dp1.redex.services.impl.sales;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -12,13 +8,9 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import pucp.dp1.redex.dao.location.ICountry;
@@ -33,18 +25,14 @@ import pucp.dp1.redex.dao.storage.IStorageRegister;
 import pucp.dp1.redex.dao.storage.IWarehouse;
 import pucp.dp1.redex.dao.utils.ISummaryCase;
 import pucp.dp1.redex.dao.utils.ITrackingHistory;
-import pucp.dp1.redex.model.location.Country;
 import pucp.dp1.redex.model.route.FlightPlan;
 import pucp.dp1.redex.model.route.RoutePlan;
-import pucp.dp1.redex.model.sales.Airport;
 import pucp.dp1.redex.model.sales.Dispatch;
 import pucp.dp1.redex.model.sales.DispatchStatus;
 import pucp.dp1.redex.model.sales.Historico;
 import pucp.dp1.redex.model.storage.Package;
 import pucp.dp1.redex.model.storage.StorageRegister;
 import pucp.dp1.redex.model.storage.Warehouse;
-import pucp.dp1.redex.model.utils.AirportElement;
-import pucp.dp1.redex.model.utils.SummaryCase;
 import pucp.dp1.redex.model.utils.TrackingHistory;
 import pucp.dp1.redex.router.algorithms.AStar;
 import pucp.dp1.redex.services.dao.sales.IDispatchService;
@@ -257,7 +245,7 @@ public class DispatchService implements IDispatchService {
 			this.cantPackages = cantPackages;
 		}
 	}
-	public LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
+	public LocalDate convertToLocalDateViaInstant(LocalDate dateToConvert) {
 		return LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(dateToConvert));
 	}
 	public LocalTime convertStringToLocalTime(String time) {
@@ -271,11 +259,13 @@ public class DispatchService implements IDispatchService {
 	}
 	class PackageComparator implements Comparator<Historico>{
 		public int compare(Historico a, Historico b) {
-			if ( a.getHora().after(b.getHora()) ) return 1;
-			else if (a.getHora().before(b.getHora())) return -1;
+			if ( a.getHora().isAfter(b.getHora()) ) return 1;
+			else if (a.getHora().isBefore(b.getHora())) return -1;
 			return 0;
 		}
 	}
+
+	/*
 	public LocalDate convertStringToLocalDate(String date) {
 		try {
 			SimpleDateFormat formatterDate = new SimpleDateFormat("yyyyMMdd");
@@ -288,6 +278,7 @@ public class DispatchService implements IDispatchService {
 		}
 	}
 
+	*/
 	@Override
 	public String masiveLoad(MultipartHttpServletRequest request) {
 		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
@@ -308,7 +299,7 @@ public class DispatchService implements IDispatchService {
 			// PROCESAR ALGORITMO
 			while(!fallo && (dias != 3 || !cinco) ) {
 				//le enviamos la fecha Date yyyyMMdd para que retorne la lista de envios historicos de esa fecha
-				historicos = daoHistorico.findAllByFecha(dateDate);
+				historicos = daoHistorico.findByFecha(date1);
 
 				//colocamos los datos de la lista de envios historicos a la pq
 				pqHistoricos.addAll(historicos);
@@ -322,7 +313,7 @@ public class DispatchService implements IDispatchService {
 				dias +=1;
 
 				//Asignamos la fecha aumentada al date para que busque los encios historicos del dia siguiente
-				dateDate = Date.from(date1.atStartOfDay(ZoneId.systemDefault()).toInstant());
+				//dateDate = Date.from(date1.atStartOfDay(ZoneId.systemDefault()).toInstant());
 			}
 			return "OK";
 		} catch (Exception e) {
@@ -333,11 +324,9 @@ public class DispatchService implements IDispatchService {
 	private Boolean procesarAlgoritmo(PriorityQueue<Historico> pqHistoricos) {
 		while (pqHistoricos.size() != 0) {
 			Historico pack = pqHistoricos.poll();
-			LocalDate fecha = convertToLocalDateViaInstant(pack.getFecha());
-			LocalTime hora = LocalTime.parse(new SimpleDateFormat("HH:mm").format(pack.getHora()));
-			Integer	resultPlan = serviceAStart.insertHistoricPackage(pack.getCodigoPaisSalida(), pack.getCodigoPaisLlegada(), fecha, hora, pack.getNroPaquetes());
+			Integer	resultPlan = serviceAStart.insertHistoricPackage(pack.getCodigoPaisSalida(), pack.getCodigoPaisLlegada(), pack.getFecha(),pack.getHora(), pack.getNroPaquetes());
 			if (resultPlan != 1) {
-				System.out.println(pack.getCodigoPaisSalida() + "  " + fecha + " " + hora + " " + pack.getCodigoPaisLlegada() + " " + pack.getNroPaquetes());
+				System.out.println(pack.getCodigoPaisSalida() + "  " + pack.getFecha()+ " " + pack.getHora() + " " + pack.getCodigoPaisLlegada() + " " + pack.getNroPaquetes());
 				System.out.println("El sistema fallo");
 				return true;
 			}

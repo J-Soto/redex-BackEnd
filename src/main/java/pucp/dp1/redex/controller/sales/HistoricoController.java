@@ -13,6 +13,7 @@ import pucp.dp1.redex.services.dao.sales.IHistoricoService;
 import pucp.dp1.redex.services.impl.sales.HistoricoService;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,7 +34,8 @@ public class HistoricoController {
             SimpleDateFormat formatterDate = new SimpleDateFormat("yyyyMMdd");
             Date dateDate;
             dateDate = formatterDate.parse(datereq);
-            List<Historico> lista = this.historicoService.findAllByFecha(dateDate);
+            LocalDate date1 = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(dateDate));
+            List<Historico> lista = this.historicoService.findByFecha(date1);
             response.setResultado(lista);
             response.setEstado(Estado.OK);
             return new ResponseEntity<ResponseObject>(response, HttpStatus.OK);
@@ -52,7 +54,8 @@ public class HistoricoController {
             SimpleDateFormat formatterDate = new SimpleDateFormat("yyyyMMdd");
             Date dateDate;
             dateDate = formatterDate.parse(datereq);
-            List<Historico> lista = this.historicoService.findAllByFecha(dateDate).stream().filter(historico -> historico.getCodigoPaisSalida().equals(codigo)).collect(Collectors.toList());
+            LocalDate date1 = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(dateDate));
+            List<Historico> lista = this.historicoService.findByFecha(date1).stream().filter(historico -> historico.getCodigoPaisSalida().equals(codigo)).collect(Collectors.toList());
             response.setResultado(lista);
             response.setEstado(Estado.OK);
             return new ResponseEntity<ResponseObject>(response, HttpStatus.OK);

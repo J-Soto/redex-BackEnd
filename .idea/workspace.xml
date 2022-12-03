@@ -4,54 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa94474a-5987-4463-a820-534a5ded8da5" name="Changes" comment="Imports arreglados y anadidos &#10;&#10;Columna redundante nro_vuelo eliminada &#10;&#10;Carga masiva 2M datos agregada al startup de la aplicaion &#10;&#10;Colocados controladores del ciclo de inicio de la aplciacion">
-      <change afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/ApplicationListenerInitialize.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/Runner.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_BIKF.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EBCI.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EDDI.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EETN.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EFHK.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EGLL.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EHAM.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EIDW.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EKCH.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_ELLX.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_ENGM.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EPMO.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_ESKN.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EVRA.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LATI.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LBSF.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LDZA.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LEMD.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LFPG.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LGAV.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LHBP.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LIRA.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LJLJ.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LKPR.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LMML.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LOWW.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LPPT.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LSZB.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LZIB.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SABE.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SBBR.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SCEL.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SEQM.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SGAS.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SKBO.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SLLP.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SPIM.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SUAA.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SVMI.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_UMMS.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/pucp/dp1/redex/te.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+    <list default="true" id="fa94474a-5987-4463-a820-534a5ded8da5" name="Changes" comment="Imports arreglados y anadidos &#10;&#10;Columna redundante nro_vuelo eliminada &#10;&#10;Carga masiva 2M datos agregada al startup de la aplicaion &#10;&#10;Colocados controladores del ciclo de inicio de la aplciacion&#10;&#10;IHistoricoService terminado&#10;&#10;HistoricoService terminado&#10;&#10;IHistorico terminado&#10;&#10;HistoricoController terminado&#10;&#10;Logica de api para filtrar historico por fechas &#10;&#10;Logica de api para filtrar historico por fechas y codigo de pais salida &#10;&#10;Culminada la logica de prueba con los datos de 1 txt extraidos desde la base de datos para &#10;&#10;la ejecucion dia a dia &#10;la ejecucion de 5 dias &#10;la ejecucion hasta colapso">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/85a6ec74-1f91-40ad-8ff1-0de2bf4b797f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/85a6ec74-1f91-40ad-8ff1-0de2bf4b797f.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/RedexApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/RedexApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/sales/HistoricoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/sales/HistoricoController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/dao/sales/IHistorico.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/dao/sales/IHistorico.java" afterDir="false" />
@@ -59,187 +14,14 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/dao/sales/IHistoricoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/dao/sales/IHistoricoService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/DispatchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/DispatchService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/HistoricoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/HistoricoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_BIKF.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_EBCI.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_EDDI.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_EETN.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_EFHK.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_EGLL.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_EHAM.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_EIDW.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_EKCH.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_ELLX.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_ENGM.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_EPMO.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_ESKN.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_EVRA.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LATI.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LBSF.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LDZA.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LEMD.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LFPG.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LGAV.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LHBP.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LIRA.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LJLJ.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LKPR.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LMML.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LOWW.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LPPT.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LSZB.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_LZIB.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_SABE.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_SBBR.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_SCEL.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_SEQM.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_SGAS.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_SKBO.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_SLLP.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_SPIM.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_SUAA.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_SVMI.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Imports/imports_pack_enviado_UMMS.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/import.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/import.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_BIKF.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_EBCI.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_EDDI.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_EETN.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_EFHK.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_EGLL.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_EHAM.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_EIDW.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_EKCH.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_ELLX.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_ENGM.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_EPMO.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_ESKN.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_EVRA.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_LATI.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_LBSF.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_LDZA.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_LEMD.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_LFPG.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_LGAV.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_LHBP.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_LIRA.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_LJLJ.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_LKPR.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_LMML.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_LPPT.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_LSZB.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_LZIB.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_SABE.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_SBBR.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_SCEL.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_SEQM.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_SGAS.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_SKBO.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_SLLP.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_SPIM.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_SUAA.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_SVMI.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Imports/imports_pack_enviado_UMMS.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/import.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/import.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/RedexApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/RedexApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/PACK/FlightController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/PACK/FlightController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/location/CityController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/location/CityController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/location/ContinentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/location/ContinentController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/location/CountryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/location/CountryController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/login/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/login/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/route/RoutePlanController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/route/RoutePlanController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/sales/ClientController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/sales/ClientController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/sales/HistoricoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/sales/HistoricoController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/sales/IncidentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/sales/IncidentController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/storage/PackageController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/storage/PackageController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/storage/StorageRegisterController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/storage/StorageRegisterController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/storage/WarehouseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/storage/WarehouseController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/testing/FileReaderController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/testing/FileReaderController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/PACK/IFlight.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/PACK/IFlight.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/location/ICity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/location/ICity.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/location/IContinent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/location/IContinent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/location/ICountry.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/location/ICountry.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/login/IRole.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/login/IRole.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/login/IUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/login/IUser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/route/IFlightPlan.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/route/IFlightPlan.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/route/IRoutePlan.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/route/IRoutePlan.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/sales/IAirport.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/sales/IAirport.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/sales/IClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/sales/IClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/sales/IDispatch.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/sales/IDispatch.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/sales/IHistorico.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/sales/IHistorico.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/sales/IIncident.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/sales/IIncident.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/storage/IPackage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/storage/IPackage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/storage/IStorageRegister.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/storage/IStorageRegister.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/storage/IWarehouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/storage/IWarehouse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/utils/ISummaryCase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/utils/ISummaryCase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/utils/ITrackingHistory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/utils/ITrackingHistory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/PACK/Flight.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/PACK/Flight.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/location/City.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/location/City.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/location/Continent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/location/Continent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/location/Country.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/location/Country.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/login/Role.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/login/Role.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/login/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/login/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/response/Error.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/response/Error.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/response/Paginacion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/response/Paginacion.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/response/ResponseObject.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/response/ResponseObject.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/route/FlightPlan.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/route/FlightPlan.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/route/FlightPlanStatus.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/route/FlightPlanStatus.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/route/RoutePlan.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/route/RoutePlan.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/route/RoutePlanStatus.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/route/RoutePlanStatus.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/sales/Airport.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/sales/Airport.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/sales/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/sales/Client.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/sales/Dispatch.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/sales/Dispatch.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/sales/DispatchStatus.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/sales/DispatchStatus.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/sales/Historico.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/sales/Historico.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/sales/Incident.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/sales/Incident.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/storage/Package.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/storage/Package.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/storage/PackageStatus.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/storage/PackageStatus.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/storage/StorageRegister.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/storage/StorageRegister.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/storage/Warehouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/storage/Warehouse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/utils/AirportElement.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/utils/AirportElement.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/utils/FlightElement.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/utils/FlightElement.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/utils/FlightPlanElement.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/utils/FlightPlanElement.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/utils/IncidentSummary.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/utils/IncidentSummary.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/utils/SummaryCase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/utils/SummaryCase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/utils/TrackingHistory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/utils/TrackingHistory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/utils/TrackingList.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/utils/TrackingList.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/AirportsMap.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/AirportsMap.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/AStar2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/AStar2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/Dijkstra.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/Dijkstra.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/Graph.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/Graph.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/Node.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/Node.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/PACK/IFlightService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/PACK/IFlightService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/location/ICityService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/location/ICityService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/location/ICountryService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/location/ICountryService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/login/IUserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/login/IUserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/route/IFlightPlanService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/route/IFlightPlanService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/sales/IAirportService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/sales/IAirportService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/sales/IClientService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/sales/IClientService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/sales/IDispatchService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/sales/IDispatchService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/sales/IHistoricoService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/sales/IHistoricoService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/sales/IIncidentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/sales/IIncidentService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/storage/IPackageService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/storage/IPackageService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/storage/IStorageRegisterService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/storage/IStorageRegisterService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/storage/IWarehouseService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/storage/IWarehouseService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/PACK/FlightService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/PACK/FlightService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/location/CityService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/location/CityService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/location/ContinentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/location/ContinentService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/location/CountryService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/location/CountryService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/login/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/login/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/route/RoutePlanService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/route/RoutePlanService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/AirportService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/AirportService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/ClientService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/ClientService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService$PackageComparator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService$PackageComparator.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService$PackageTemp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService$PackageTemp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/HistoricoService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/HistoricoService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/IncidentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/IncidentService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/storage/PackageService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/storage/PackageService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/storage/StorageRegisterService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/storage/StorageRegisterService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/storage/WarehouseService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/storage/WarehouseService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/testing/FileReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/testing/FileReader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/pucp/dp1/redex/RedexApplicationTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/pucp/dp1/redex/RedexApplicationTests.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -273,6 +55,7 @@
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/sales/AirportController.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/sales/DispatchController.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/sales/HistoricoController.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/dao/route/IFlightPlan.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/dao/sales/IHistorico.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/model/PACK/Flight.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/model/route/FlightPlan.java" root0="SKIP_INSPECTION" />
@@ -404,7 +187,7 @@
       <workItem from="1669953460347" duration="2439000" />
       <workItem from="1670010077601" duration="1816000" />
       <workItem from="1670011911479" duration="999000" />
-      <workItem from="1670016651906" duration="9762000" />
+      <workItem from="1670016651906" duration="11963000" />
     </task>
     <task id="LOCAL-00001" summary="Back arreglado y con los ultimos cambios">
       <created>1668304064027</created>
@@ -539,7 +322,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669782378969</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Imports arreglados y anadidos &#10;&#10;Columna redundante nro_vuelo eliminada &#10;&#10;Carga masiva 2M datos agregada al startup de la aplicaion &#10;&#10;Colocados controladores del ciclo de inicio de la aplciacion&#10;&#10;IHistoricoService terminado&#10;&#10;HistoricoService terminado&#10;&#10;IHistorico terminado&#10;&#10;HistoricoController terminado&#10;&#10;Logica de api para filtrar historico por fechas &#10;&#10;Logica de api para filtrar historico por fechas y codigo de pais salida &#10;&#10;Culminada la logica de prueba con los datos de 1 txt extraidos desde la base de datos para &#10;&#10;la ejecucion dia a dia &#10;la ejecucion de 5 dias &#10;la ejecucion hasta colapso">
+      <created>1670027209207</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1670027209207</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -575,28 +365,10 @@
     <MESSAGE value="logica para el colapso y simulacion de 5 dias terminada" />
     <MESSAGE value="Back optimizado a la velocidad de la luz usando tecnicas venezolanas e ICPC" />
     <MESSAGE value="Logica de colapso implementada, falta comprobar pq aun no me se la logica completa de pablo pero intente hacer lo que me dijo xdxd" />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="Imports arreglados y anadidos &#10;&#10;Columna redundante nro_vuelo eliminada &#10;&#10;Carga masiva 2M datos agregada al startup de la aplicaion &#10;&#10;Colocados controladores del ciclo de inicio de la aplciacion&#10;&#10;IHistoricoService terminado&#10;&#10;HistoricoService terminado&#10;&#10;IHistorico terminado&#10;&#10;HistoricoController terminado&#10;&#10;Logica de api para filtrar historico por fechas &#10;&#10;Logica de api para filtrar historico por fechas y codigo de pais salida &#10;&#10;Culminada la logica de prueba con los datos de 1 txt extraidos desde la base de datos para &#10;&#10;la ejecucion dia a dia &#10;la ejecucion de 5 dias &#10;la ejecucion hasta colapso" />
+    <option name="LAST_COMMIT_MESSAGE" value="Imports arreglados y anadidos &#10;&#10;Columna redundante nro_vuelo eliminada &#10;&#10;Carga masiva 2M datos agregada al startup de la aplicaion &#10;&#10;Colocados controladores del ciclo de inicio de la aplciacion&#10;&#10;IHistoricoService terminado&#10;&#10;HistoricoService terminado&#10;&#10;IHistorico terminado&#10;&#10;HistoricoController terminado&#10;&#10;Logica de api para filtrar historico por fechas &#10;&#10;Logica de api para filtrar historico por fechas y codigo de pais salida &#10;&#10;Culminada la logica de prueba con los datos de 1 txt extraidos desde la base de datos para &#10;&#10;la ejecucion dia a dia &#10;la ejecucion de 5 dias &#10;la ejecucion hasta colapso" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/route/FlightPlanController.java</url>
-          <line>76</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/sales/HistoricoController.java</url>
-          <line>48</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/DispatchService.java</url>
-          <line>292</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="SpringBootApplicationConfigurationType">
         <watch expression="request" />
