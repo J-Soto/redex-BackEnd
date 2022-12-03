@@ -323,14 +323,14 @@ public class DispatchService implements IDispatchService {
 	}
 	private Boolean procesarAlgoritmo(List<Historico> pqHistoricos) {
 
-		while (!pqHistoricos.isEmpty()){
-			Historico pack = pqHistoricos.remove(0);
+		for (Historico pack : pqHistoricos) {
 			Integer	resultPlan = serviceAStart.insertHistoricPackage(pack.getCodigoPaisSalida(), pack.getCodigoPaisLlegada(), pack.getFecha(),pack.getHora(), pack.getNroPaquetes());
 			if (resultPlan != 1) {
 				System.out.println(pack.getCodigoPaisSalida() + "  " + pack.getFecha()+ " " + pack.getHora() + " " + pack.getCodigoPaisLlegada() + " " + pack.getNroPaquetes());
 				System.out.println("El sistema fallo");
 				return true;
 			}
+
 		}
 		return false;
 	}
