@@ -304,9 +304,13 @@ public class DispatchService implements IDispatchService {
 			//le enviamos la fecha Date yyyyMMdd para que retorne la lista de envios historicos de esa fecha
 			historicos = daoHistorico.findByFechaHora(date1,time1,time2);
 
+			//Inicio :07:56
+
 			//enviamos los envios historicos al algoritmo a ver si falla
 			fallo =procesarAlgoritmo(historicos);
 			if (fallo) return "COLAPSO";
+
+			//Fin :08:04
 
 			//Si no fallo, entonces aumentamos el LocalDate en 1 dia y los dias procesados en 1
 			//date1 = date1.plusDays(1);
