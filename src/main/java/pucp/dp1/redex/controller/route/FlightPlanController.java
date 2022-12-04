@@ -8,6 +8,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,7 @@ public class FlightPlanController {
 	}
 	@GetMapping(path = "/allDay", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseObject> consultarTodosPorDia(@Param("fecha") String fecha,@Param("horaI") String horaI,@Param("horaF") String horaF) {
+		//TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 		ResponseObject response = new ResponseObject();
 		try {
 			String datereq = fecha.substring(1, 11).replace("-", "");
