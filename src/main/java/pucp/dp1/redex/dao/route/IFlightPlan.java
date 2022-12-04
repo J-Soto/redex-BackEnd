@@ -29,8 +29,8 @@ public interface IFlightPlan extends JpaRepository<FlightPlan, Integer>{
 	void cleanSimulated();
 
 	//@Query("SELECT fp FROM FlightPlan fp, Flight f where fp.id = f.id and fp.takeOffDate = :fecha AND f.takeOffTime between :horaI AND :horaF")
-	@Query("SELECT fp FROM FlightPlan fp INNER JOIN Flight f ON fp.flight.id = f.idFlight WHERE fp.takeOffDate = :fecha AND f.takeOffTime > :horaI AND f.takeOffTime < :horaF")
-	//@Query("SELECT fp FROM FlightPlan fp INNER JOIN Flight f ON fp.id = f.id WHERE fp.takeOffDate = :fecha AND f.takeOffTime > '00:00:00' AND f.takeOffTime < '06:00:00'")
+	//@Query("SELECT fp FROM FlightPlan fp INNER JOIN Flight f ON fp.flight.id = f.idFlight WHERE fp.takeOffDate = :fecha AND f.takeOffTime > :horaI AND f.takeOffTime < :horaF")
+	@Query("SELECT fp FROM FlightPlan fp WHERE fp.takeOffDate = :fecha AND fp.takeOffTimeUtc BETWEEN :horaI AND :horaF")
 	List<FlightPlan> buscarFP(Date fecha, Time horaI, Time horaF);
 
 	// @Query("SELECT fp FROM FlightPlan fp INNER JOIN Flight f ON fp.flight.id = f.idFlight WHERE fp.takeOffDate = :fecha AND f.takeOffTime > '00:00:00' AND f.takeOffTime < '10:00:00'")

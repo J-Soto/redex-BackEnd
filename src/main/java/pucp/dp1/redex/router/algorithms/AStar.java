@@ -74,6 +74,10 @@ public class AStar {
 			if (nodeDistance < lowestDistance) {
 				lowestDistance = nodeDistance;
 				lowestDistanceNode = node;
+				// if(lowestDistanceNode.getId()==40){
+				// 	System.out.println("holaa");
+				// }
+				//System.out.println(lowestDistanceNode.getFlightPlan().getArrivalTimeUtc());
 			}
 		}
 		return lowestDistanceNode;
@@ -135,11 +139,11 @@ public class AStar {
 						Date arrivalDate2=Date.from(arrivalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 						fp.setTakeOffDate(takeOfDate2);
 						fp.setArrivalDate(arrivalDate2);
+						setearArrivalTakeOffUTC(fp);
 					}
 					adjacentNode.setArrivalFlight(f);
 					adjacentNode.setFather(currentNode);
 					adjacentNode.setHeuristic(heuristic(adjacentNode.getArrivalFlight().getArrivalAirport(),currentNode.getId(), objective.getId(), time));
-					int k=44444;
 					newDistance=durationBetweenTime(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc,fp);//actualiza el fp
 					packagesProcesados= hayCapacidad(f, f.getArrivalAirport().getWarehouse(), cantPackages,fp);
 					//fp.setPackagesNumber(packagesProcesados);
@@ -189,6 +193,32 @@ public class AStar {
 		}
 		return bestWays;
 	}
+
+	public void setearArrivalTakeOffUTC(FlightPlan fp){
+		int takeOffUtc =fp.getFlight().getTakeOffAirport().getCity().getCountry().getUtc();
+		int arrivalUtc =fp.getFlight().getArrivalAirport().getCity().getCountry().getUtc();
+
+		LocalTime takeOff= fp.getFlight().getTakeOffTime().toLocalTime();
+		LocalTime arrival= fp.getFlight().getArrivalTime().toLocalTime();
+		
+		if(takeOffUtc>0) takeOff=takeOff.minusHours(takeOffUtc);		
+		else {
+			takeOffUtc*=-1;
+			takeOff=takeOff.plusHours(takeOffUtc);
+		}
+
+		if(arrivalUtc>0) arrival=arrival.minusHours(arrivalUtc);		
+		else {
+			arrivalUtc*=-1;
+			arrival=arrival.plusHours(arrivalUtc);
+		}
+
+		fp.setArrivalTimeUtc(Time.valueOf(arrival));
+		fp.setTakeOffTimeUtc(Time.valueOf(takeOff));
+
+
+	}
+
 	private LocalDate calcularArrivalDate(Boolean isStart, LocalDate date,LocalTime time,LocalTime start, LocalTime end) {
 
 		//Integer dia=0;

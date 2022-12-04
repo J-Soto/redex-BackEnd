@@ -1,6 +1,7 @@
 package pucp.dp1.redex.model.route;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.time.Instant;
 import java.util.Date;
 
@@ -62,6 +63,12 @@ public class FlightPlan implements Serializable{
 	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date arrivalDate;
+
+	@Column(name = "take_off_time_utc")
+	private Time takeOffTimeUtc;
+	
+	@Column(name = "arrival_time_utc")
+	private Time arrivalTimeUtc;
 	
 	@OneToOne
 	@JsonIgnoreProperties("flightPlan")
@@ -151,5 +158,23 @@ public class FlightPlan implements Serializable{
 	public void setFullSimulated(Boolean fullSimulated) {
 		this.fullSimulated = fullSimulated;
 	}
+
+	public Time getTakeOffTimeUtc() {
+		return takeOffTimeUtc;
+	}
+
+	public void setTakeOffTimeUtc(Time takeOffTimeUtc) {
+		this.takeOffTimeUtc = takeOffTimeUtc;
+	}
+
+	public Time getArrivalTimeUtc() {
+		return arrivalTimeUtc;
+	}
+
+	public void setArrivalTimeUtc(Time arrivalTimeUtc) {
+		this.arrivalTimeUtc = arrivalTimeUtc;
+	}
+
+	
 
 }
