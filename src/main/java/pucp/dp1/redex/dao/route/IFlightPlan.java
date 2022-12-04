@@ -28,7 +28,17 @@ public interface IFlightPlan extends JpaRepository<FlightPlan, Integer>{
 	@Query(value = "update FlightPlan f set f.fullSimulated = false, f.packagesNumberSimulated=0 where f.id>0")
 	void cleanSimulated();
 
-	@Query("SELECT fp FROM FlightPlan fp, Flight f where fp.id = f.id and fp.takeOffDate = :fecha AND f.takeOffTime between :horaI AND :horaF")
-	List<FlightPlan> findByFechaHora(Date fecha, Time horaI, Time horaF);
+	//@Query("SELECT fp FROM FlightPlan fp, Flight f where fp.id = f.id and fp.takeOffDate = :fecha AND f.takeOffTime between :horaI AND :horaF")
+	@Query("SELECT fp FROM FlightPlan fp INNER JOIN Flight f ON fp.flight.id = f.idFlight WHERE fp.takeOffDate = :fecha AND f.takeOffTime > :horaI AND f.takeOffTime < :horaF")
+	//@Query("SELECT fp FROM FlightPlan fp INNER JOIN Flight f ON fp.id = f.id WHERE fp.takeOffDate = :fecha AND f.takeOffTime > '00:00:00' AND f.takeOffTime < '06:00:00'")
+	List<FlightPlan> buscarFP(Date fecha, Time horaI, Time horaF);
+
+	// @Query("SELECT fp FROM FlightPlan fp INNER JOIN Flight f ON fp.flight.id = f.idFlight WHERE fp.takeOffDate = :fecha AND f.takeOffTime > '00:00:00' AND f.takeOffTime < '10:00:00'")
+	// List<FlightPlan> buscar2(Date fecha);
+
+	// @Transactional
+	// @Modifying
+	// @Query("UPDATE Flight f SET f.takeOffTime = :horaI, f.arrivalTime = :horaF WHERE f.id=2621")
+	// void prueba(Time horaI, Time horaF);
 	
 }

@@ -43,6 +43,14 @@ public class FlightPlanService implements IFlightPlanService{
 	}
 
 	public List<FlightPlan> findByFechaHora(Date fecha, Time horaI, Time horaF){
-		return dao.findByFechaHora(fecha, horaI, horaF);
+		return dao.buscarFP(fecha, horaI, horaF);
 	}
+
+	// public List<FlightPlan> buscar2(Date fecha){
+	// 	return dao.buscar2(fecha);
+	// }
+
+	// public void prueba(Time horaI, Time horaF){
+	// 	dao.prueba(horaI, horaF);
+	// }
 }

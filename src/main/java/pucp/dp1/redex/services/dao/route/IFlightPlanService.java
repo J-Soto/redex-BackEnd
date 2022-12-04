@@ -18,5 +18,9 @@ public interface IFlightPlanService {
 	public Optional<FlightPlan> updateOccupiedCapacity(Integer id, Integer capacity);
 
 	List<FlightPlan> findByFechaHora(Date fecha, Time horaI, Time horaF);
+	//List<FlightPlan> buscar2(Date fecha);
+
+
+	//public void prueba(Time horaI, Time horaF);
 }
 
