@@ -118,11 +118,13 @@ public class AStar {
 					Double newDistance=0.0;
 					Boolean isStart=false, flagFP=false;
 					Date dia;
+					Integer takeOffUtc, arrivalUtc;
 					dia=Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
 					if(f.getTakeOffAirport().getId() == start.getId()) isStart=true;
 					takeOff= f.getTakeOffTime().toLocalTime();
 					arrival = f.getArrivalTime().toLocalTime();
-
+					takeOffUtc =f.getTakeOffAirport().getCity().getCountry().getUtc();
+					arrivalUtc =f.getArrivalAirport().getCity().getCountry().getUtc();
 					LocalDate takeOfDate = calcularTakeOfDate(isStart,date, time, takeOff, arrival);
 					LocalDate arrivalDate = calcularArrivalDate(isStart,date, time, takeOff, arrival);
 					FlightPlan fp = buscarFP(f,takeOfDate);
@@ -137,7 +139,7 @@ public class AStar {
 					adjacentNode.setArrivalFlight(f);
 					adjacentNode.setFather(currentNode);
 					adjacentNode.setHeuristic(heuristic(adjacentNode.getArrivalFlight().getArrivalAirport(),currentNode.getId(), objective.getId(), time));
-					newDistance=durationBetweenTime(isStart,date, time, takeOff, arrival,fp);//actualiza el fp
+					newDistance=durationBetweenTime(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc,fp);//actualiza el fp
 					packagesProcesados= hayCapacidad(f, f.getArrivalAirport().getWarehouse(), cantPackages,fp);
 					//fp.setPackagesNumber(packagesProcesados);
 					//fp.setPackagesNumberSimulated(packagesProcesados);
@@ -508,6 +510,54 @@ public class AStar {
 		}
 		return res;
 	}
+	public double durationBetweenTime(Boolean isStart, LocalDate date,LocalTime time,LocalTime start, LocalTime end, Integer utcStart, Integer utcEnd, FlightPlan fp)  {
+		double acumulator=0;
+		Integer dia=0;
+		LocalDate diaFinLC=date;
+		Date diaIni,diaFin;
+		
+
+		if(!isStart) acumulator+=60; //agregar una hora si es escala
+
+		if(utcStart>0) start.minusHours(utcStart);		
+		else {
+			utcStart*=-1;
+			start.plusHours(utcStart);
+		}
+
+		if(utcEnd>0) end.minusHours(utcEnd);		
+		else {
+			utcEnd*=-1;
+			end.plusHours(utcEnd);
+		}
+		
+		//calcular tiempo hasta el vuelo
+		if(time.isBefore(start)){
+			acumulator += Duration.between(time, start).toMinutes();
+		}
+		else {
+			dia++;
+			acumulator += Duration.between(time, LocalTime.parse("23:59:59")).toMinutes();
+			acumulator += Duration.between( LocalTime.parse("00:00:00"),start).toMinutes();
+		}
+		
+		//calcular tiempo desde el arrivo hasta la llegada
+		if (start.isBefore(end)) {
+			acumulator += Duration.between(start, end).toMinutes();
+		} else {
+			dia++;
+			acumulator += Duration.between(start, LocalTime.parse("23:59:59")).toMinutes();
+			acumulator += Duration.between(LocalTime.parse("00:00:00"), end).toMinutes();
+		}
+
+		diaIni=Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		diaFinLC.plusDays(dia);
+		diaFin=Date.from(diaFinLC.atStartOfDay(ZoneId.systemDefault()).toInstant());	
+		//fp.setTakeOffDate(diaIni);
+		//fp.setArrivalDate(diaFin);
+		return acumulator;
+	}
+
 	public double durationBetweenTime(Boolean isStart, LocalDate date,LocalTime time,LocalTime start, LocalTime end,  FlightPlan fp)  {
 		double acumulator=0;
 		Integer dia=0;
