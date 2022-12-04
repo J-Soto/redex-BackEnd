@@ -69,8 +69,8 @@ public class FlightPlanController {
 			SimpleDateFormat formatterDate = new SimpleDateFormat("yyyyMMdd");
 			dateDate = formatterDate.parse(datereq);
 			LocalDate date1 = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(dateDate));
-			LocalTime time1 = convertStringToLocalTime(horaI);
-			LocalTime time2 = convertStringToLocalTime(horaF);
+			Time time1 = Time.valueOf(convertStringToLocalTime(horaI));
+			Time time2 = Time.valueOf(convertStringToLocalTime(horaF));
 			List<FlightPlan> lista = this.service.findByFechaHora(dateDate,time1,time2);
 			//List<FlightPlan> listaFiltrada = lista.stream().filter(x -> x.getTakeOffDate().equals(dateDate)).collect(Collectors.toList());
 			response.setResultado(lista);

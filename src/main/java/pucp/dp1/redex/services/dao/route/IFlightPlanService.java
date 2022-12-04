@@ -1,5 +1,6 @@
 package pucp.dp1.redex.services.dao.route;
 
+import java.sql.Time;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,6 @@ public interface IFlightPlanService {
 	public void clenaSimulated();
 	public Optional<FlightPlan> updateOccupiedCapacity(Integer id, Integer capacity);
 
-	List<FlightPlan> findByFechaHora(Date fecha, LocalTime horaI, LocalTime horaF);
+	List<FlightPlan> findByFechaHora(Date fecha, Time horaI, Time horaF);
 }
 

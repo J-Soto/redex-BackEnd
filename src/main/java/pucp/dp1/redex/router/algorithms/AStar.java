@@ -480,7 +480,6 @@ public class AStar {
 			return acumulator;
 		}
 	}
-
 	public Integer hayCapacidad(Flight f,Warehouse w,Integer cantPackages, FlightPlan fp){
 		Integer res=0;
 
