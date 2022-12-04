@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa94474a-5987-4463-a820-534a5ded8da5" name="Changes" comment="Querys arregaldas &#10;&#10;Back solucionado&#10;&#10;Clases e interfaces:&#10;&#10;FlightPlanController&#10;FlightPlanService&#10;IFlightPlan&#10;IFlightPlanService&#10;FlightPlan &#10;Solucionadas e implementadas&#10;&#10;Imports recuperados">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/85a6ec74-1f91-40ad-8ff1-0de2bf4b797f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/85a6ec74-1f91-40ad-8ff1-0de2bf4b797f.xml" afterDir="false" />
+    <list default="true" id="fa94474a-5987-4463-a820-534a5ded8da5" name="Changes" comment="Errores solucionados, clases &quot;Services&quot; reparadas, clases &quot;Controllers&quot; terminadas y probadas, &quot;APIs&quot; terminadas y probadas">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/DispatchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/DispatchService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -385,7 +383,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670113159049</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Errores solucionados, clases &quot;Services&quot; reparadas, clases &quot;Controllers&quot; terminadas y probadas, &quot;APIs&quot; terminadas y probadas">
+      <created>1670115990401</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1670115990401</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -427,7 +432,8 @@
     <MESSAGE value="Imports terminados ahora si" />
     <MESSAGE value="Back arreglado" />
     <MESSAGE value="Querys arregaldas &#10;&#10;Back solucionado&#10;&#10;Clases e interfaces:&#10;&#10;FlightPlanController&#10;FlightPlanService&#10;IFlightPlan&#10;IFlightPlanService&#10;FlightPlan &#10;Solucionadas e implementadas&#10;&#10;Imports recuperados" />
-    <option name="LAST_COMMIT_MESSAGE" value="Querys arregaldas &#10;&#10;Back solucionado&#10;&#10;Clases e interfaces:&#10;&#10;FlightPlanController&#10;FlightPlanService&#10;IFlightPlan&#10;IFlightPlanService&#10;FlightPlan &#10;Solucionadas e implementadas&#10;&#10;Imports recuperados" />
+    <MESSAGE value="Errores solucionados, clases &quot;Services&quot; reparadas, clases &quot;Controllers&quot; terminadas y probadas, &quot;APIs&quot; terminadas y probadas" />
+    <option name="LAST_COMMIT_MESSAGE" value="Errores solucionados, clases &quot;Services&quot; reparadas, clases &quot;Controllers&quot; terminadas y probadas, &quot;APIs&quot; terminadas y probadas" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

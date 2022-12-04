@@ -310,7 +310,7 @@ public class DispatchService implements IDispatchService {
 			fallo =procesarAlgoritmo(historicos);
 			if (fallo) return "COLAPSO";
 
-			//Fin :08:04
+			//Fin :08:14
 
 			//Si no fallo, entonces aumentamos el LocalDate en 1 dia y los dias procesados en 1
 			//date1 = date1.plusDays(1);
