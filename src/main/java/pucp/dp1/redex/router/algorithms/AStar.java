@@ -189,7 +189,7 @@ public class AStar {
 			actualizarCapacidad(start,currentNode,minComunCap);
 			cantPackages-=minComunCap;
 			bestWays.add(currentNode);
-			actualizarStart(start, objective.getId());
+			//actualizarStart(start, objective.getId());
 		}
 		return bestWays;
 	}
