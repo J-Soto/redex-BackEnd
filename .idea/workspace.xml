@@ -6,84 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="fa94474a-5987-4463-a820-534a5ded8da5" name="Changes" comment="Cola anadida&#10;&#10;Imports corregidos">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_BIKF.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_BIKF.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EBCI.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EBCI.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EDDI.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EDDI.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EETN.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EETN.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EFHK.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EFHK.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EGLL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EGLL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EHAM.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EHAM.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EIDW.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EIDW.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EKCH.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EKCH.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_ELLX.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_ELLX.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_ENGM.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_ENGM.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EPMO.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EPMO.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_ESKN.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_ESKN.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EVRA.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_EVRA.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LATI.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LATI.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LBSF.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LBSF.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LDZA.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LDZA.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LEMD.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LEMD.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LFPG.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LFPG.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LGAV.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LGAV.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LHBP.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LHBP.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LIRA.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LIRA.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LJLJ.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LJLJ.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LKPR.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LKPR.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LMML.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LMML.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LOWW.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LOWW.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LPPT.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LPPT.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LSZB.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LSZB.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LZIB.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_LZIB.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SABE.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SABE.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SBBR.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SBBR.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SCEL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SCEL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SEQM.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SEQM.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SGAS.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SGAS.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SKBO.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SKBO.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SLLP.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SLLP.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SPIM.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SPIM.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SUAA.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SUAA.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SVMI.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_SVMI.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_UMMS.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/imports_pack_enviado_UMMS.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_EBCI.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_EBCI.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_EDDI.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_EDDI.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_EETN.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_EETN.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_EFHK.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_EFHK.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_EGLL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_EGLL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_EHAM.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_EHAM.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_EIDW.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_EIDW.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_EKCH.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_EKCH.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_ELLX.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_ELLX.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_ENGM.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_ENGM.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_EPMO.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_EPMO.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_ESKN.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_ESKN.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_EVRA.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_EVRA.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LATI.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LATI.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LBSF.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LBSF.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LDZA.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LDZA.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LEMD.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LEMD.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LFPG.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LFPG.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LGAV.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LGAV.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LHPB.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LIRA.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LIRA.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LJLJ.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LJLJ.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LKPR.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LKPR.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LMML.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LMML.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LOWW.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LOWW.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LSZB.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LSZB.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LZIB.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_LZIB.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_SABE.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_SABE.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_SBBR.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_SBBR.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_SCEL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_SCEL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_SEQM.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_SEQM.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_SGAS.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_SGAS.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_SKBO.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_SKBO.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_SLLP.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_SLLP.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_SPIM.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_SPIM.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_SUAA.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_SUAA.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_SVMI.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_SVMI.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imports_pack_enviado_UMMS.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/imports_pack_enviado_UMMS.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/router/algorithms/AStar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/router/algorithms/AStar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/AStar.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/AStar.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -489,7 +413,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670388582213</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Cola anadida&#10;&#10;Imports corregidos">
+      <created>1670390415581</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1670390415581</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -540,11 +471,6 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/router/algorithms/AStar.java</url>
-          <line>81</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/DispatchService.java</url>
           <line>284</line>
           <option name="timeStamp" value="17" />
@@ -556,6 +482,7 @@
         <watch expression="request" />
         <watch expression="daoHistorico" />
         <watch expression="historicos" />
+        <watch expression="currentNode" />
       </configuration>
     </watches-manager>
   </component>

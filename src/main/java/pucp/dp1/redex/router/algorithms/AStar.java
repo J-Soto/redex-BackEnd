@@ -89,7 +89,7 @@ public class AStar {
 			if(cantPackages <= 0) break;
 			minComunCap=cantPackages;
 			Set<Node> settledNodes = new HashSet<>();
-			PriorityQueue<Node> unsettledNodes2 = new PriorityQueue<>(new Comparator<Node>() {
+			PriorityQueue<Node> unsettledNodes = new PriorityQueue<>(new Comparator<Node>() {
 				@Override
 				public int compare(Node a, Node b) {
 					if ( a.getDistance() + a.getHeuristic() > b.getDistance() + b.getHeuristic() ) return 1;
@@ -98,15 +98,13 @@ public class AStar {
 				}
 			});
 
-			Set<Node> unsettledNodes = new HashSet<>();
+			//Set<Node> unsettledNodes = new HashSet<>();
 			currentNode=null;
 			start.setDistance(0.0);
 			unsettledNodes.add(start);
 			while (unsettledNodes.size() != 0) {
-				currentNode = getLowestDistanceNode(unsettledNodes);
-				System.out.println("currentNode: "+currentNode.getId());
-				currentNode = unsettledNodes2.poll();
-				System.out.println("currentNode2: "+currentNode.getId());
+				//currentNode = getLowestDistanceNode(unsettledNodes);
+				currentNode = unsettledNodes.poll();
 				if(minComunCap > currentNode.getPackagesProcesados() && currentNode.getId()!=start.getId()) minComunCap = currentNode.getPackagesProcesados();
 				unsettledNodes.remove(currentNode);
 				settledNodes.add(currentNode);
@@ -288,6 +286,15 @@ public class AStar {
 		return fpResult;
 	}
 	Node contiene(Set<Node> unsettledNodes, Integer id){
+		Node result=null;
+		for (Node node :  unsettledNodes){
+			if (node.getId()==id){
+				return node;
+			}
+		}
+		return result;
+	}
+	Node contiene(PriorityQueue<Node> unsettledNodes, Integer id){
 		Node result=null;
 		for (Node node :  unsettledNodes){
 			if (node.getId()==id){
