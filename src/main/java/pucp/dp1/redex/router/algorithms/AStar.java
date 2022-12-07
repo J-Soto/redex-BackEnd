@@ -22,11 +22,7 @@ import pucp.dp1.redex.model.route.FlightPlan;
 import pucp.dp1.redex.model.route.FlightPlanStatus;
 import pucp.dp1.redex.model.route.RoutePlan;
 import pucp.dp1.redex.model.route.RoutePlanStatus;
-import pucp.dp1.redex.model.sales.Airport;
-import pucp.dp1.redex.model.sales.Client;
-import pucp.dp1.redex.model.sales.Dispatch;
-import pucp.dp1.redex.model.sales.DispatchStatus;
-import pucp.dp1.redex.model.sales.Incident;
+import pucp.dp1.redex.model.sales.*;
 import pucp.dp1.redex.model.storage.Package;
 import pucp.dp1.redex.model.storage.PackageStatus;
 import pucp.dp1.redex.model.storage.StorageRegister;
@@ -93,12 +89,24 @@ public class AStar {
 			if(cantPackages <= 0) break;
 			minComunCap=cantPackages;
 			Set<Node> settledNodes = new HashSet<>();
+			PriorityQueue<Node> unsettledNodes2 = new PriorityQueue<>(new Comparator<Node>() {
+				@Override
+				public int compare(Node a, Node b) {
+					if ( a.getDistance() + a.getHeuristic() > b.getDistance() + b.getHeuristic() ) return 1;
+					else if (a.getDistance() + a.getHeuristic() < b.getDistance() + b.getHeuristic()) return -1;
+					return 0;
+				}
+			});
+
 			Set<Node> unsettledNodes = new HashSet<>();
 			currentNode=null;
 			start.setDistance(0.0);
 			unsettledNodes.add(start);
 			while (unsettledNodes.size() != 0) {
 				currentNode = getLowestDistanceNode(unsettledNodes);
+				System.out.println("currentNode: "+currentNode.getId());
+				currentNode = unsettledNodes2.poll();
+				System.out.println("currentNode2: "+currentNode.getId());
 				if(minComunCap > currentNode.getPackagesProcesados() && currentNode.getId()!=start.getId()) minComunCap = currentNode.getPackagesProcesados();
 				unsettledNodes.remove(currentNode);
 				settledNodes.add(currentNode);
