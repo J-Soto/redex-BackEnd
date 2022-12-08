@@ -66,7 +66,6 @@ public class AStar {
 		return map;
 	}
 	private static Map<Pair<Integer,Date>, FlightPlan> fpMap = null;
-	private  Map<String,Optional<Airport>> airports = serviceAirport.findAll().stream().collect(Collectors.toMap(Airport::getCode, (Airport a) -> Optional.of(a)));
 
 	// ALGORITMO
 	private void actualizarCapacidad(Node start, Node node, Integer minComunCapac) {
@@ -257,6 +256,7 @@ public class AStar {
 		return listplan;
 	}
 	public Integer insertHistoricPackage(String originAirport, String destinationAirport, LocalDate dateS, LocalTime time, Integer cantPackages) {
+		Map<String,Optional<Airport>> airports = serviceAirport.findAll().stream().collect(Collectors.toMap(Airport::getCode, (Airport a) -> Optional.of(a)));
 		List <RoutePlan> listplan = new ArrayList<>();
 		Date dia = null;
 		int resultado=0;
