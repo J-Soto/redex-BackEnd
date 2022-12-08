@@ -153,8 +153,8 @@ public class AStar {
 					}
 					adjacentNode.setArrivalFlight(f);
 					adjacentNode.setFather(currentNode);
-					adjacentNode.setHeuristic(heuristic(adjacentNode.getArrivalFlight().getArrivalAirport(),currentNode.getId(), objective.getId(), time));
-					newDistance=durationBetweenTime(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc,fp);//actualiza el fp
+					newDistance=durationBetweenTime(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc,fp);
+					adjacentNode.setHeuristic(heuristic(adjacentNode.getArrivalFlight().getArrivalAirport(),currentNode.getId(), objective.getId(), time,newDistance));
 					packagesProcesados= hayCapacidad(f, f.getArrivalAirport().getWarehouse(), cantPackages,fp);
 					//fp.setPackagesNumber(packagesProcesados);
 					//fp.setPackagesNumberSimulated(packagesProcesados);
@@ -344,10 +344,19 @@ public class AStar {
 			}
 
 		}
+		
 
 
 		return timeHeu;
 	}
+
+
+	public double heuristic(Airport arrivalAirport, Integer takeOffNode, Integer objective, LocalTime time, double newDistance){
+		double  timeHeu= 10000000.0;
+		if(arrivalAirport.getId()==objective) timeHeu =newDistance;
+	return timeHeu;
+	}
+	
 	public void  actualizarStart(Node start,Integer objective){
 		Map<Airport, List<Flight>> graphOld = this.getMap();
 		Map<Integer, Node> nodes = new HashMap<>();
