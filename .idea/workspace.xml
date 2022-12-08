@@ -4,24 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa94474a-5987-4463-a820-534a5ded8da5" name="Changes" comment="Cola anadida&#10;&#10;Imports corregidos">
+    <list default="true" id="fa94474a-5987-4463-a820-534a5ded8da5" name="Changes" comment="diccionario implementado">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/85a6ec74-1f91-40ad-8ff1-0de2bf4b797f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/85a6ec74-1f91-40ad-8ff1-0de2bf4b797f.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_11_2022_11_28_p__m___Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_11_2022_11_28_p_ m__[Changes]/AStar.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_11_2022_11_28_p_ m__[Changes]/DispatchService$PackageComparator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_11_2022_11_28_p_ m__[Changes]/DispatchService$PackageTemp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_11_2022_11_28_p_ m__[Changes]/DispatchService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_11_2022_11_28_p_ m__[Changes]/FlightPlanService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_11_2022_11_28_p_ m__[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_11_2022_11_52_p__m___Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_11_2022_11_52_p_ m__[Changes]/AStar.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_11_2022_11_52_p_ m__[Changes]/DispatchService$PackageComparator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_11_2022_11_52_p_ m__[Changes]/DispatchService$PackageTemp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_11_2022_11_52_p_ m__[Changes]/DispatchService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_11_2022_11_52_p_ m__[Changes]/FlightPlanService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_11_2022_11_52_p_ m__[Changes]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/dao/PACK/IFlight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/dao/PACK/IFlight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/model/sales/Airport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/model/sales/Airport.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/router/algorithms/AStar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/router/algorithms/AStar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/import.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/import.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/AStar$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/AStar$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/AStar.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/AStar.class" afterDir="false" />
     </list>
@@ -65,6 +56,7 @@
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/sales/AirportController.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/sales/DispatchController.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/sales/HistoricoController.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/dao/PACK/IFlight.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/dao/route/IFlightPlan.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/dao/sales/IHistorico.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/model/PACK/Flight.java" root0="SKIP_INSPECTION" />
@@ -128,7 +120,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;835865bcf96d169a9ac7f1ca4bf02848&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -198,7 +190,8 @@
       <workItem from="1670010077601" duration="1816000" />
       <workItem from="1670011911479" duration="999000" />
       <workItem from="1670016651906" duration="15142000" />
-      <workItem from="1670456229745" duration="2896000" />
+      <workItem from="1670456229745" duration="3773000" />
+      <workItem from="1670460849207" duration="13494000" />
     </task>
     <task id="LOCAL-00001" summary="Back arreglado y con los ultimos cambios">
       <created>1668304064027</created>
@@ -445,7 +438,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670393903739</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="diccionario implementado">
+      <created>1670459975252</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1670459975252</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -490,7 +490,8 @@
     <MESSAGE value="Querys arregaldas &#10;&#10;Back solucionado&#10;&#10;Clases e interfaces:&#10;&#10;FlightPlanController&#10;FlightPlanService&#10;IFlightPlan&#10;IFlightPlanService&#10;FlightPlan &#10;Solucionadas e implementadas&#10;&#10;Imports recuperados" />
     <MESSAGE value="Errores solucionados, clases &quot;Services&quot; reparadas, clases &quot;Controllers&quot; terminadas y probadas, &quot;APIs&quot; terminadas y probadas" />
     <MESSAGE value="Cola anadida&#10;&#10;Imports corregidos" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cola anadida&#10;&#10;Imports corregidos" />
+    <MESSAGE value="diccionario implementado" />
+    <option name="LAST_COMMIT_MESSAGE" value="diccionario implementado" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

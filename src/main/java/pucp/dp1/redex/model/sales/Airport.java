@@ -47,6 +47,9 @@ public class Airport implements Serializable{
 	@JsonIgnoreProperties("airport")
 	private Warehouse warehouse;
 
+	public Airport() {
+	}
+
 	public int getId() {
 		return id;
 	}
