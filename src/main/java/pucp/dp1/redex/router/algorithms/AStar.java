@@ -10,6 +10,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import javax.print.attribute.standard.Destination;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,7 @@ public class AStar {
 		}
 		return lowestDistanceNode;
 	}
+	private Map<Pair<Integer,Date>, FlightPlan> fpMap = null;
 	public List<Node> calculateShortestPathFromSource( Node start,Node objective, LocalDate date, LocalTime time, Integer cantPackages) {
 		Integer minComunCap=0;
 		Node currentNode=null;
@@ -85,6 +87,8 @@ public class AStar {
 		Integer packagesProcesados,packagesProcesadosR;
 		Double timeAc=0.0,tMax;
 		tMax=maxTiempo(start,objective);
+		fpMap=serviceFlightPlan.findAll().stream().collect(Collectors.toMap(fp->new Pair<Integer,Date>(fp.getFlight().getIdFlight(),fp.getTakeOffDate()), fp->fp));
+		Pair<Integer,Date> llaves = null;
 		while(true){
 			if(cantPackages <= 0) break;
 			minComunCap=cantPackages;
@@ -127,9 +131,7 @@ public class AStar {
 					LocalTime takeOff, arrival;
 					Double newDistance=0.0;
 					Boolean isStart=false, flagFP=false;
-					Date dia;
 					Integer takeOffUtc, arrivalUtc;
-					dia=Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
 					if(f.getTakeOffAirport().getId() == start.getId()) isStart=true;
 					takeOff= f.getTakeOffTime().toLocalTime();
 					arrival = f.getArrivalTime().toLocalTime();
@@ -137,7 +139,9 @@ public class AStar {
 					arrivalUtc =f.getArrivalAirport().getCity().getCountry().getUtc();
 					LocalDate takeOfDate = calcularTakeOfDate(isStart,date, time, takeOff, arrival);
 					LocalDate arrivalDate = calcularArrivalDate(isStart,date, time, takeOff, arrival);
-					FlightPlan fp = buscarFP(f,takeOfDate);
+					//FlightPlan fp = buscarFP(f,takeOfDate);
+					llaves = new Pair<Integer,Date>(f.getIdFlight(),Date.from(takeOfDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+					FlightPlan fp = fpMap.get(llaves);
 					if(fp==null){
 						flagFP = true;
 						fp= new FlightPlan(f);
