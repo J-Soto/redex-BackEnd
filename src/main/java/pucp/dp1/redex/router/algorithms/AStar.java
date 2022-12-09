@@ -12,7 +12,6 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import javax.print.attribute.standard.Destination;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javafx.util.Pair;
@@ -59,6 +58,7 @@ public class AStar {
 	@Autowired
 	private FlightService serviceFlight;
 	private Map<Airport, List<Flight>> map;
+	private Map<Pair<Integer,Date>, FlightPlan> fpMap = null;
 	public Map<Airport, List<Flight>> getMap() {
 		map = airportMap.getGraph();
 		return map;
@@ -79,7 +79,6 @@ public class AStar {
 		}
 		return lowestDistanceNode;
 	}
-	private Map<Pair<Integer,Date>, FlightPlan> fpMap = null;
 	public List<Node> calculateShortestPathFromSource( Node start,Node objective, LocalDate date, LocalTime time, Integer cantPackages) {
 		Integer minComunCap=0;
 		Node currentNode=null;
@@ -100,6 +99,14 @@ public class AStar {
 					else if (a.getDistance() + a.getHeuristic() < b.getDistance() + b.getHeuristic()) return -1;
 					return 0;
 				}
+				/*
+				@Override
+				public int compare(Node a, Node b) {
+					if ( a.getDistance() * a.getHeuristic() > b.getDistance() * b.getHeuristic() ) return 1;
+					else if (a.getDistance() * a.getHeuristic() < b.getDistance() * b.getHeuristic()) return -1;
+					return 0;
+				}
+				*/
 			});
 
 			//Set<Node> unsettledNodes = new HashSet<>();
@@ -203,32 +210,6 @@ public class AStar {
 		}
 		return bestWays;
 	}
-
-	public void setearArrivalTakeOffUTC(FlightPlan fp){
-		int takeOffUtc =fp.getFlight().getTakeOffAirport().getCity().getCountry().getUtc();
-		int arrivalUtc =fp.getFlight().getArrivalAirport().getCity().getCountry().getUtc();
-
-		LocalTime takeOff= fp.getFlight().getTakeOffTime().toLocalTime();
-		LocalTime arrival= fp.getFlight().getArrivalTime().toLocalTime();
-
-		if(takeOffUtc>0) takeOff=takeOff.minusHours(takeOffUtc);
-		else {
-			takeOffUtc*=-1;
-			takeOff=takeOff.plusHours(takeOffUtc);
-		}
-
-		if(arrivalUtc>0) arrival=arrival.minusHours(arrivalUtc);
-		else {
-			arrivalUtc*=-1;
-			arrival=arrival.plusHours(arrivalUtc);
-		}
-
-		fp.setArrivalTimeUtc(Time.valueOf(arrival));
-		fp.setTakeOffTimeUtc(Time.valueOf(takeOff));
-
-
-	}
-
 	private LocalDate calcularArrivalDate(Boolean isStart, LocalDate date,LocalTime time,LocalTime start, LocalTime end) {
 
 		//Integer dia=0;
@@ -349,14 +330,7 @@ public class AStar {
 
 		return timeHeu;
 	}
-
-
-	public double heuristic(Airport arrivalAirport, Integer takeOffNode, Integer objective, LocalTime time, double newDistance){
-		double  timeHeu= 10000000.0;
-		if(arrivalAirport.getId()==objective) timeHeu =newDistance;
-	return timeHeu;
-	}
-	
+	public double heuristic(Airport arrivalAirport, Integer takeOffNode, Integer objective, LocalTime time, double newDistance){return (arrivalAirport.getId()==objective)?newDistance:10000000.0;}
 	public void  actualizarStart(Node start,Integer objective){
 		Map<Airport, List<Flight>> graphOld = this.getMap();
 		Map<Integer, Node> nodes = new HashMap<>();
@@ -459,15 +433,13 @@ public class AStar {
 		}
 		return listplan;
 	}
-	private Double getBestTime(Integer start, Integer objective) {
-		return null;
-	}
 	public Integer insertHistoricPackage(String originAirport, String destinationAirport, LocalDate dateS, LocalTime time, Integer cantPackages) {
 		List <RoutePlan> listplan = new ArrayList<>();
+		Map<String,Optional<Airport>> airports = serviceAirport.findAll().stream().collect(Collectors.toMap(Airport::getCode, (Airport a) -> Optional.of(a)));
 		int resultado=0;
 		/* Obtener id de aeropuertos */
-		Optional<Airport> oDestination = serviceAirport.findByCode(destinationAirport);
-		Optional<Airport> oOrigin = serviceAirport.findByCode(originAirport);
+		Optional<Airport> oDestination = airports.get(destinationAirport);
+		Optional<Airport> oOrigin = airports.get(originAirport);
 		if (oDestination.isPresent() && oOrigin.isPresent()) {
 			Airport origin = oOrigin.get();
 			Airport destination = oDestination.get();
@@ -513,6 +485,33 @@ public class AStar {
 			System.out.println("No existe alguno de los aeropuertos");
 			resultado=0;}
 		return resultado;
+	}
+	private Double getBestTime(Integer start, Integer objective) {
+		return null;
+	}
+	public void setearArrivalTakeOffUTC(FlightPlan fp){
+		int takeOffUtc =fp.getFlight().getTakeOffAirport().getCity().getCountry().getUtc();
+		int arrivalUtc =fp.getFlight().getArrivalAirport().getCity().getCountry().getUtc();
+
+		LocalTime takeOff= fp.getFlight().getTakeOffTime().toLocalTime();
+		LocalTime arrival= fp.getFlight().getArrivalTime().toLocalTime();
+
+		if(takeOffUtc>0) takeOff=takeOff.minusHours(takeOffUtc);
+		else {
+			takeOffUtc*=-1;
+			takeOff=takeOff.plusHours(takeOffUtc);
+		}
+
+		if(arrivalUtc>0) arrival=arrival.minusHours(arrivalUtc);
+		else {
+			arrivalUtc*=-1;
+			arrival=arrival.plusHours(arrivalUtc);
+		}
+
+		fp.setArrivalTimeUtc(Time.valueOf(arrival));
+		fp.setTakeOffTimeUtc(Time.valueOf(takeOff));
+
+
 	}
 	public LocalDate convertStringToLocalDate(String date) {
 		try {
@@ -612,7 +611,6 @@ public class AStar {
 		}
 		return acumulator;
 	}
-
 	public double durationBetweenTime(LocalTime start, LocalTime end, Integer utcStart, Integer utcEnd) {
 		double acumulator;
 		if(utcStart>0){
@@ -634,7 +632,6 @@ public class AStar {
 		acumulator  =durationBetweenTime( start,  end);
 		return acumulator;
 	}
-
 	public double durationBetweenTime(Boolean isStart, LocalDate date,LocalTime time,LocalTime start, LocalTime end,  FlightPlan fp)  {
 		double acumulator=0;
 		Integer dia=0;

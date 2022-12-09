@@ -1,0 +1,14 @@
+<changelist name="Uncommitted_changes_before_Update_at_08_12_2022_10_26_p_ m__[Changes]" date="1670556381241" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08_12_2022_10_26_p_ m__[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 08/12/2022 10:26 p. m. [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/pucp/dp1/redex/router/algorithms/AStar.class" />
+    <option name="AFTER_PATH" value="target/classes/pucp/dp1/redex/router/algorithms/AStar.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08_12_2022_10_26_p_ m__[Changes]/AStar.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/pucp/dp1/redex/router/algorithms/AStar$1.class" />
+    <option name="AFTER_PATH" value="target/classes/pucp/dp1/redex/router/algorithms/AStar$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08_12_2022_10_26_p_ m__[Changes]/AStar$1.class" />
+  </binary>
+</changelist>
