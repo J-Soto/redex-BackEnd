@@ -26,8 +26,11 @@ import pucp.dp1.redex.dao.storage.IStorageRegister;
 import pucp.dp1.redex.dao.storage.IWarehouse;
 import pucp.dp1.redex.dao.utils.ISummaryCase;
 import pucp.dp1.redex.dao.utils.ITrackingHistory;
+import pucp.dp1.redex.model.PACK.Flight;
+import pucp.dp1.redex.model.location.Country;
 import pucp.dp1.redex.model.route.FlightPlan;
 import pucp.dp1.redex.model.route.RoutePlan;
+import pucp.dp1.redex.model.sales.Airport;
 import pucp.dp1.redex.model.sales.Dispatch;
 import pucp.dp1.redex.model.sales.DispatchStatus;
 import pucp.dp1.redex.model.sales.Historico;
@@ -36,6 +39,7 @@ import pucp.dp1.redex.model.storage.StorageRegister;
 import pucp.dp1.redex.model.storage.Warehouse;
 import pucp.dp1.redex.model.utils.TrackingHistory;
 import pucp.dp1.redex.router.algorithms.AStar;
+import pucp.dp1.redex.services.dao.PACK.IFlightService;
 import pucp.dp1.redex.services.dao.sales.IDispatchService;
 
 @Service
@@ -69,6 +73,9 @@ public class DispatchService implements IDispatchService {
 	private HistoricoService historicoService;
 	@Autowired
 	private IHistorico daoHistorico;
+	@Autowired
+	private IFlightService serviceFlight;
+	private Map <Airport, List<Flight>> mapVuelosPorAeropuerto = null;
 	@Override
 	public List<Dispatch> findByActiveTrue() {
 		return this.dao.findByActiveTrue();
@@ -307,6 +314,7 @@ public class DispatchService implements IDispatchService {
 			//Inicio :07:56
 
 			//enviamos los envios historicos al algoritmo a ver si falla
+
 			fallo =procesarAlgoritmo(historicos);
 			if (fallo) return "COLAPSO";
 
@@ -326,9 +334,10 @@ public class DispatchService implements IDispatchService {
 		}
 	}
 	private Boolean procesarAlgoritmo(List<Historico> pqHistoricos) {
-
+		mapVuelosPorAeropuerto= daoAirport.findAll().stream().collect(Collectors.toMap(airport -> airport, airport -> serviceFlight.findByTakeOffAirport(airport)));
+		List<Country>countrys=daoCountry.findAll();
 		for (Historico pack : pqHistoricos) {
-			Integer	resultPlan = serviceAStart.insertHistoricPackage(pack.getCodigoPaisSalida(), pack.getCodigoPaisLlegada(), pack.getFecha(),pack.getHora(), pack.getNroPaquetes());
+			Integer	resultPlan = serviceAStart.insertHistoricPackage(countrys,mapVuelosPorAeropuerto,pack.getCodigoPaisSalida(), pack.getCodigoPaisLlegada(), pack.getFecha(),pack.getHora(), pack.getNroPaquetes());
 			if (resultPlan != 1) {
 				System.out.println(pack.getCodigoPaisSalida() + "  " + pack.getFecha()+ " " + pack.getHora() + " " + pack.getCodigoPaisLlegada() + " " + pack.getNroPaquetes());
 				System.out.println("El sistema fallo");

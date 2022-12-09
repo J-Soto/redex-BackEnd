@@ -1433,7 +1433,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <ColNames>arrival_airport_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="386" parent="306" name="FKm4lu10xe8yncvwetajfw7uvoh">
+    <index id="386" parent="306" name="takeoffairport_index">
       <ColNames>take_off_airport_id</ColNames>
       <Type>btree</Type>
     </index>

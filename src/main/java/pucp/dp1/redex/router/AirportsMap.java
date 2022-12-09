@@ -33,18 +33,14 @@ public class AirportsMap {
 		System.out.println("Servicio");
 		return serviceAirport.findAll();
 	}
-	
-	public List<Flight> obtainFlightsByAirport(Airport airport){
-		return serviceFlight.findByTakeOffAirport(airport);
-	}
-	
-	public Map<Airport, List<Flight>> getGraph() {
+
+	public Map<Airport, List<Flight>> getGraph(Map <Airport, List<Flight>> listaVuelosPorAeropuerto) {
 		List<Airport> airports = this.obtainAirpots();
-		for (Airport airport: airports){
-			List<Flight> flights = obtainFlightsByAirport(airport);
-			this.map.put(airport, flights);
-		}
-		return this.map;
+		listaVuelosPorAeropuerto.forEach((airport, flights) -> {
+			airport.setWarehouse(airports.get(airports.indexOf(airport)).getWarehouse());
+			flights = flights;
+		});
+		return listaVuelosPorAeropuerto;
 	}
 
 	public void setGraph(Map<Airport, List<Flight>> map) {

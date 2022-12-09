@@ -21,6 +21,9 @@ public class Node {
 	private List<List<Pair<Node,FlightPlan>>> listShortestPath= new LinkedList<>();
 	private FlightPlan flightPlan=null;
 	private Boolean Colapso = false;
+	private Node father=null;
+	private Flight fatherFlight;
+	private Double DistancePlusHeu;
 
 	public Boolean getColapso() {
 		return this.Colapso;
@@ -43,8 +46,6 @@ public class Node {
 	public void addListShortestPath( List<Pair<Node,FlightPlan>> shortestPath){
 		this.listShortestPath.add(shortestPath);
 	}
-	
-	
 
 	public Flight getArrivalFlight() {
 		return arrivalFlight;
@@ -69,12 +70,6 @@ public class Node {
 	
 	public Node() {
 	}
-
-	private Node father=null;
-	private Flight fatherFlight;
-	private Double DistancePlusHeu;
-
-	
 	public Flight getFatherFlight() {
 		return fatherFlight;
 	}
@@ -82,8 +77,6 @@ public class Node {
 	public void setFatherFlight(Flight fatherFlight) {
 		this.fatherFlight = fatherFlight;
 	}
-
-	
 	
 	public Double getDistancePlusHeu() {
 		return DistancePlusHeu;
