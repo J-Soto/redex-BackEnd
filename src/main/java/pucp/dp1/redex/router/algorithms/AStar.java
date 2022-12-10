@@ -1,6 +1,6 @@
 package pucp.dp1.redex.router.algorithms;
 
-import java.sql.Time;
+import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -10,10 +10,18 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.Date;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.print.attribute.standard.Destination;
+import javax.sql.DataSource;
+
+import ch.qos.logback.core.db.ConnectionSource;
+import com.zaxxer.hikari.pool.HikariProxyConnection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Service;
 import javafx.util.Pair;
 import pucp.dp1.redex.dao.sales.IIncident;
@@ -204,12 +212,36 @@ public class AStar {
 		return bestWays;
 	}
 	public double heuristic(Airport arrivalAirport, Integer takeOffNode, Integer objective, LocalTime time, double newDistance){return (arrivalAirport.getId()==objective)?newDistance:10000000.0;}
-	public List <RoutePlan> getShortestPath(Integer start, Integer objective, LocalDate date, LocalTime time, boolean simulated, Integer cantPackages) {
+	public List <RoutePlan> getShortestPath(Integer start, Integer objective, LocalDate date, LocalTime time, boolean simulated, Integer cantPackages) throws SQLException, NamingException {
 		// cambio en los warehouses
+		/*
+		StringBuffer sql = new StringBuffer();
+		sql.append("select * from warehouse;");
+		DriverManagerDataSource dataSource =  new DriverManagerDataSource();
+		dataSource.setDriverClassName( "com.mysql.jdbc.Driver");
+		dataSource.setUrl( " jdbc:mysql://localhost:3306/redex");
+		dataSource.setUsername( "root");
+		dataSource.setPassword( "Johnsoto10_@");
+		Connection con = dataSource.getConnection();
+		PreparedStatement ps = con.prepareStatement(sql.toString());
+		ResultSet rs = ps.executeQuery(sql.toString());
+		if (!rs.next()) return null;
+		Warehouse warehouse1 = new Warehouse();
+		while (rs.next()) {
+			warehouse1.setId(rs.getInt("id"));
+			warehouse1.setCapacity(rs.getInt("capacity"));
+			int id = Integer.parseInt(rs.getString(1));
+			warehouse1.setCapacity(Integer.parseInt(rs.getString(2)));
+			warehouse1.setFull(Boolean.parseBoolean(rs.getString(3)));
+			int a = Integer.parseInt(rs.getString(4));
+			warehouse1.setOccupiedCapacity(a);      // Retrieve the first column value
+			warehouse1.setPackagesNumber(Integer.parseInt(rs.getString(5)));      // Retrieve the first column value
+		}
+		*/
 		warehouses = serviceWarehouse.findAll();
 		airports = serviceAirport.findAll();
 		listaVuelosPorAeropuerto.forEach((airport, flights) -> {
-			airport.setWarehouse(warehouses.get(airport.getId()));
+			airport.setWarehouse(warehouses.stream().filter(warehouse -> warehouse.getId() == airport.getWarehouse().getId()).findFirst().get());
 			flights = flights;
 		});
 		Map<Airport, List<Flight>> graphOld = listaVuelosPorAeropuerto;
@@ -270,9 +302,11 @@ public class AStar {
 			listplan.add(rPlan);
 			//result.addListShortestPath(shortestPath);
 		}
+		//rs.close();
+		//ps.close();
 		return listplan;
 	}
-	public Integer insertHistoricPackage(List<Country>countrys,Map <Airport, List<Flight>> vuelos ,String originAirport, String destinationAirport, LocalDate dateS, LocalTime time, Integer cantPackages) {
+	public Integer insertHistoricPackage(List<Country>countrys,Map <Airport, List<Flight>> vuelos ,String originAirport, String destinationAirport, LocalDate dateS, LocalTime time, Integer cantPackages) throws SQLException, NamingException {
 		this.countrys=countrys;
 		listaVuelosPorAeropuerto=vuelos;
 		List <RoutePlan> listplan = new ArrayList<>();

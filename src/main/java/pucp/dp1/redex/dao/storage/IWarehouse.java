@@ -12,6 +12,7 @@ import pucp.dp1.redex.model.storage.Warehouse;
 import pucp.dp1.redex.model.utils.AirportElement;
 
 public interface IWarehouse extends JpaRepository<Warehouse, Integer> {
+	@Query("SELECT w FROM Warehouse w")
 	List<Warehouse> findAll();
 	
 	Optional<Warehouse> findByAirport_id(Integer id);

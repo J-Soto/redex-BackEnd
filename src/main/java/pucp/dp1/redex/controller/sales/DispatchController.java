@@ -166,10 +166,12 @@ public class DispatchController {
 				response.setEstado(Estado.OK);
 			} else {
 				if(check.equals("COLAPSO")){
+					response.setError(1, "ERROR COLAPSO", "");;
 					response.setEstado(Estado.COLAPSO);
 				}
-				response.setError(1, "ERROR EN EL PROCESO", "");
-				response.setEstado(Estado.ERROR);
+
+				else{response.setError(1, "ERROR EN EL PROCESO", "");
+				response.setEstado(Estado.ERROR);}
 			}
 			return new ResponseEntity<ResponseObject>(response, HttpStatus.OK);
 		} catch (Exception e) {

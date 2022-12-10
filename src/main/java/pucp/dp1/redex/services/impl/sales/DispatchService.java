@@ -1,5 +1,6 @@
 package pucp.dp1.redex.services.impl.sales;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -41,6 +42,8 @@ import pucp.dp1.redex.model.utils.TrackingHistory;
 import pucp.dp1.redex.router.algorithms.AStar;
 import pucp.dp1.redex.services.dao.PACK.IFlightService;
 import pucp.dp1.redex.services.dao.sales.IDispatchService;
+
+import javax.naming.NamingException;
 
 @Service
 public class DispatchService implements IDispatchService {
@@ -333,7 +336,7 @@ public class DispatchService implements IDispatchService {
 			return "COLAPSO";
 		}
 	}
-	private Boolean procesarAlgoritmo(List<Historico> pqHistoricos) {
+	private Boolean procesarAlgoritmo(List<Historico> pqHistoricos) throws SQLException, NamingException {
 		mapVuelosPorAeropuerto= daoAirport.findAll().stream().collect(Collectors.toMap(airport -> airport, airport -> serviceFlight.findByTakeOffAirport(airport)));
 		List<Country>countrys=daoCountry.findAll();
 		for (Historico pack : pqHistoricos) {

@@ -9,7 +9,7 @@ import pucp.dp1.redex.model.sales.Airport;
 
 public interface IAirport extends JpaRepository<Airport, Integer>{
 
-	@Query("SELECT a FROM Airport")
+	@Query("SELECT a FROM Airport as a")
 	List<Airport> findAll();
 	
 	Optional<Airport> findByCity_id(Integer id);
