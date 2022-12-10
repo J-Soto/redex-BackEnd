@@ -116,7 +116,7 @@ public class FlightPlanController {
 			listFP = serviceFlightPlan.findAll();
 			for(FlightPlan fp:listFP){
 				dia=Date.from(date1.atStartOfDay(ZoneId.systemDefault()).toInstant());
-				if((fp.getArrivalDate().before(dia) || fp.getArrivalDate().equals(dia)  )&& fp.getFlight().getArrivalTime().toLocalTime().isBefore(hour1)){
+				if(fp.getArrivalDate().equals(dia) && fp.getArrivalTimeUtc().toLocalTime().isBefore(hour1)){
 					actualizarWarehouse(fp);
 				}
 			}
@@ -142,10 +142,9 @@ public class FlightPlanController {
 		if(fp.getRevisado()==0){
 			serviceWarehouse.updateOccupiedCapacity(start.getId(), start.getOccupiedCapacity()-cant);
 			serviceWarehouse.updateOccupiedCapacity(end.getId(), end.getOccupiedCapacity()-cant);
-			fp.setRevisado(1);
+			serviceFlightPlan.updateRevisado(fp.getId(),1);
 			
 		}
-		
 
 	}
 }

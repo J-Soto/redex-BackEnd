@@ -16,6 +16,8 @@ public interface IFlightPlanService {
 	public Optional<FlightPlan> findByFlight_IdFlightAndTakeOffDate(Integer id, Date date);
 	public void clenaSimulated();
 	public Optional<FlightPlan> updateOccupiedCapacity(Integer id, Integer capacity);
+	public Optional<FlightPlan> updateRevisado(Integer id, Integer valor);
+
 
 	List<FlightPlan> findByFechaHora(Date fecha, Time horaI, Time horaF);
 	//List<FlightPlan> buscar2(Date fecha);
