@@ -205,6 +205,7 @@ public class AStar {
 	}
 	public double heuristic(Airport arrivalAirport, Integer takeOffNode, Integer objective, LocalTime time, double newDistance){return (arrivalAirport.getId()==objective)?newDistance:10000000.0;}
 	public List <RoutePlan> getShortestPath(Integer start, Integer objective, LocalDate date, LocalTime time, boolean simulated, Integer cantPackages) {
+		// cambio en los warehouses
 		warehouses = serviceWarehouse.findAll();
 		airports = serviceAirport.findAll();
 		listaVuelosPorAeropuerto.forEach((airport, flights) -> {
