@@ -42,6 +42,18 @@ public class FlightPlanService implements IFlightPlanService{
 		}
 	}
 
+	@Override
+	public Optional<FlightPlan> updateRevisado(Integer id, Integer valor) {
+		Optional<FlightPlan> ff = this.dao.findById(id);
+		if(ff.isPresent()) {
+			ff.get().setRevisado(valor);
+			this.dao.save(ff.get());
+			return ff;
+		} else {
+			return Optional.empty();
+		}
+	}
+
 	public List<FlightPlan> findByFechaHora(Date fecha, Time horaI, Time horaF){
 		return dao.buscarFP(fecha, horaI, horaF);
 	}
