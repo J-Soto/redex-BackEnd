@@ -65,6 +65,8 @@ public class AStar {
 	//region Maps y Lists
 	private Map<Airport, List<Flight>> map;
 	private List<Country>countrys=null;
+	private List<Airport> airports = null;
+	private List<Warehouse> warehouses = null;
 	private Map <Airport, List<Flight>> listaVuelosPorAeropuerto= null;
 	private Map<Pair<Integer,Date>, FlightPlan> fpMap = null;
 	//endregion
@@ -202,9 +204,10 @@ public class AStar {
 	}
 	public double heuristic(Airport arrivalAirport, Integer takeOffNode, Integer objective, LocalTime time, double newDistance){return (arrivalAirport.getId()==objective)?newDistance:10000000.0;}
 	public List <RoutePlan> getShortestPath(Integer start, Integer objective, LocalDate date, LocalTime time, boolean simulated, Integer cantPackages) {
-		List<Airport> airports = serviceAirport.findAll();
+		warehouses = serviceWarehouse.findAll();
+		airports = serviceAirport.findAll();
 		listaVuelosPorAeropuerto.forEach((airport, flights) -> {
-			airport.setWarehouse(airports.get(airports.indexOf(airport)).getWarehouse());
+			airport.setWarehouse(warehouses.get(airport.getId()));
 			flights = flights;
 		});
 		Map<Airport, List<Flight>> graphOld = listaVuelosPorAeropuerto;
