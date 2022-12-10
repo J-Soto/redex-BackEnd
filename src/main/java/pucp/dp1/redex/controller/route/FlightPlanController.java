@@ -138,11 +138,14 @@ public class FlightPlanController {
 		cant=fp.getOccupiedCapacity();
 		start = fp.getFlight().getArrivalAirport().getWarehouse();
 		end = fp.getFlight().getTakeOffAirport().getWarehouse();
-		if(start.getOccupiedCapacity() - cant > 0){
+
+		if(fp.getRevisado()==0){
 			serviceWarehouse.updateOccupiedCapacity(start.getId(), start.getOccupiedCapacity()-cant);
-		}
-		if(end.getOccupiedCapacity() - cant > 0){
 			serviceWarehouse.updateOccupiedCapacity(end.getId(), end.getOccupiedCapacity()-cant);
+			fp.setRevisado(1);
+			
 		}
+		
+
 	}
 }

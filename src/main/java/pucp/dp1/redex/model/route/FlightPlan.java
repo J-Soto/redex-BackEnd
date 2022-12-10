@@ -53,6 +53,9 @@ public class FlightPlan implements Serializable{
 	
 	@Column(name = "status")
 	private FlightPlanStatus status;
+
+	@Column(name = "revisado")
+	private Integer revisado=0;
 	
 	@Column(name = "take_off_date")
 	@Temporal(TemporalType.DATE)
@@ -109,9 +112,18 @@ public class FlightPlan implements Serializable{
 		return this.occupiedCapacity;
 	}
 
+	public Integer getRevisado() {
+		return this.revisado;
+	}
+
 	public void setOccupiedCapacity(final Integer occupiedCapacity) {
 		this.occupiedCapacity = occupiedCapacity;
 	}
+
+	public void setRevisado(Integer rev) {
+		this.revisado = rev;
+	}
+
 	public FlightPlanStatus getStatus() {
 		return status;
 	}
