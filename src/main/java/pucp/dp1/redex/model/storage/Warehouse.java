@@ -36,7 +36,7 @@ public class Warehouse implements Serializable{
 	@Column(name = "full")
 	private Boolean full;
 
-	@Column(name = "occupied_Capacity")
+	@Column(name = "occupied_capacity")
 	private Integer occupiedCapacity;
 
 	public Integer getOccupiedCapacity() {

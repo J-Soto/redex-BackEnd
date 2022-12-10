@@ -138,9 +138,10 @@ public class AStar {
 					LocalDate takeOfDate = calcularTakeOfDate(isStart,date, time, takeOff, arrival);
 					LocalDate arrivalDate = calcularArrivalDate(isStart,date, time, takeOff, arrival);
 					packagesProcesados= hayCapacidad(f, f.getArrivalAirport().getWarehouse(), cantPackages);
+					newDistance=durationBetweenTime(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc);
 					if(packagesProcesados == 0){
-						//adjacentNode.setDistance(Double.MAX_VALUE);
-						continue;
+						adjacentNode.setDistance(Double.MAX_VALUE);
+						//continue;
 					}
 					else{
 						adjacentNode.setDistance(currentNode.getDistance() + newDistance);
@@ -160,7 +161,7 @@ public class AStar {
 					}
 					adjacentNode.setArrivalFlight(f);
 					adjacentNode.setFather(currentNode);
-					newDistance=durationBetweenTime(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc,fp);
+					//newDistance=durationBetweenTime(isStart,date, time, takeOff, arrival, takeOffUtc, arrivalUtc);
 					//fp.setPackagesNumber(packagesProcesados);
 					adjacentNode.setHeuristic(heuristic(adjacentNode.getArrivalFlight().getArrivalAirport(),currentNode.getId(), objective.getId(), time,newDistance));
 					//fp.setPackagesNumberSimulated(packagesProcesados);
@@ -455,7 +456,7 @@ public class AStar {
 		}
 		return res;
 	}
-	public double durationBetweenTime(Boolean isStart, LocalDate date,LocalTime time,LocalTime start, LocalTime end, Integer utcStart, Integer utcEnd, FlightPlan fp)  {
+	public double durationBetweenTime(Boolean isStart, LocalDate date,LocalTime time,LocalTime start, LocalTime end, Integer utcStart, Integer utcEnd)  {
 		double acumulator=0;
 		Integer dia=0;
 		LocalDate diaFinLC=date;
