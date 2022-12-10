@@ -336,12 +336,18 @@ public class DispatchService implements IDispatchService {
 			return "COLAPSO";
 		}
 	}
+	private Historico muerte = null;
+	@Override
+	public Historico envioMuerte() {
+		return muerte;
+	}
 	private Boolean procesarAlgoritmo(List<Historico> pqHistoricos) throws SQLException, NamingException {
 		mapVuelosPorAeropuerto= daoAirport.findAll().stream().collect(Collectors.toMap(airport -> airport, airport -> serviceFlight.findByTakeOffAirport(airport)));
 		List<Country>countrys=daoCountry.findAll();
 		for (Historico pack : pqHistoricos) {
 			Integer	resultPlan = serviceAStart.insertHistoricPackage(countrys,mapVuelosPorAeropuerto,pack.getCodigoPaisSalida(), pack.getCodigoPaisLlegada(), pack.getFecha(),pack.getHora(), pack.getNroPaquetes());
 			if (resultPlan != 1) {
+				muerte = pack;
 				System.out.println(pack.getCodigoPaisSalida() + "  " + pack.getFecha()+ " " + pack.getHora() + " " + pack.getCodigoPaisLlegada() + " " + pack.getNroPaquetes());
 				System.out.println("El sistema fallo");
 				return true;

@@ -5,31 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa94474a-5987-4463-a820-534a5ded8da5" name="Changes" comment="Funciones optimizadas, logica optimizada, bucles reemplazados con funciones builtIn, codigo innecesario comentado,30 imports corregidos">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/85a6ec74-1f91-40ad-8ff1-0de2bf4b797f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/85a6ec74-1f91-40ad-8ff1-0de2bf4b797f.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/sales/DispatchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/controller/sales/DispatchController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/dao/sales/IAirport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/dao/sales/IAirport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/dao/storage/IWarehouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/dao/storage/IWarehouse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/router/algorithms/AStar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/router/algorithms/AStar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/dao/sales/IDispatchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/dao/sales/IDispatchService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/DispatchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/DispatchService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/route/FlightPlanController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/route/FlightPlanController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/route/RoutePlanController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/route/RoutePlanController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/sales/AirportController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/sales/AirportController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/storage/WarehouseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/controller/storage/WarehouseController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/sales/IAirport.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/sales/IAirport.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/storage/IWarehouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/dao/storage/IWarehouse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/route/FlightPlan.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/route/FlightPlan.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/storage/Warehouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/model/storage/Warehouse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/AStar$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/AStar$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/AStar.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/router/algorithms/AStar.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/route/IFlightPlanService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/dao/route/IFlightPlanService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/route/FlightPlanService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/route/FlightPlanService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService$PackageComparator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService$PackageComparator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService$PackageTemp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService$PackageTemp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/sales/DispatchService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/storage/StorageRegisterService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pucp/dp1/redex/services/impl/storage/StorageRegisterService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -216,7 +195,7 @@
       <workItem from="1670623416950" duration="809000" />
       <workItem from="1670625239086" duration="959000" />
       <workItem from="1670656290111" duration="432000" />
-      <workItem from="1670657246388" duration="5581000" />
+      <workItem from="1670657246388" duration="7267000" />
     </task>
     <task id="LOCAL-00001" summary="Back arreglado y con los ultimos cambios">
       <created>1668304064027</created>
@@ -547,7 +526,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670681611736</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="Funciones optimizadas, logica optimizada, bucles reemplazados con funciones builtIn, codigo innecesario comentado,30 imports corregidos">
+      <created>1670686961376</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1670686961376</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -620,7 +606,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/pucp/dp1/redex/services/impl/sales/DispatchService.java</url>
-          <line>342</line>
+          <line>347</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

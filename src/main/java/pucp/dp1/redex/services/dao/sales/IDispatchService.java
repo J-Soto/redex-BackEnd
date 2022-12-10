@@ -8,10 +8,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import pucp.dp1.redex.model.sales.Dispatch;
 import pucp.dp1.redex.model.sales.DispatchStatus;
+import pucp.dp1.redex.model.sales.Historico;
 import pucp.dp1.redex.model.utils.TrackingHistory;
 
 public interface IDispatchService {
-
+	public Historico envioMuerte();
 	public List<Dispatch> findByActiveTrue();
 	
 	public Optional<Dispatch> findByTrackingCode(String trackingcode);

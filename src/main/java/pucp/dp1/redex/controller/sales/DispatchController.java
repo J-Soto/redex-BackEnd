@@ -24,6 +24,7 @@ import pucp.dp1.redex.model.response.Estado;
 import pucp.dp1.redex.model.response.ResponseObject;
 import pucp.dp1.redex.model.sales.Dispatch;
 import pucp.dp1.redex.model.sales.DispatchStatus;
+import pucp.dp1.redex.model.sales.Historico;
 import pucp.dp1.redex.model.utils.TrackingHistory;
 import pucp.dp1.redex.model.utils.TrackingList;
 import pucp.dp1.redex.services.dao.sales.IDispatchService;
@@ -153,7 +154,25 @@ public class DispatchController {
 			return new ResponseEntity<ResponseObject>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+	@GetMapping(path = "/envioMuerte", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResponseObject> consultarEnviosPorAeropuertoDestino() {
+		ResponseObject response = new ResponseObject();
+		try {
+			Historico muerte =this.service.envioMuerte();
+			if (muerte!=null) {
+				response.setEstado(Estado.OK);
+				response.setResultado(muerte);
+			} else {
+				response.setError(1, "ERROR EN MUERTE", "");
+				response.setEstado(Estado.ERROR);
+			}
+			return new ResponseEntity<ResponseObject>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			response.setError(1, "Error", e.getMessage());
+			response.setEstado(Estado.ERROR);
+			return new ResponseEntity<ResponseObject>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	@PostMapping(path = "/upload/zip", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseObject> procesamientoMasivo(MultipartHttpServletRequest request) {
 	//public ResponseEntity<ResponseObject> procesamientoMasivo(MultipartHttpServletRequest request, Date date) {
