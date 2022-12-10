@@ -1,5 +1,4 @@
 package pucp.dp1.redex.controller.sales;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -28,15 +27,12 @@ import pucp.dp1.redex.model.sales.Historico;
 import pucp.dp1.redex.model.utils.TrackingHistory;
 import pucp.dp1.redex.model.utils.TrackingList;
 import pucp.dp1.redex.services.dao.sales.IDispatchService;
-
 @CrossOrigin
 @RestController
 @RequestMapping("/api/dispatch")
 public class DispatchController {
-
 	@Autowired
 	private IDispatchService service;
-
 	@GetMapping(path = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseObject> consultarEnvios() {
 		ResponseObject response = new ResponseObject();
@@ -51,7 +47,6 @@ public class DispatchController {
 			return new ResponseEntity<ResponseObject>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
 	@GetMapping(path = "/tracking", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseObject> consultarEnviosPorCodigoDeRastreo(@RequestParam("code") String code) {
 		ResponseObject response = new ResponseObject();
@@ -71,7 +66,6 @@ public class DispatchController {
 			return new ResponseEntity<ResponseObject>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
 	@GetMapping(path = "/findby/oairport", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseObject> consultarEnviosPorAeropuertoOrigen(@RequestParam("code") Integer id) {
 		ResponseObject response = new ResponseObject();
@@ -91,7 +85,6 @@ public class DispatchController {
 			return new ResponseEntity<ResponseObject>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
 	@GetMapping(path = "/findby/dairport", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseObject> consultarEnviosPorAeropuertoDestino(@RequestParam("code") Integer id) {
 		ResponseObject response = new ResponseObject();
@@ -111,7 +104,6 @@ public class DispatchController {
 			return new ResponseEntity<ResponseObject>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
 	@PostMapping(path = "/save", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseObject> guardarPedido(@Valid @RequestBody Dispatch dispatch) {
 		ResponseObject response = new ResponseObject();
@@ -131,7 +123,6 @@ public class DispatchController {
 			return new ResponseEntity<ResponseObject>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
 	@PostMapping(path = "/update/status", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseObject> actualizarEstadoPedido(@Valid @RequestBody Map<String, Object> payload) {
 		ResponseObject response = new ResponseObject();
@@ -175,7 +166,7 @@ public class DispatchController {
 	}
 	@PostMapping(path = "/upload/zip", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseObject> procesamientoMasivo(MultipartHttpServletRequest request) {
-	//public ResponseEntity<ResponseObject> procesamientoMasivo(MultipartHttpServletRequest request, Date date) {
+		//public ResponseEntity<ResponseObject> procesamientoMasivo(MultipartHttpServletRequest request, Date date) {
 		ResponseObject response = new ResponseObject();
 		try {
 			//MultipartHttpServletRequest request = (MultipartHttpServletRequest) params.getFile("file");
@@ -199,7 +190,6 @@ public class DispatchController {
 			return new ResponseEntity<ResponseObject>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
 	@GetMapping(path = "/outgoing", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseObject> consultarSalidas(@Param("id") Integer id) {
 		ResponseObject response = new ResponseObject();
@@ -214,7 +204,6 @@ public class DispatchController {
 			return new ResponseEntity<ResponseObject>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
 	@GetMapping(path = "/arriving", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseObject> consultarLlegadas(@Param("id") Integer id) {
 		ResponseObject response = new ResponseObject();
@@ -229,7 +218,6 @@ public class DispatchController {
 			return new ResponseEntity<ResponseObject>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
 	@GetMapping(path = "/history", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseObject> consultarHistorialTracking(@Param("code") String code) {
 		ResponseObject response = new ResponseObject();
@@ -252,5 +240,4 @@ public class DispatchController {
 			return new ResponseEntity<ResponseObject>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
 }
